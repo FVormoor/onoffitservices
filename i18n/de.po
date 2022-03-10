@@ -1,0 +1,180 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_all_in_one_disable_followers
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.1alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-02 09:58+0000\n"
+"PO-Revision-Date: 2020-10-02 09:58+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model,name:sh_all_in_one_disable_followers.model_res_company
+msgid "Companies"
+msgstr "Firmen"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model,name:sh_all_in_one_disable_followers.model_res_config_settings
+msgid "Config Settings"
+msgstr "Config-Einstellungen"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_company__sh_disable_follower_email
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_config_settings__sh_disable_follower_email
+msgid "Disable to add Followers by Send by Email"
+msgstr "Deaktivieren Verfolger von E-Mail durch Senden hinzufügen"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_company__sh_disable_follower_validate_invoice
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_config_settings__sh_disable_follower_validate_invoice
+msgid "Disable to add Followers by Validate Invoice/Bill"
+msgstr "Disable Verfolger von Validate Rechnung / Bill hinzufügen"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_company__sh_disable_follower_create_picking
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_config_settings__sh_disable_follower_create_picking
+msgid "Disable to add Followers by create/update picking"
+msgstr "Deaktivieren Follower hinzufügen, indem Sie erstellen / aktualisieren Kommissionierung"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_company__sh_disable_follower_confirm_sale
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_config_settings__sh_disable_follower_confirm_sale
+msgid "Disable to add followers by Confirm Quotation"
+msgstr "Deaktivieren hinzufügen Anhänger von bestätigen Zitat"
+
+#. module: sh_all_in_one_disable_followers
+#: model_terms:ir.ui.view,arch_db:sh_all_in_one_disable_followers.res_config_settings_view_form
+msgid "Disable/Restrict to add Followers"
+msgstr "Deaktivieren / einschränken Follower hinzufügen"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_account_move__display_name
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_company__display_name
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_account_move__id
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_purchase_order__id
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_company__id
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_sale_order__id
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_stock_picking__id
+msgid "ID"
+msgstr "ICH WÜRDE"
+
+#. module: sh_all_in_one_disable_followers
+#. openerp-web
+#: code:addons/sh_all_in_one_disable_followers/static/src/js/followers.js:0
+#, python-format
+msgid "Invite Follower"
+msgstr "einladen Follower"
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/sale_order.py:0
+#, python-format
+msgid "It is not allowed to confirm an order in the following states: %s"
+msgstr "Es ist nicht eine Bestellung in den folgenden Staaten bestätigen erlaubt:% s"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model,name:sh_all_in_one_disable_followers.model_account_move
+msgid "Journal Entry"
+msgstr "Tagebucheintrag"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_account_move____last_update
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_company____last_update
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_res_config_settings____last_update
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_sale_order____last_update
+#: model:ir.model.fields,field_description:sh_all_in_one_disable_followers.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/account_move.py:0
+#, python-format
+msgid "Please define a sequence on your journal."
+msgstr "Bitte definieren Sie eine Sequenz auf Ihrer Zeitschrift."
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model,name:sh_all_in_one_disable_followers.model_purchase_order
+msgid "Purchase Order"
+msgstr "Bestellung"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model,name:sh_all_in_one_disable_followers.model_sale_order
+msgid "Sales Order"
+msgstr "Kundenauftrag"
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/account_move.py:0
+#, python-format
+msgid ""
+"The field 'Customer' is required, please complete it to validate the "
+"Customer Invoice."
+msgstr ""
+"Das Feld ‚Kunde‘ erforderlich ist, bitte füllen Sie das validieren"
+"Kundenrechnung."
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/account_move.py:0
+#, python-format
+msgid ""
+"The field 'Vendor' is required, please complete it to validate the Vendor "
+"Bill."
+msgstr ""
+"Das Feld ‚Vendor‘ erforderlich ist, bitte füllen Sie das Vendor zu validieren"
+"Rechnung."
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/account_move.py:0
+#, python-format
+msgid "This move is configured to be auto-posted on %s"
+msgstr "Dieser Schritt ist so konfiguriert, auf% s Auto-gepostet zu sein"
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/account_move.py:0
+#, python-format
+msgid "This move is configured to be auto-posted on {}"
+msgstr "Dieser Schritt ist so konfiguriert, automatisch gebucht werden auf: {}"
+
+#. module: sh_all_in_one_disable_followers
+#: model:ir.model,name:sh_all_in_one_disable_followers.model_stock_picking
+msgid "Transfer"
+msgstr "Transfer"
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/account_move.py:0
+#, python-format
+msgid ""
+"You cannot validate an invoice with a negative total amount. You should "
+"create a credit note instead. Use the action menu to transform it into a "
+"credit note or refund."
+msgstr ""
+"Sie können nicht eine Rechnung mit einem negativen Gesamtbetrag validieren. Du solltest"
+"erstellen, anstatt eine Gutschrift. Verwenden Sie das Aktionsmenü es in eine verwandeln"
+"Gutschrift oder eine Rückerstattung."
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/account_move.py:0
+#, python-format
+msgid "You don't have the access rights to post an invoice."
+msgstr "Sie verfügen nicht über die Zugriffsrechte eine Rechnung zu stellen."
+
+#. module: sh_all_in_one_disable_followers
+#: code:addons/sh_all_in_one_disable_followers/models/account_move.py:0
+#, python-format
+msgid "You need to add a line before posting."
+msgstr "Sie müssen eine Zeile vor der Veröffentlichung hinzuzufügen."
