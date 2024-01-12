@@ -1,109 +1,50 @@
 # Changelog
 
-## 15.0.0.0.33
+## 16.0.0.0.12
 
-- Improve serach for datev_ref when partially paid
+- Solve problem with doc_field (Belegfeld1) beause it was not taken correctly to the export on reconciled
+  entries
 
-## 15.0.0.0.32
+## 16.0.0.0.11
 
-- change from action_post to _post for overall checks and generation of BEDI
+- Fix no attribute error reversed_entry_id
 
-## 15.0.0.0.31
+## 16.0.0.0.10
 
-- prevent thorwing error if no Buchungstext is configured
+- Set copy=False in datev_bedi
 
-## 15.0.0.0.30
+## 16.0.0.0.9
 
-- fix problems with bedi beleglink
+- Remove Quotation marks from beleglink
 
-## 15.0.0.0.29
+## 16.0.0.0.8
 
-- make datev_ref searcheable
+- Solve Error If value not assigned to Buchungstext
 
-## 15.0.0.0.28
+## 16.0.0.0.7
 
-- Add country code to Land because of OSS
+- Change computation of Kurs value
 
-## 15.0.0.0.27
+## 16.0.0.0.6
 
-- replace line_count in datev checks with line name
+- Solve error with problems in community where no asset module exists
 
-## 15.0.0.0.26
+## 16.0.0.0.5
 
-- solve little issues with tests
+- Add support for analytic accounts back
 
-## 15.0.0.0.25
+## 16.0.0.0.4
 
-- Change function calculate differences when foreign currecny is used
-- Change function to skip tax move lines
+- Add server action for recreated DATEV BEDI
 
-## 15.0.0.0.24
+## 16.0.0.0.3
 
-- ValueError: Expected singleton: account.move
+- Add possibility to activate / deactivate by company
 
-## 15.0.0.0.23
+## 16.0.0.0.2
 
-- UnboundLocalError: local variable 'line' referenced before assignment
+- Add option to allow EU VAT in export
 
-## 15.0.0.0.22
+## 16.0.0.0.1
 
-- change bookingtext to line.name instead of line.label
-
-## 15.0.0.0.21
-
-- solve problem with wrong created datev_bedi
-- do post migration of the datev_bedi (will change all records where datev_bedi = True)
-
-## 15.0.0.0.20
-
-- solve error if line.move_id.invoice_date is bool
-
-## 15.0.0.0.19
-
-- Add Leistungsdatum if it differs from Belegdatum
-
-## 15.0.0.0.18
-
-- de.po translation update
-
-## 15.0.0.0.17
-
-- extend search for account_asset module by state
-
-## 15.0.0.0.16
-
-- remove outcomment of payment id in payment term for DATEV
-
-## 15.0.0.0.15
-
-- Adding guid (uuid5) for BEDI Beleglink to ASCII file for preparation of online API.
-
-## 15.0.0.0.14
-
-- Remove constraint at datev_payment_term_id
-
-## 15.0.0.0.13
-
-- Better handling of balancing move total amount
-
-## 15.0.0.0.12
-
-- Fix wrong behavoir with booking text configuration
-
-## 15.0.0.0.11
-
-- Solve rounding problem - it was added if amount was negativ
-
-## 15.0.0.0.10
-
-- Add sudo to search in some cases, because of access restrictions
-
-## 15.0.0.0.9
-
-- Replace self.env.user.company id by self.env.company
-
-## 15.0.0.0.8
-
-- Move grouping export lines from config to account journal and little changes in
-  function of it
-- Add journal to bookingtext configuration
+- Code Migration to V16

@@ -4,7 +4,6 @@ import logging
 import re
 
 from lxml import etree, html
-
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import float_utils
@@ -12,7 +11,7 @@ from odoo.tools import float_utils
 _logger = logging.getLogger(__name__)
 
 
-class syscoonFinanceinterface(models.Model):
+class SyscoonFinanceinterface(models.Model):
     """The class syscoon.financeinterface is the central object to generate
     exports for the selected moves that can be used to be imported in the
     different financial programms on different ways"""
@@ -22,18 +21,15 @@ class syscoonFinanceinterface(models.Model):
     _order = "name desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    name = fields.Char("Name", required=True, readonly=True)
+    name = fields.Char(required=True, readonly=True)
     period = fields.Char("Date", required=True, readonly=True)
-    account_moves_ids = fields.One2many(
-        "account.move", "export_id", "Account Moves", readonly=True
-    )
+    account_moves_ids = fields.One2many("account.move", "export_id", readonly=True)
     mode = fields.Selection(
         selection=[("none", "None")], string="Export Mode", default="none"
     )
-    log = fields.Text("Log")
+    log = fields.Text()
     company_id = fields.Many2one(
         "res.company",
-        string="Company",
         required=True,
         default=lambda self: self.env.company,
     )
@@ -48,7 +44,7 @@ class syscoonFinanceinterface(models.Model):
             if isinstance(val, float) and key != "Kurs":
                 line[key] = str(float_utils.float_repr(val, 2)).replace(".", ",")
             if isinstance(val, float) and key == "Kurs":
-                line[key] = str(float_utils.float_repr(val, 5)).replace(".", ",")
+                line[key] = str(float_utils.float_repr(val, 6)).replace(".", ",")
         return line
 
     def currency_round(self, value, currency=False):
@@ -68,9 +64,11 @@ class syscoonFinanceinterface(models.Model):
         The format can be given free by using the known python formats"""
         return date.strftime(date_format)
 
-    def copy(self, selfdefault=None):
+    def copy(self, default=None):
         """Prevent the copy of the object"""
-        raise UserError(_("Warning! Exports cannot be duplicated."))
+        if self._context.get("prevent_copy", True):
+            raise UserError(_("Warning! Exports cannot be duplicated."))
+        return super().copy(default=default)
 
     def pre_export(self):
         """Method to call before the Import starts and the moves to export
@@ -85,7 +83,7 @@ class syscoonFinanceinterface(models.Model):
             period = str(date_from)
         else:
             period = ""
-        export_id = self.create(
+        return self.create(
             {
                 "name": self.env["ir.sequence"].next_by_code(
                     "syscoon.financeinterface.name"
@@ -94,7 +92,6 @@ class syscoonFinanceinterface(models.Model):
                 "period": period,
             }
         )
-        return export_id
 
     def _get_report_base_filename(self):
         self.ensure_one()
@@ -109,9 +106,8 @@ class syscoonFinanceinterface(models.Model):
         except (TypeError, etree.XMLSyntaxError, etree.ParserError):
             if fail:
                 raise
-            else:
-                _logger.exception("Failure parsing this HTML:\n%s", html_content)
-                return ""
+            _logger.exception("Failure parsing this HTML:\n%s", html_content)
+            return ""
         words = "".join(doc.xpath("//text()")).split()
         suffix = max_words and len(words) > max_words
         if max_words:
@@ -125,7 +121,7 @@ class syscoonFinanceinterface(models.Model):
         return text
 
 
-class syscoonFinanceinterfaceBookingtextConfig(models.Model):
+class SyscoonFinanceinterfaceBookingtextConfig(models.Model):
     """This class provides parameters for the configuration of the creation of the bookingtext"""
 
     _name = "syscoon.financeinterface.bookingtext.config"
@@ -133,9 +129,9 @@ class syscoonFinanceinterfaceBookingtextConfig(models.Model):
     _order = "sequence asc"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    sequence = fields.Integer(string="Sequence", default=10)
-    name = fields.Char("Name", compute="_name_get", store=True)
-    journal_id = fields.Many2one("account.journal", string="Journal")
+    sequence = fields.Integer(default=10)
+    name = fields.Char(compute="_compute_name", store=True)
+    journal_id = fields.Many2one("account.journal")
     field = fields.Selection(
         [
             ("partner_id.display_name", "Partner Name"),
@@ -146,6 +142,7 @@ class syscoonFinanceinterfaceBookingtextConfig(models.Model):
         string="Fields",
     )
 
-    @api.depends("field")
-    def _name_get(self):
-        self.name = dict(self._fields["field"].selection).get(self.field)
+    @api.depends('field')
+    def _compute_name(self):
+        for rec in self:
+            rec.name = dict(rec._fields['field'].selection).get(rec.field)

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResPartner(models.Model):
-    _inherit = "res.partner"
+    _inherit = 'res.partner'
 
     datev_exported = fields.Selection(
         selection=[("false", "False"), ("true", "True")],
@@ -14,6 +14,6 @@ class ResPartner(models.Model):
     )
 
     def write(self, values):
-        if not values.get("datev_exported"):
-            values["datev_exported"] = "false"
-        return super(ResPartner, self).write(values)
+        if not values.get('datev_exported'):
+            values['datev_exported'] = 'false'
+        return super().write(values)

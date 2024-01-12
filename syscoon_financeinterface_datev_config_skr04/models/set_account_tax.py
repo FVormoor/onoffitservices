@@ -3,7 +3,7 @@
 
 from odoo import models
 
-autoaccounts_skr04 = {
+AUTO_ACCOUNT_SKR04 = {
     "l10n_de_skr04.chart_skr04_1181": {
         "datev_automatic_tax": [
             "l10n_de_skr04.tax_vst_7_skr04",
@@ -370,14 +370,6 @@ autoaccounts_skr04 = {
         "datev_automatic_account": True,
         "datev_vatid_required": False,
     },
-    "l10n_de_skr04.chart_skr04_4948": {
-        "datev_automatic_tax": [
-            "l10n_de_skr04.tax_ust_19_skr04",
-            "l10n_de_skr04.tax_ust_19_taxinclusive_skr04",
-        ],
-        "datev_automatic_account": True,
-        "datev_vatid_required": False,
-    },
     "l10n_de_skr04.chart_skr04_5110": {
         "datev_automatic_tax": [
             "l10n_de_skr04.tax_vst_7_skr04",
@@ -557,11 +549,6 @@ autoaccounts_skr04 = {
         "datev_automatic_account": True,
         "datev_vatid_required": False,
     },
-    "l10n_de_skr04.chart_skr04_5741": {
-        "datev_automatic_tax": ["l10n_de_skr04.tax_eu_7_purchase_skr04"],
-        "datev_automatic_account": True,
-        "datev_vatid_required": False,
-    },
     "l10n_de_skr04.chart_skr04_5750": {
         "datev_automatic_tax": [
             "l10n_de_skr04.tax_vst_7_skr04",
@@ -679,11 +666,6 @@ autoaccounts_skr04 = {
         "datev_automatic_account": True,
         "datev_vatid_required": False,
     },
-    "l10n_de_skr04.chart_skr04_6932": {
-        "datev_automatic_tax": ["l10n_de_skr04.tax_ust_eu_skr04"],
-        "datev_automatic_account": True,
-        "datev_vatid_required": False,
-    },
     "l10n_de_skr04.chart_skr04_6936": {
         "datev_automatic_tax": [
             "l10n_de_skr04.tax_ust_19_skr04",
@@ -701,10 +683,10 @@ autoaccounts_skr04 = {
 
 
 class AccountAccount(models.Model):
-    _inherit = "account.account"
+    _inherit = 'account.account'
 
     def _set_account_autoaccount_skr04(self, company_id):
-        for key, values in autoaccounts_skr04.items():
+        for key, values in AUTO_ACCOUNT_SKR04.items():
             tax_keys = False
             template_id = self.env.ref(key)
             account_id = self.env["account.account"].search(
@@ -712,7 +694,7 @@ class AccountAccount(models.Model):
             )
             if values["datev_automatic_tax"]:
                 template_ids = []
-                for val in values["datev_automatic_tax"]:
+                for val in values['datev_automatic_tax']:
                     template_ids.append(self.env.ref(val).name)
                 tax_ids = self.env["account.tax"].search(
                     [("name", "in", template_ids), ("company_id", "=", company_id)]
@@ -720,10 +702,8 @@ class AccountAccount(models.Model):
                 if tax_ids:
                     tax_keys = tax_ids.ids
             if tax_keys:
-                account_id.write(
-                    {
-                        "datev_vatid_required": values["datev_vatid_required"],
-                        "datev_automatic_account": values["datev_automatic_account"],
-                        "datev_automatic_tax": [(6, 0, tax_keys)],
-                    }
-                )
+                account_id.write({
+                    'datev_vatid_required': values['datev_vatid_required'],
+                    'datev_automatic_account': values['datev_automatic_account'],
+                    'datev_automatic_tax': [(6, 0, tax_keys)],
+                })

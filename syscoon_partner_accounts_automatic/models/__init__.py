@@ -1,4 +1,4 @@
-#See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
 from . import autmatic_mode
 from . import res_company

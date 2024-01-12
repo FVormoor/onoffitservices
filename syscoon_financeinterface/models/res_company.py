@@ -9,3 +9,4 @@ class ResCompany(models.Model):
     export_finance_interface = fields.Selection(
         selection=[("none", "None")], default="none"
     )
+    export_finance_interface_active = fields.Boolean()

@@ -2,7 +2,7 @@
 
 {
     "name": "Finanzinterface - SDD Bridge for DATEV",
-    "version": "15.0.0.0.2",
+    "version": "16.0.0.0.1",
     "depends": [
         "syscoon_financeinterface_datev_ascii_accounts",
         "account_sepa_direct_debit",
@@ -14,6 +14,5 @@
     "description": """""",
     "category": "Accounting",
     "data": [],
-    "active": False,
     "installable": True,
 }

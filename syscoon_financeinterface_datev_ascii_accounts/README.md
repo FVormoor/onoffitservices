@@ -1,9 +1,13 @@
 # Changelog
 
-## 15.0.0.0.5
+## 16.0.0.0.3
 
-- Fix problems with creditor and debitor numbers in export
+- fix key error Skonto in Prozent (Debitor)
 
-## 15.0.0.0.4
+## 16.0.0.0.2
 
-- Add sudo to search in some cases, because of access restrictions
+- fix singleton error invoice contact export
+
+## 16.0.0.0.1
+
+- Code Migration to V16

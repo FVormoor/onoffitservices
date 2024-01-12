@@ -4,9 +4,8 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    """Inherits the res.company class and adds several fields for the finance interface"""
-
-    _inherit = "res.company"
+    """ Inherits the res.company class and adds several fields for the finance interface"""
+    _inherit = 'res.company'
 
     export_finance_interface = fields.Selection(
         selection_add=[("datev_ascii_accounts", "DATEV ASCII Account Export")]

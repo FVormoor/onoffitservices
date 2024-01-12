@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models
@@ -7,29 +6,44 @@ from odoo import api, models
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    @api.model
-    def create (self, vals):
-        result = super(ResPartner, self).create(vals)
-        config = self.env.company
-        create_accounts = [auto.code for auto in config.create_auto_account_on]
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        company = self.env.company
+        for res in records:
+            types = res._prepare_account_types()
+            if not types:
+                continue
+            res.create_accounts(company, types)
+        return records
+
+    def _prepare_account_types(self):
+        company = self.env.company
+        create_accounts = [auto.code for auto in company.create_auto_account_on]
         types = {}
-        if result.commercial_partner_id.id == result.id:
-            if self._context.get('default_customer_rank'):
-                if 'partner_customer' in create_accounts:
-                    types['receivable'] = True
-            if self._context.get('default_supplier_rank'):
-                if 'partner_supplier' in create_accounts:
-                    types['payable'] = True
-        if 'receivable' in types.keys() or 'payable' in types.keys():
-            if config.use_separate_accounts:
-                types['use_separate'] = True
-            if config.add_number_to_partner_number:
-                types['add_number'] = True
-            if config.use_separate_partner_numbers:
-                if 'partner_customer_numbers' in create_accounts and 'receivable' in types.keys():
-                    types['customer_number'] = True
-                if 'partner_supplier_numbers' in create_accounts and 'payable' in types.keys():
-                    types['supplier_number'] = True
-        if types:
-            self.create_accounts(result, types)
-        return result
+        if self.commercial_partner_id.id != self.id:
+            return types
+        if "partner_customer" in create_accounts:
+            types.update(
+                {
+                    "asset_receivable": True,
+                    "customer_number": bool(
+                        company.use_separate_partner_numbers
+                        and "partner_customer_numbers" in create_accounts
+                    ),
+                }
+            )
+        if "partner_supplier" in create_accounts:
+            types.update(
+                {
+                    "liability_payable": True,
+                    "supplier_number": bool(
+                        company.use_separate_partner_numbers
+                        and "partner_supplier_numbers" in create_accounts
+                    ),
+                }
+            )
+        if "asset_receivable" in types or "liability_payable" in types:
+            types["use_separate"] = bool(company.use_separate_accounts)
+            types["add_number"] = bool(company.add_number_to_partner_number)
+        return types

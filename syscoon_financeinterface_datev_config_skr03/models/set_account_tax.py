@@ -3,7 +3,7 @@
 
 from odoo import models
 
-autoaccounts_skr03 = {
+AUTO_ACCOUNT_SKR03 = {
     "l10n_de_skr03.account_1518": {
         "datev_automatic_tax": [
             "l10n_de_skr03.tax_vst_19_skr03",
@@ -60,10 +60,7 @@ autoaccounts_skr03 = {
         "datev_vatid_required": False,
     },
     "l10n_de_skr03.account_3060": {
-        "datev_automatic_tax": [
-            "l10n_de_skr03.tax_vst_19_skr03",
-            "l10n_de_skr03.tax_vst_19_taxinclusive_skr03",
-        ],
+        "datev_automatic_tax": ["l10n_de_skr03.tax_eu_7_purchase_skr03"],
         "datev_automatic_account": True,
         "datev_vatid_required": False,
     },
@@ -707,7 +704,7 @@ class AccountAccount(models.Model):
     _inherit = "account.account"
 
     def _set_account_autoaccount_skr03(self, company_id):
-        for key, values in autoaccounts_skr03.items():
+        for key, values in AUTO_ACCOUNT_SKR03.items():
             tax_keys = False
             template_id = self.env.ref(key)
             account_id = self.env["account.account"].search(

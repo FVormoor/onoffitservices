@@ -1,39 +1,41 @@
 # Changelog
 
-## 15.0.0.0.11
+## 16.0.0.0.10
 
-- set 5 digits for rounding to "Kurs" in function
+- add german translation
 
-## 15.0.0.0.10
+## 16.0.0.0.9
 
-- misc. updates
+- fix error expected singleton configuration name_get
 
-## 15.0.0.0.9
+## 16.0.0.0.8
 
-- fix local variable 'lines' referenced before assignment
+- display export_id in account moves to all users
 
-## 15.0.0.0.8
+## 16.0.0.0.7
 
-- improve calculation of account counterpart
+- add function to check if hr_expense module installed or not
 
-## 15.0.0.0.7
+## 16.0.0.0.6
 
-- add function to handle html content as text
+- solve problem with expenses paid by company and counter account
 
-## 15.0.0.0.6
+## 16.0.0.0.5
 
-- Correction of little errors
+- improvments in export view
 
-## 15.0.0.0.5
+## 16.0.0.0.4
 
-- Replace self.env.user.company id by self.env.company
+- add possibility to activate / deactivate by company
 
-## 15.0.0.0.4
+## 16.0.0.0.3
 
-- Solve error with setting counter account on moves with a bank account
+- add export_id group to the view_move_form
 
-## 15.0.0.0.3
+## 16.0.0.0.2
 
-- Add sequence in tree view of bookingtext configuration
-- Add journal to bookingtext configuration
-- Improvement with selecting counteraccount
+- Allow set exported moves back to draft with confirmation message
+
+## 16.0.0.0.1
+
+- Code Migration to V16

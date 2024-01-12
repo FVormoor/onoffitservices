@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * syscoon_financeinterface
+# 	* syscoon_financeinterface
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-20 13:12+0000\n"
-"PO-Revision-Date: 2022-10-20 13:12+0000\n"
+"POT-Creation-Date: 2023-08-23 09:14+0000\n"
+"PO-Revision-Date: 2023-08-23 09:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,14 @@ msgstr ""
 #. module: syscoon_financeinterface
 #: model:ir.actions.report,print_report_name:syscoon_financeinterface.syscoon_financeinterface_report
 msgid "(object._get_report_base_filename())"
+msgstr ""
+
+#. module: syscoon_financeinterface
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.view_syscoon_financeinterface_configuration
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" aria-label=\"Values set here are company-specific.\" "
+"groups=\"base.group_multi_company\" role=\"img\"/>"
 msgstr ""
 
 #. module: syscoon_financeinterface
@@ -61,10 +69,27 @@ msgid "Account Moves"
 msgstr "Buchungen"
 
 #. module: syscoon_financeinterface
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.view_move_form_syscoon_financeinterface
+msgid "Account move is already exported. Do you want to proceed?"
+msgstr ""
+
+#. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__message_needaction
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface_bookingtext_config__message_needaction
 msgid "Action Needed"
 msgstr "Aktion notwendig"
+
+#. module: syscoon_financeinterface
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.view_syscoon_financeinterface_configuration
+msgid ""
+"Activate the Finance-Interface for this company. If activated, all options "
+"include the menu entries will be visible."
+msgstr ""
+
+#. module: syscoon_financeinterface
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.view_syscoon_financeinterface_configuration
+msgid "Activation"
+msgstr ""
 
 #. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__activity_ids
@@ -94,6 +119,11 @@ msgstr "Aktivitäts-Typ-Icon"
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.export_report_document
 msgid "Amount"
 msgstr "Betrag"
+
+#. module: syscoon_financeinterface
+#: model:ir.model,name:syscoon_financeinterface.model_account_analytic_plan
+msgid "Analytic Plans"
+msgstr "Analysepläne"
 
 #. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__message_attachment_count
@@ -141,6 +171,13 @@ msgid "Configuration"
 msgstr "Konfiguration"
 
 #. module: syscoon_financeinterface
+#. odoo-python
+#: code:addons/syscoon_financeinterface/models/account_analytic_plan.py:0
+#, python-format
+msgid "Cost Center Already Assigned in "
+msgstr ""
+
+#. module: syscoon_financeinterface
 #: model:ir.ui.menu,name:syscoon_financeinterface.syscoon_financenterface_wizard_action_view
 msgid "Create Finance Export"
 msgstr "Export erstellen"
@@ -167,6 +204,7 @@ msgstr "Erstellt am"
 #. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__period
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface_export__date
+#: model:ir.model.fields.selection,name:syscoon_financeinterface.selection__syscoon_financeinterface_export__type__date
 msgid "Date"
 msgstr "Datum"
 
@@ -184,6 +222,11 @@ msgstr "Datumsbereich"
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface_export__date_to
 msgid "Date To"
 msgstr "Datum bis"
+
+#. module: syscoon_financeinterface
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_analytic_plan__datev_cost_center
+msgid "Datev Cost Center"
+msgstr ""
 
 #. module: syscoon_financeinterface
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.export_report_document
@@ -217,7 +260,7 @@ msgstr "Export Gegenkonto"
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_move__export_account_counterpart_manual
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_payment__export_account_counterpart_manual
 msgid "Export Account Counterpart Manual"
-msgstr "Export Gegenkonto manuell"
+msgstr ""
 
 #. module: syscoon_financeinterface
 #: model:ir.actions.act_window,name:syscoon_financeinterface.syscoon_financeinterface_bookingtext_config_action
@@ -232,6 +275,15 @@ msgstr "Export Buchungskonfiguration"
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_res_config_settings__company_export_finance_interface
 msgid "Export Finance Interface"
 msgstr "Export Finanz-Interface"
+
+#. module: syscoon_financeinterface
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_bank_statement_line__export_finance_interface_active
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_move__export_finance_interface_active
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_payment__export_finance_interface_active
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_res_company__export_finance_interface_active
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_res_config_settings__company_export_finance_interface_active
+msgid "Export Finance Interface Active"
+msgstr ""
 
 #. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__mode
@@ -324,9 +376,7 @@ msgstr "Symbol, um eine Ausnahmeaktivität anzuzeigen."
 
 #. module: syscoon_financeinterface
 #: model:ir.model.fields,help:syscoon_financeinterface.field_syscoon_financeinterface__message_needaction
-#: model:ir.model.fields,help:syscoon_financeinterface.field_syscoon_financeinterface__message_unread
 #: model:ir.model.fields,help:syscoon_financeinterface.field_syscoon_financeinterface_bookingtext_config__message_needaction
-#: model:ir.model.fields,help:syscoon_financeinterface.field_syscoon_financeinterface_bookingtext_config__message_unread
 msgid "If checked, new messages require your attention."
 msgstr "Falls markiert, benötigen neue Nachrichten Ihre Kenntnisnahme."
 
@@ -353,7 +403,7 @@ msgstr ""
 #. module: syscoon_financeinterface
 #: model:ir.model,name:syscoon_financeinterface.model_account_move
 msgid "Journal Entry"
-msgstr "Buchungssatz"
+msgstr "Journaleintrag"
 
 #. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface____last_update
@@ -382,10 +432,20 @@ msgid "Log"
 msgstr "Protokoll"
 
 #. module: syscoon_financeinterface
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.syscoon_financeinterface_form_view
+msgid "Logs"
+msgstr ""
+
+#. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__message_main_attachment_id
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface_bookingtext_config__message_main_attachment_id
 msgid "Main Attachment"
 msgstr "Hauptanhänge"
+
+#. module: syscoon_financeinterface
+#: model:ir.model,name:syscoon_financeinterface.model_ir_ui_menu
+msgid "Menu"
+msgstr "Menü"
 
 #. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__message_has_error
@@ -412,6 +472,11 @@ msgstr ""
 #. module: syscoon_financeinterface
 #: model:ir.model.fields.selection,name:syscoon_financeinterface.selection__syscoon_financeinterface_bookingtext_config__field__move_id_ref
 msgid "Move Reference"
+msgstr ""
+
+#. module: syscoon_financeinterface
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.syscoon_financeinterface_form_view
+msgid "Moves / Invoices"
 msgstr ""
 
 #. module: syscoon_financeinterface
@@ -446,6 +511,7 @@ msgid "Next Activity Type"
 msgstr "Nächster Aktivitätstyp"
 
 #. module: syscoon_financeinterface
+#. odoo-python
 #: code:addons/syscoon_financeinterface/wizards/syscoon_financeinterface_export.py:0
 #, python-format
 msgid ""
@@ -488,12 +554,6 @@ msgid "Number of messages with delivery error"
 msgstr "Anzahl der Nachrichten mit einem Fehler beim Senden."
 
 #. module: syscoon_financeinterface
-#: model:ir.model.fields,help:syscoon_financeinterface.field_syscoon_financeinterface__message_unread_counter
-#: model:ir.model.fields,help:syscoon_financeinterface.field_syscoon_financeinterface_bookingtext_config__message_unread_counter
-msgid "Number of unread messages"
-msgstr "Anzahl ungelesener Nachrichten"
-
-#. module: syscoon_financeinterface
 #: model:ir.model.fields.selection,name:syscoon_financeinterface.selection__syscoon_financeinterface_bookingtext_config__field__partner_id_display_name
 msgid "Partner Name"
 msgstr ""
@@ -502,6 +562,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.export_report_document
 msgid "Protocol for exported acoount moves"
 msgstr "Protokoll für den Buchungexport"
+
+#. module: syscoon_financeinterface
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.view_move_form_syscoon_financeinterface
+msgid "Reset to Draft"
+msgstr "Auf Entwurf zurücksetzen"
 
 #. module: syscoon_financeinterface
 #: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__activity_user_id
@@ -540,9 +605,11 @@ msgid "Set counterpart account manually"
 msgstr ""
 
 #. module: syscoon_financeinterface
-#: model:ir.model.fields.selection,name:syscoon_financeinterface.selection__syscoon_financeinterface_export__type__date
-msgid "Single Date"
-msgstr "Einzeldatum"
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_bank_statement_line__show_export_to_draft_button
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_move__show_export_to_draft_button
+#: model:ir.model.fields,field_description:syscoon_financeinterface.field_account_payment__show_export_to_draft_button
+msgid "Show Export To Draft Button"
+msgstr ""
 
 #. module: syscoon_financeinterface
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface.syscoon_financeinterface_export_wizard_view
@@ -577,18 +644,7 @@ msgid "Type of the exception activity on record."
 msgstr "Typ der Ausnahmeaktivität im Datensatz."
 
 #. module: syscoon_financeinterface
-#: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__message_unread
-#: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface_bookingtext_config__message_unread
-msgid "Unread Messages"
-msgstr "Ungelesene Nachrichten"
-
-#. module: syscoon_financeinterface
-#: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface__message_unread_counter
-#: model:ir.model.fields,field_description:syscoon_financeinterface.field_syscoon_financeinterface_bookingtext_config__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr "Anzahl ungelesener Nachrichten"
-
-#. module: syscoon_financeinterface
+#. odoo-python
 #: code:addons/syscoon_financeinterface/models/syscoon_financeinterface.py:0
 #, python-format
 msgid "Warning! Exports cannot be duplicated."
@@ -607,12 +663,19 @@ msgid "Website communication history"
 msgstr "Website-Kommunikationshistorie"
 
 #. module: syscoon_financeinterface
-#: code:addons/syscoon_financeinterface/models/account_move.py:0
-#, python-format
-msgid "You cannot modify an already exported move."
+#: model:ir.model.fields.selection,name:syscoon_financeinterface.selection__account_analytic_plan__datev_cost_center__add_to_kost1
+msgid "add to Datev KOST1"
 msgstr ""
-"Ein Buchungssatz der bereits exportiert wurde, kann nicht mehr geändert "
-"werden."
+
+#. module: syscoon_financeinterface
+#: model:ir.model.fields.selection,name:syscoon_financeinterface.selection__account_analytic_plan__datev_cost_center__add_to_kost2
+msgid "add to Datev KOST2"
+msgstr ""
+
+#. module: syscoon_financeinterface
+#: model:ir.module.category,name:syscoon_financeinterface.module_category_syscoon_financeinterface
+msgid "syscoon Financeinterface"
+msgstr ""
 
 #. module: syscoon_financeinterface
 #: model:ir.model,name:syscoon_financeinterface.model_syscoon_financeinterface

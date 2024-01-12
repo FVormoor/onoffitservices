@@ -1,93 +1,121 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from odoo import api, models
 
+ALLOWED_MOVE_TYPES = ["in_invoice", "out_invoice", "in_refund", "out_refund"]
 
-from odoo import api, fields, models, _
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    # todo: vals in onchange ?? needs to be checked
     @api.onchange('partner_id', 'journal_id')
-    def _check_account_created(self):
-        accounts = False
-        if self.partner_id and self.journal_id:
-            if self.journal_id.type in ['sale', 'purchase']:
-                journal_id = self.journal_id
-                config = self.env.company
-                create_accounts = [auto.code for auto in config.create_auto_account_on]
-                types = {}
-                partner = self.partner_id.commercial_partner_id
-                if journal_id.type == 'sale':
-                    partner_default_id = str(partner['property_account_receivable_id'].id)
-                    if 'invoice_customer' in create_accounts:
-                        types['receivable'] = True
-                if journal_id.type == 'purchase':
-                    partner_default_id = str(partner['property_account_payable_id'].id)
-                    if 'invoice_supplier' in create_accounts:
-                        types['payable'] = True
-                if 'receivable' in types.keys() or 'payable' in types.keys():
-                    if config.use_separate_accounts:
-                        types['use_separate'] = True
-                    if config.add_number_to_partner_number:
-                        types['add_number'] = True
-                if config.use_separate_partner_numbers:
-                    if 'invoice_customer_numbers' in create_accounts and 'receivable' in types.keys():
-                        types['customer_number'] = True
-                    if 'invoice_supplier_numbers' in create_accounts and 'payable' in types.keys():
-                        types['supplier_number'] = True
-                if types:
-                    accounts = self.env['res.partner'].create_accounts(partner, types)
-                if self.line_ids and accounts:
-                    for line in self.line_ids:
-                        if journal_id.type == 'sale':
-                            if self.partner_id and line.account_id.id == int(partner_default_id):
-                                if accounts and accounts[2]:
-                                    line.account_id = accounts[2].id
-                        if journal_id.type == 'purchase':
-                            if self.partner_id and line.account_id.id == int(partner_default_id):
-                                if accounts and accounts[5]:
-                                    line.account_id = accounts[5].id
+    def _check_account_created(self, vals=False):
+        if not vals:
+            vals = {}
+        partner_obj = self.env["res.partner"]
+        partner_id = (
+            self.partner_id or partner_obj.browse(vals.get("partner_id")).exists()
+        )
+        journal_type = self.journal_id.type
+        if not partner_id or self.journal_id.type not in ("sale", "purchase"):
+            return
+        types = {}
+        partner = partner_id.commercial_partner_id
+        default_account_id = self._get_partner_default_account_id(
+            partner, journal_type=journal_type
+        )
+        types = self._prepare_account_types(partner, journal_type=journal_type)
+        company = self.company_id or self.env.company
+        accounts = partner.create_accounts(company, types)
+        if not accounts:
+            return
+        for line in self.line_ids:
+            if line.account_id.id != int(default_account_id):
+                continue
+            if journal_type == "sale" and accounts.get("property_account_receivable_id"):
+                line.account_id = accounts["property_account_receivable_id"]
+            if journal_type == "purchase" and accounts.get("property_account_payable_id"):
+                line.account_id = accounts["property_account_payable_id"]
+
+    def write(self, vals):
+        if vals.get('partner_id'):
+            self._check_account_created(vals)
+        return super().write(vals)
 
     @api.model_create_multi
     def create(self, vals_list):
+        partner_obj = self.env["res.partner"]
         for val in vals_list:
-            accounts = False
-            if val.get('move_type') and val['move_type'] in ['in_invoice', 'out_invoice', 'in_refund', 'out_refund'] and val.get('partner_id'):
-                config = self.env.company
-                create_accounts = [auto.code for auto in config.create_auto_account_on]
-                types = {}
-                partner = self.env['res.partner'].browse(val['partner_id'])
-                partner = partner.commercial_partner_id
-                if val['move_type'] in ['out_invoice', 'out_refund']:
-                    partner_default_id = str(partner['property_account_receivable_id'].id)
-                    if 'invoice_customer' in create_accounts:
-                        types['receivable'] = True
-                if val['move_type'] in ['in_invoice', 'in_refund']:
-                    partner_default_id = str(partner['property_account_payable_id'].id)
-                    if 'invoice_supplier' in create_accounts:
-                        types['payable'] = True
-                if 'receivable' in types.keys() or 'payable' in types.keys():
-                    if config.use_separate_accounts:
-                        types['use_separate'] = True
-                    if config.add_number_to_partner_number:
-                        types['add_number'] = True
-                if config.use_separate_partner_numbers:
-                    if 'invoice_customer_numbers' in create_accounts and 'receivable' in types.keys():
-                        types['customer_number'] = True
-                    if 'invoice_supplier_numbers' in create_accounts and 'payable' in types.keys():
-                        types['supplier_number'] = True
-                if types:
-                    accounts = self.env['res.partner'].create_accounts(partner, types)
-                if accounts:
-                    if 'line_ids' in val and val['line_ids']:
-                        for id in val['line_ids']:
-                            if val['move_type'] in ['out_invoice', 'out_refund']:
-                                if self.partner_id and id[2]['account_id'] == int(partner_default_id):
-                                    if accounts and accounts[2]:
-                                        id[2]['account_id'] = accounts[2].id
-                            if val['move_type'] in ['out_invoice', 'out_refund']:
-                                if self.partner_id and id[2]['account_id'] == int(partner_default_id):
-                                    if accounts and accounts[5]:
-                                        id[2]['account_id'] = accounts[5].id
-        return super(AccountMove, self).create(vals_list)
+            if not val.get("partner_id"):
+                continue
+            partner = partner_obj.browse(val["partner_id"]).commercial_partner_id
+            if val.get("move_type") not in ALLOWED_MOVE_TYPES or not partner:
+                continue
+            default_account_id = self._get_partner_default_account_id(
+                partner, move_type=val["move_type"]
+            )
+            types = self._prepare_account_types(partner, move_type=val["move_type"])
+            if val.get("company_id"):
+                company = self.env["res.company"].browse(val["company_id"])
+            else:
+                company = self.env.company
+            accounts = partner.create_accounts(company, types)
+            if not accounts:
+                continue
+            for _0, _1, line_vals in val.get("line_ids", []):
+                if line_vals.get("account_id") != default_account_id.id:
+                    continue
+                if (
+                    val["move_type"] in ["out_invoice", "out_refund"]
+                    and accounts.get("property_account_receivable_id")
+                ):
+                    account_receivable_id = accounts["property_account_receivable_id"]
+                    line_vals["account_id"] = account_receivable_id
+                if (
+                    val["move_type"] in ["in_invoice", "in_refund"]
+                    and accounts.get("property_account_payable_id")
+                ):
+                    line_vals["account_id"] = accounts["property_account_payable_id"]
+        return super().create(vals_list)
 
+    def _get_partner_default_account_id(
+        self, partner, move_type=None, journal_type=None
+    ):
+        if move_type in ["out_invoice", "out_refund"] or journal_type in ("sale",):
+            default_account_id = partner.property_account_receivable_id
+        else:
+            default_account_id = partner.property_account_payable_id
+        return default_account_id
+
+    def _prepare_account_types(self, partner, move_type=None, journal_type=None):
+        company = self.env.company
+        create_accounts = [auto.code for auto in company.create_auto_account_on]
+        types = {}
+        if (
+            move_type in ["out_invoice", "out_refund"] or journal_type in ("sale",)
+        ) and "invoice_customer" in create_accounts:
+            types.update(
+                {
+                    "asset_receivable": True,
+                    "customer_number": bool(
+                        company.use_separate_partner_numbers
+                        and "invoice_customer_numbers" in create_accounts
+                    ),
+                }
+            )
+        elif (
+            move_type in ["in_invoice", "in_refund"] or journal_type in ("purchase",)
+        ) and "invoice_supplier" in create_accounts:
+            types.update(
+                {
+                    "liability_payable": True,
+                    "supplier_number": bool(
+                        company.use_separate_partner_numbers
+                        and "invoice_supplier_numbers" in create_accounts
+                    ),
+                }
+            )
+        if "asset_receivable" in types or "liability_payable" in types:
+            types["use_separate"] = bool(company.use_separate_accounts)
+            types["add_number"] = bool(company.add_number_to_partner_number)
+        return types
