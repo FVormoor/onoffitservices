@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+   </head>
+   <body>
+      <section id="sh_module_heading">
+         <div class="container">
+            <div class="sh_center text-center" style='margin: 2rem 0;'>
+               <div class="row align-items-center" style='align-items: center;'>
+                  <div class="col-lg-4 col-md-4 col-sm-12" style='text-align: left;'>
+                     <img src='softhealer.png' alt='logo' style="width: 80%;">
+                  </div>
+                  <div class="col-lg-8 col-md-8 col-sm-12" style='text-align: right;'>
+                     <span class='btn btn-primary' style="position: relative; overflow: hidden; border: 1px solid transparent; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; background-color: #3363c1;border-color: #3363c1;"><i class='fa fa-check' style="margin-right: 9px;"></i>Community</span>
+                     <span class='btn btn-primary' style="position: relative; overflow: hidden; border: 1px solid transparent; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; background-color: #3363c1;border-color: #3363c1;"><i class='fa fa-check' style="margin-right: 9px;"></i>Enterprise</span>
+                     <span class='btn btn-primary' style="position: relative; overflow: hidden; border: 1px solid transparent; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; background-color: #3363c1;border-color: #3363c1;"><i class='fa fa-check' style="margin-right: 9px;"></i>Odoo.sh</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- heading  -->
+      <section id="sh_module_heading" style="padding-top: 50px;">
+         <div class="container">
+            <div class="sh_center text-center">
+               <h4 style="font-size: 30px;font-weight: 600;color: #3363c1;margin-bottom: 10px;">
+                  All in One Disable Followers
+               </h4>
+               <!-- <img src="shape.png" style="width: 100px;display: block;text-align: center;margin: auto;margin-bottom: 20px;" /> -->
+               <img src="heading.png" alt="heading" />
+               <p style="color: #777;font-size: 18px;margin: 0;letter-spacing: 1px;margin-top: 12px;">
+                  Generally in the odoo automatically partners(customers, vendors, contacts) added as the followers. so our module restricts that.This module disables the partners automatically added as followers. This module includes, <br><br>
+<b>1) Confirmation Quotation:</b> When you confirm the quotation the partners not added as the followers. <br><br>                        
+<b>2) Confirmation RFQ:</b> When you confirm the Purchase order/RFQ the vendor not added as the followers.</b>  <br><br>
+<b>3) Validate Invoice/Bill/Credit Note/Debit Note:</b> When you validate the invoice/bill/credit note/debit note the partners not added as the followers. <br><br>
+
+<b>4) Send By Email:</b> When you press send by email button in the sale order/quotation, purchase order/request for quotation the partners not added as the followers.<br><br>
+
+<b>5) Create/Update Picking:</b> When you create or update the picking the partners not added as the followers. <br><br>
+<b>6) Disable Sales Person In Invoice :</b> Disable add sales person as followers in invoice/bill/credit note.<br><br>
+
+               </p>
+            </div>
+         </div>
+      </section>
+  <section id="sh_module_heading" style="padding-top: 50px;">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
+                  <div>
+                     <a href="https://youtu.be/wlDsTifXeEk" target="_blank"
+                        class="shadow rounded py-3 px-4 mb-2 text-center btn"
+                        style="border-width: 1px;border-style: solid;border-color: #1b325f;color: #1b325f;position: relative; overflow: hidden;text-decoration: none;border-radius: 0px;display: inline-block;font-size: 20px;font-weight: bold;width: 100%;border-radius: 0.25rem !important;"><span><img
+                              class="mr-2" src="vd_btn.png" alt="video_btn" style="height: 25px;" /></span><span
+                           class="align-middle">How it works? click here to watch video</span></a>
+                  </div>
+               </div>
+               <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="mx-auto">
+                     <a href="https://youtu.be/Bpn4_gx2dmE" target="_blank"
+                        class="shadow rounded py-3 px-4 mb-2 text-center btn"
+                        style="border-width: 1px;border-style: solid;border-color: #1b325f;color: #1b325f;position: relative; overflow: hidden;text-decoration: none;border-radius: 0px;display: inline-block;font-size: 20px;font-weight: bold;width: 100%;border-radius: 0.25rem !important;"><span><img
+                              class="mr-2" src="vd_btn.png" alt="video_btn" style="height: 25px;" /></span><span
+                           class="align-middle">Create/Update Picking Video</span></a>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               
+               <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
+
+                  <div class="mx-auto">
+                     <a href="https://youtu.be/bvG0Nl0v0lM?list=PL-zDV7_rrd2ourbw4iHMPvE9ohJ5J8G_1" target="_blank"
+                        class="shadow rounded py-3 px-4 mb-2 text-center btn"
+                        style="border-width: 1px;border-style: solid;border-color: #1b325f;color: #1b325f;position: relative; overflow: hidden;text-decoration: none;border-radius: 0px;display: inline-block;font-size: 20px;font-weight: bold;width: 100%;border-radius: 0.25rem !important;"><span><img
+                              class="mr-2" src="vd_btn.png" alt="video_btn" style="height: 25px;" /></span><span
+                           class="align-middle">Restrict Send Re-assign Responsible Mail Video</span></a>
+                  </div>
+
+               </div>
+               <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
+
+                  <div class="mx-auto">
+                     <a href="https://youtu.be/DnFEf90Kf-Y?list=PL-zDV7_rrd2ourbw4iHMPvE9ohJ5J8G_1" target="_blank"
+                        class="shadow rounded py-3 px-4 mb-2 text-center btn"
+                        style="border-width: 1px;border-style: solid;border-color: #1b325f;color: #1b325f;position: relative; overflow: hidden;text-decoration: none;border-radius: 0px;display: inline-block;font-size: 20px;font-weight: bold;width: 100%;border-radius: 0.25rem !important;"><span><img
+                              class="mr-2" src="vd_btn.png" alt="video_btn" style="height: 25px;" /></span><span
+                           class="align-middle">Disable Followers In CRM (Lead/Opportunity) Video<img src="neww.png"
+                              style="max-width: 100%;padding-left: 10px;height: 20px;width: auto;vertical-align: text-bottom;"></span></a>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- End More than one video button -->
+
+<!-- Two button section -->
+      <section class="sh_bg_cover" style="padding:40px 0px;background-color: transparent;">
+        <div class="container">
+            <div class="sh_center text-center" style="margin-bottom: 40px;">
+               <h4 style="font-size: 28px;font-weight: 600;color: #3363c1;margin-bottom: 10px;">Related Modules</h4>
+               <!-- <hr style="width: 100px;border-width: 2px;border-color: #3363c1;" /> -->
+               <img src="heading.png" alt="heading" />
+            </div>
+            <div class="row">
+               
+               <div class="col-lg-6 col-md-6 mb-2 col-sm-12 col-12">
+                  <a href="https://apps.odoo.com/apps/modules/16.0/sh_default_followers/" target="_blank" style="text-decoration:none;">
+                     <div class="box p-3 shadow text-center border border-warning rounded d-flex justify-content-center align-items-center" align="center" style="color:#434343; font-family:sans-serif!important; margin-bottom:0px !important; text-align:justify; text-decoration: none;background-color: #fff8e0;border-radius: 0.25rem !important;">
+                        <!-- <img class="mr-2" src="d.png" alt="gif" style="height: 25px;" /> -->
+                        <span class="fa fa-download" style="font-size: 20px;color: #434343;margin-right: 8px;"></span>
+                        <h6 class="mb-0 font-weight-bold mr-2">All in One Default Followers</h6> <span class="badge badge-warning" style="padding:5px 15px; border-radius:2px; color:#fff; font-size: 11px; font-weight:bold;vertical-align: text-top;">Related</span>
+                     </div>
+                  </a>
+               </div>
+               <div class="col-lg-6 col-md-6 mb-2 col-sm-12 col-12">
+                  <a href="https://apps.odoo.com/apps/modules/16.0/sh_multi_followers/" target="_blank" style="text-decoration:none;">
+                     <div class="box p-3 shadow text-center border border-warning rounded d-flex justify-content-center align-items-center" align="center" style="color:#434343; font-family:sans-serif!important; margin-bottom:0px !important; text-align:justify; text-decoration: none;background-color: #fff8e0;border-radius: 0.25rem !important;">
+                        <!-- <img class="mr-2" src="d.png" alt="gif" style="height: 25px;" /> -->
+                        <span class="fa fa-download" style="font-size: 20px;color: #434343;margin-right: 8px;"></span>
+                        <h6 class="mb-0 font-weight-bold mr-2">All in One Multi Followers</h6> <span class="badge badge-warning" style="padding:5px 15px; border-radius:2px; color:#fff; font-size: 11px; font-weight:bold;vertical-align: text-top;">Related</span>
+                     </div>
+                  </a>
+               </div>
+               
+            </div>
+         </div>
+      </section> 
+<!-- end Two button section -->
+
+
+     
+      
+      <section id="sh_hot_feature" style="padding-top: 30px;background-color: transparent;">
+         <div class="container">
+            <div class="sh_center text-center mb-5">
+               <h4 style="font-size: 30px;font-weight: 600;color: #3363c1;margin-bottom: 10px;">Hot Features</h4>
+               <!-- <hr style="width: 100px;border-width: 2px;border-color: #3363c1;" /> -->
+               <img src="heading.png" alt="heading" />
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="sh_icon d-flex justify-content-center align-items-center rounded shadow" style="padding: 15px;border: 1px solid #9ebdfb;border-bottom: 4px solid #9ebdfb;background-color: #ebf0fb;border-radius: 0.25rem !important;">
+                     
+                     <span style="color: #212121;font-weight: 600;vertical-align: middle;padding-left: 10px;text-align: center;">Restrict Send Re-assign Responsible Email 
+                     </span>
+                  </div>
+               </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="sh_icon d-flex justify-content-center align-items-center rounded shadow" style="padding: 15px;border: 1px solid #9ebdfb;border-bottom: 4px solid #9ebdfb;background-color: #ebf0fb;border-radius: 0.25rem !important;">
+                     
+                     <span style="color: #212121;font-weight: 600;vertical-align: middle;padding-left: 10px;text-align: center;">Disable To Add Salesperson As Followers In Accounting
+                     </span>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="sh_icon d-flex justify-content-center align-items-center rounded shadow" style="padding: 15px;border: 1px solid #9ebdfb;border-bottom: 4px solid #9ebdfb;background-color: #ebf0fb;border-radius: 0.25rem !important;min-height: 83px;">
+                     
+                     <span style="color: #212121;font-weight: 600;vertical-align: middle;padding-left: 10px;text-align: center;">Quotation Disable Followers
+                     </span>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="sh_icon d-flex justify-content-center align-items-center rounded shadow" style="padding: 15px;border: 1px solid #9ebdfb;border-bottom: 4px solid #9ebdfb;background-color: #ebf0fb;border-radius: 0.25rem !important;">
+                     <span style="color: #212121;font-weight: 600;vertical-align: middle;padding-left: 10px;text-align: center;">RFQ Disable Followers
+                     </span>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="sh_icon d-flex justify-content-center align-items-center rounded shadow" style="padding: 15px;border: 1px solid #9ebdfb;border-bottom: 4px solid #9ebdfb;background-color: #ebf0fb;border-radius: 0.25rem !important;">
+                     <span style="color: #212121;font-weight: 600;vertical-align: middle;padding-left: 10px;text-align: center;">Accounting Disable Followers
+                     </span>
+                  </div>
+               </div>
+
+               <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="sh_icon d-flex justify-content-center align-items-center rounded shadow" style="padding: 15px;border: 1px solid #9ebdfb;border-bottom: 4px solid #9ebdfb;background-color: #ebf0fb;border-radius: 0.25rem !important;">
+                     <span style="color: #212121;font-weight: 600;vertical-align: middle;padding-left: 10px;text-align: center;">CRM Disable Followers
+                     </span>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="sh_icon d-flex justify-content-center align-items-center rounded shadow" style="padding: 15px;border: 1px solid #9ebdfb;border-bottom: 4px solid #9ebdfb;background-color: #ebf0fb;border-radius: 0.25rem !important;min-height: 83px;">
+                     <span style="color: #212121;font-weight: 600;vertical-align: middle;padding-left: 10px;text-align: center;">Inventory Disable Followers
+                     </span>
+                  </div>
+               </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
+                  <div class="sh_icon d-flex justify-content-center align-items-center rounded shadow"
+                     style="padding: 15px;border: 1px solid #9ebdfb;border-bottom: 4px solid #9ebdfb;background-color: #ebf0fb;border-radius: 0.25rem !important;min-height: 83px;">
+
+                     <span
+                        style="color: #212121;font-weight: 600;vertical-align: middle;padding-left: 10px;text-align: center;">
+                       Disable Followers In CRM<img src="new tag.png"
+                           style="max-width:18%; padding-left:10px">
+                     </span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         </div>
+      </section>
+
+      <section id="sh_feature" style="padding-top: 50px;background-color: transparent;">
+         <div class="container">
+            <div class="sh_center text-center mb-5">
+               <h4 style="font-size: 28px;font-weight: 600;color: #3363c1;margin-bottom: 10px;">Features</h4>
+               <!-- <hr style="width: 100px;border-width: 2px;border-color: #3363c1;" /> -->
+               <img src="heading.png" alt="heading" />
+            </div>
+      <div id="Feature" class="tab-pane active">
+         <ul style="padding: 0;list-style: none;">
+             <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+You can restrict to send mail when re-assign the salesperson, purchase representative & the responsible person in the sales, purchase, invoice & inventory. 
+               </li>
+                <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+Disable salesperson add as the followers in the invoice/bill/credit note/debit note. 
+               </li>
+                        <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+You can restrict the salesperson, purchase representative & the responsible person to add as followers in the sales, purchase & stock. 
+               </li>
+                   
+                  <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+You can restrict to add the partners(customers, vendors, contacts) as the followers.
+               </li>
+                <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+Restrict the customer's add as the followers in the confirmation of the quotation.
+
+               </li>
+               <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+<b>Restrict the partner's add as the followers in the create/update of the picking.</b>
+               </li>
+                <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+Disable the customer's add as the followers in the validation of the invoice/credit note.
+
+               </li>
+                <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+Disable the vendor's add as the followers in the validation of the bill/debit note.
+
+               </li>
+                <li class="shadow rounded" style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;"><span class="fa fa-arrow-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+Restrict the partners add as the followers in the send by email button in the sale order/quotation, purchase order/request for quotation & invoice/credit note.
+               </li>
+                <li class="shadow rounded"
+                  style="padding: 20px;margin-bottom: 20px;font-size: 16px;color: #212121;font-weight: 600;letter-spacing: 1px;display: block;border-radius: 0.25rem !important;">
+                  <span class="fa fa-arrow-right"
+                     style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                  You can restrict adding followers in CRM when creating/updating it or sending mail. <span class="badge badge-danger"
+                     style="background-color: #f44336 !important;
+padding: 5px 14px;
+border-radius: 3px;
+color: #fff;
+font-size: 9px;
+text-transform: uppercase;
+font-weight: bold;
+box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">New</span>
+               </li>
+         </ul>
+      </div>
+   </div>
+</section>
+<section id="sh_tab" style="padding-top: 50px;background-color: transparent;">
+   <div class="">
+      <ul class="nav nav-tabs justify-content-center" role="tablist" style="justify-content: center;padding-bottom: 10px;background-color: transparent;">
+         
+            <li class="nav-item rounded" style="cursor:pointer; background-color: #3363c1;color: #fff;border-radius: 0;font-weight: 600;font-size: 14px;margin: 0 2px;border-radius: 0.25rem !important;">
+            <span class="nav-link active rounded" data-toggle="tab" href="#Configurations" style="cursor: pointer;border: 1px solid #3363c1;padding: 10px 20px;border-top-left-radius: 0px;border-top-right-radius: 0px;">Setup</span>
+            </li>
+            <li class="nav-item position-relative" style="cursor:pointer; background-color: #3363c1;color: #fff;border-radius: 0;font-weight: 600;font-size: 14px;margin: 0 2px;border-radius: 0.25rem !important;">
+               <span class="nav-link rounded" data-toggle="tab" href="#Releases" style="cursor: pointer;border: 1px solid #3363c1;padding: 10px 20px;border-top-left-radius: 0px;border-top-right-radius: 0px;">Latest Updates</span><img class="position-absolute fixed-top" src="new2.png" alt="new_tag_ribbon" style="height:35px"></a>
+               </li>
+            <li class="nav-item rounded" style="cursor:pointer; background-color: #3363c1;color: #fff;border-radius: 0;font-weight: 600;font-size: 14px;margin: 0 2px;border-radius: 0.25rem !important;">
+            <span class="nav-link rounded" data-toggle="tab" href="#Release" style="cursor: pointer;border: 1px solid #3363c1;padding: 10px 20px;border-top-left-radius: 0px;border-top-right-radius: 0px;">Releases</span>
+            </li>
+            <li class="nav-item rounded" style="cursor:pointer; background-color: #3363c1;color: #fff;border-radius: 0;font-weight: 600;font-size: 14px;margin: 0 2px;border-radius: 0.25rem !important;">
+            <span class="nav-link rounded" data-toggle="tab" href="#FAQ" style="cursor: pointer;border: 1px solid #3363c1;padding: 10px 20px;border-top-left-radius: 0px;border-top-right-radius: 0px;">FAQs</span>
+            </li>
+            <li class="nav-item rounded" style="cursor:pointer; background-color: #3363c1;color: #fff;border-radius: 0;font-weight: 600;font-size: 14px;margin: 0 2px;border-radius: 0.25rem !important;">
+            <span class="nav-link rounded" data-toggle="tab" href="#Support" style="cursor: pointer;border: 1px solid #3363c1;padding: 10px 20px;border-top-left-radius: 0px;border-top-right-radius: 0px;">Support</span>
+            </li>
+      </ul>
+      <div class="tab-content" style="padding-top: 30px;background-color: transparent;padding-bottom: 30px;">
+         
+         <!-- tab 2 -->
+         <div id="Configurations" class="tab-pane active">
+            <section id="sh_configuration">
+               <div class="container">
+                  <div class="text-center">
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Go to settings => general settings to restrict the partners automatically added as followers. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="disable_1.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the inventory, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="disable_2.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list partners add as the followers in the inventory.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="disable_3.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the settings => general settings tick the tickbox "Disable to add followers by Create/Update Picking" to restrict the partners automatically added as followers. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="disable_4.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+You can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="disable_5.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list partners not add as the followers. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="disable_6.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the quotation, you can see the followers list. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="2.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, confirm the quotation. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="3.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+The sale order is created. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="4.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list customers add as the followers in the sale order. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="5.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the settings => general settings tick the tickbox "Disable to add followers by confirm Quotation" to restrict the partners automatically added as followers.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="6.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the quotation, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="7.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, confirm the quotation.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="8.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+The sale order is created.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="9.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list customers not add as the followers in the sale order.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="10.png" style="width:100%;">
+      </div>
+<br/>
+<h2 class="sh_display" style="color:#1b325f;text-align: center;font-size: 22px;margin-top: 0px;"><b style="font-weight: bold;font-family: "open="" sans="" sans-serif="">Validate Invoice/Bill/Credit Note/Debit Note Workflow</b>
+            </h2>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the invoice, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="11.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, validate the invoice.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="12.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list customers add as the followers in the invoice.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="13.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the settings => general settings tick the tickbox "Disable to add followers by validate Invoice/Bill" to restrict the partners automatically added as followers.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="14.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the invoice, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="15.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, validate the invoice.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="16.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, the invoice in the "Open" state. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="17.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list partners not add as the followers in the invoice.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="18.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, validate the credit note, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="19.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list partners not add as the followers in the credit note.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="20.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, validate the bill, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="s21.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list partners not add as the followers in the bill.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="s22.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, validate the vendor credit note, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="s23.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list partners not add as the followers.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="s24.png" style="width:100%;">
+      </div>
+<br/>
+<h2 class="sh_display" style="color:#1b325f;text-align: center;font-size: 22px;margin-top: 0px;"><b style="font-weight: bold;font-family: "open="" sans="" sans-serif="">Send By Email Workflow</b>
+            </h2>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the quotation/sale order, we press "Send By Email". </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="21.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now we send the email, you can see the recipient's/customer's name. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="22.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list customers add as the followers.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="23.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the settings => general settings tick the tickbox "Disable to add followers by send by email" to restrict the partners automatically added as followers.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="24.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the quotation/sale order, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="25.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+We press "Send By Email". </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="26.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now we send the email, you can see the recipient's/customer's name.
+
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="27.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list customers not add as the followers. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="28.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the request for quotation/purchase order, you can see the followers list.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="29.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+We press "Send By Email".
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="30.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now we send the email, you can see the recipient's/partner's name.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="31.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list partners not add as the followers. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="32.png" style="width:100%;">
+      </div>
+<br/>
+
+      <p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the sales, settings tick the tickbox "Disable to add salesperson as followers" to restrict the salesperson automatically added as followers. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="sale_4.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, confirm the quotation.
+
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="sale_5.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list salesperson not add as the followers in the sale order.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="sale_6.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the purchase, settings tick the tickbox "Disable to add purchase representative as followers" to restrict the purchase representative automatically added as followers. 
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="purchase_4.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, confirm the RFQ.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="purchase_5.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list purchase representative not add as the followers in the purchase order. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="purchase_6.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the inventory, settings tick the tickbox "Disable to add responsible as followers" to restrict the responsible person automatically added as followers. </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="inventory_4.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+Now, create the transfer.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="inventory_5.png" style="width:100%;">
+      </div>
+<br/>
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+In the follower's list the responsible person not add as the followers in the inventory.
+ </p>
+                     <div class="col-md-12">
+         <img class="img-responsive rounded shadow" src="inventory_6.png" style="width:100%;">
+      </div>
+<br/>
+
+<p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;"> In the settings tick the tickbox to restrict the salesperson automatically added as followers. Meanwhile, you can restrict salesperson, purchase representative & responsible person not added as followers in the sales, purchase, invoice & inventory.
+</p>
+<div class="col-md-12">
+   <img class="img-responsive rounded shadow" src="rd1.png" style="width: 100%;" />
+</div>
+<br/>
+ <p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;"> In the follower's list the salesperson, purchase representative & responsible person not added as the followers.
+</p>
+<div class="col-md-12">
+   <img class="img-responsive rounded shadow" src="rd2.png" style="width: 100%;" />
+</div>
+<br/>
+ <p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;"> Now change salesperson (salesperson, purchase representative & responsible person).
+</p>
+<div class="col-md-12">
+   <img class="img-responsive rounded shadow" src="rd3.png" style="width: 100%;" />
+</div>
+<br/>
+ <p style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;"> So it restricts to send email when re-assign salesperson, purchase representative & responsible person.
+</p>
+<div class="col-md-12">
+   <img class="img-responsive rounded shadow" src="rd4.png" style="width: 100%;" />
+</div>
+<br/>
+ <p
+              style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+              In general settings => Enable the "Disable To Followers By Confirm RFQ" feature to restrict the partners automatically added as followers.
+           </p>
+           <div
+              class="col-md-12">
+              <img
+                 class="img-responsive rounded shadow"
+                 src="41.png"
+                 style="width: 100%;" />
+           </div>
+           <br />
+           <p
+              style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+              In the purchase order/RFQ, you can see that the vendor has not been added as a follower.
+           </p>
+           <div
+              class="col-md-12">
+              <img
+                 class="img-responsive rounded shadow"
+                 src="42.png"
+                 style="width: 100%;" />
+           </div>
+           <p
+           style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+           After confirming the purchase order/RFQ, you may notice that the vendor has not been added as a follower.
+        </p>
+        <div
+           class="col-md-12">
+           <img
+              class="img-responsive rounded shadow"
+              src="43.png"
+              style="width: 100%;" />
+        </div>
+        <br />
+
+              
+                  </div>
+               </div>
+            </section>
+         </div>
+ <!-- tab 2 -->
+ <div id="Releases" class="tab-pane fade container">
+  <section id="sh_configuration">
+                     <div class="container">
+                        <div class="text-center">
+
+                           <p
+                           style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                           In general settings => Unable the "Disable To Add Followers By Create/Update Lead/Opportunity". 
+                        </p>
+                        <div class="col-md-12">
+                           <img class="img-responsive rounded shadow" src="crm_ss/1.png" style="width: 100%;" />
+                        </div>
+                        <br />
+                        <p
+                           style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                           In the pipeline form view, you have the option to add followers. 
+                           In this you can see the salespersons is include in the follower's list and add other followers as well.
+                        </p>
+                        <div class="col-md-12">
+                           <img class="img-responsive rounded shadow" src="crm_ss/2.png" style="width: 100%;" />
+                        </div>
+                        <p
+                           style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                           In general settings => Enable the "Disable To Add Followers By Create/Update Lead/Opportunity".
+                        </p>
+                        <div class="col-md-12">
+                           <img class="img-responsive rounded shadow" src="crm_ss/3.png" style="width: 100%;" />
+                        </div>
+                        <br />
+                        <p
+                           style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                           In the pipeline form view, you can only see the follower's option. 
+                           Salespersons are not included in the follower's list, and you are unable to add other followers as well.
+                        </p>
+                        <div class="col-md-12">
+                           <img class="img-responsive rounded shadow" src="crm_ss/4.png" style="width: 100%;" />
+                        </div>
+                        <br />
+                        <p
+                           style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                           Email view. Send email.
+                        </p>
+                        <div class="col-md-12">
+                           <img class="img-responsive rounded shadow" src="crm_ss/5.png" />
+                        </div>
+                        <br />
+                        <p
+                           style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                           In the list view of the lead, you can see the salesperson and other follower's are not displayed.
+                        </p>
+                        <div class="col-md-12">
+                           <img class="img-responsive rounded shadow" src="crm_ss/6.png" style="width: 100%;" />
+                        </div>
+                        <br />
+                        <p
+                        style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                        In general settings => Unable the "Disable To Add Followers By Send By Email".
+                     </p>
+                     <div class="col-md-12">
+                        <img class="img-responsive rounded shadow" src="crm_ss/7_1.png" style="width: 100%;" />
+                     </div>
+                     <br />
+                     <p
+                        style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                        Send an email.
+                     </p>
+                     <div class="col-md-12">
+                        <img class="img-responsive rounded shadow" src="crm_ss/9.png" />
+                     </div>
+                     <br />
+                        <p
+                           style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                           In the chatter, In this, you can see that person was included in the follower's list. 
+                        </p>
+                        <div class="col-md-12">
+                           <img class="img-responsive rounded shadow" src="crm_ss/7.png" style="width: 100%;" />
+                        </div>
+                        <br />
+                        <p
+                        style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                        In general settings => Enable the "Disable To Add Followers By Send By Email".
+                     </p>
+                     <div class="col-md-12">
+                        <img class="img-responsive rounded shadow" src="crm_ss/8.png" style="width: 100%;" />
+                     </div>
+                     <br />
+                     <p
+                        style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                        Send an email.
+                     </p>
+                     <div class="col-md-12">
+                        <img class="img-responsive rounded shadow" src="crm_ss/9.png" />
+                     </div>
+                     <br />
+
+                     <p
+                        style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                        In the chatter, you can only see the follower's option.
+                        That person are not included in the follower's list, and you are unable to add other followers as well.
+                     </p>
+                     <div class="col-md-12">
+                        <img class="img-responsive rounded shadow" src="crm_ss/10.png" style="width: 100%;" />
+                     </div>
+                     <br />
+                     <p
+                        style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                       Send the message from chatter. 
+                     </p>
+                     <div class="col-md-12">
+                        <img class="img-responsive rounded shadow" src="crm_ss/11.png" style="width: 100%;" />
+                     </div>
+                     <br />
+                     <p
+                        style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                        you can only see the follower's option.
+                     </p>
+                     <div class="col-md-12">
+                        <img class="img-responsive rounded shadow" src="crm_ss/12.png" style="width: 100%;" />
+                     </div>
+                     <br />
+                     <p
+                        style="color: #1b325f;font-size: 20px;max-width: 75%;margin: auto;margin-bottom: 20px;letter-spacing: .5px;">
+                        You can see that person in email.
+                     </p>
+                     <div class="col-md-12">
+                        <img class="img-responsive rounded shadow" src="crm_ss/13.png" style="width: 100%;" />
+                     </div>
+                     <br />
+                        </div>
+                     </div>
+                  </section>
+</div>
+
+         <div id="Release" class="tab-pane fade container">
+            <div class="sh_content shadow rounded bg-white" style="padding: 20px;margin-bottom: 15px;">
+               <h4
+                  style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: block;">
+                  <span class="fa fa-hand-o-right"
+                     style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span> <span>Version
+                     16.0.6</span> | <span style="color: #3363c1;">Released on : 15<sup>st</sup> September 2023</span></h4>
+               <div style="font-size: 16px;padding-left: 32px;color: #555;margin: 0;padding-top: 15px;">
+                  <div style="font-weight: normal;" class="d-flex align-items-center"> <span class="badge badge-info mr-2" style="
+                                                padding: 5px 15px;
+                                                border-radius: 3px;
+                                                color: #fff;
+                                                font-size: 9px;
+                                                text-transform: uppercase;
+                                                font-weight: bold;
+                                                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                                          ">
+                        Fixed
+                     </span>
+                     <span style="vertical-align: middle;font-size: 15px;"> Minor Bug Fixed.</span>
+                  </div>
+               </div>
+            </div>
+            <div class="sh_content shadow rounded bg-white" style="padding: 20px;margin-bottom: 15px;">
+               <h4
+                  style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: block;">
+                  <span class="fa fa-hand-o-right"
+                     style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                  <span>Version 16.0.5</span> | <span style="color: #3363c1;">Released on : 12<sup>th</sup> September
+                     2023</span>
+               </h4>
+               <div style="font-size: 16px;padding-left: 32px;color: #555;margin: 0;padding-top: 15px;">
+                  <div style="font-weight: normal;" class="d-flex align-items-center"><span
+                        class="badge badge-success" style="background-color: #43A047 !important;
+               padding: 5px 17px;
+               border-radius: 3px;
+               color: #fff;
+               font-size: 9px;
+               text-transform: uppercase;
+               font-weight: bold;
+               box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">New</span>
+                     <span style="vertical-align: middle;font-size: 15px;"> &nbsp; Disable Followers Feature Added In CRM.</span>
+                  </div>
+               </div>
+            </div>
+            <div class="sh_content shadow rounded bg-white" style="padding: 20px;margin-bottom: 15px;">
+               <h4 style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: block;"><span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span> <span>Version 16.0.4</span> | <span style="color: #3363c1;">Released on : 1<sup>st</sup>August 2023</span></h4>
+               <div style="font-size: 16px;padding-left: 32px;color: #555;margin: 0;padding-top: 15px;">
+                  <div style="font-weight: normal;" class="d-flex align-items-center"> <span
+                              class="badge badge-info mr-2"
+                              style="
+                                    padding: 5px 15px;
+                                    border-radius: 3px;
+                                    color: #fff;
+                                    font-size: 9px;
+                                    text-transform: uppercase;
+                                    font-weight: bold;
+                                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                              "
+                           >
+                              Fixed
+                           </span> 
+                           <span style="vertical-align: middle;font-size: 15px;"> Minor Bug Fixed.</span></div>
+               </div>
+            </div>
+            <div class="sh_content shadow rounded bg-white" style="padding: 20px;margin-bottom: 15px;">
+               <h4 style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: block;"><span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span> <span>Version 16.0.3</span> | <span style="color: #3363c1;">Released on : 12<sup>th</sup>April 2023</span></h4>
+               <div style="font-size: 16px;padding-left: 32px;color: #555;margin: 0;padding-top: 15px;">
+                  <div style="font-weight: normal;" class="d-flex align-items-center"> <span class="badge badge-success" style="background-color: #43A047 !important;
+                     padding: 5px 17px;
+                     border-radius: 3px;
+                     color: #fff;
+                     font-size: 9px;
+                     text-transform: uppercase;
+                     font-weight: bold;
+                     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">New</span>
+                            <span style="vertical-align: middle;font-size: 15px;">&nbsp;
+                              Restrict To Add Followers On Confirm RFQ.</span></div>
+                              <div style="font-weight: normal;" class="d-flex align-items-center"> <span class="badge badge-success" style="background-color: #43A047 !important;
+                                 padding: 5px 17px;
+                                 border-radius: 3px;
+                                 color: #fff;
+                                 font-size: 9px;
+                                 text-transform: uppercase;
+                                 font-weight: bold;
+                                 box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">New</span>
+                                        <span style="vertical-align: middle;font-size: 15px;">&nbsp;
+                                          Allow To Add Manually Followers Sale, Purchase, Invoice, Picking</span></div>
+               </div>
+            </div>
+              <div class="sh_content shadow rounded bg-white" style="padding: 20px;margin-bottom: 15px;">
+               <h4 style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: block;"><span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span> <span>Version 16.0.2</span> | <span style="color: #3363c1;">Released on : 12<sup>th</sup>January 2023</span></h4>
+               <div style="font-size: 16px;padding-left: 32px;color: #555;margin: 0;padding-top: 15px;">
+                  <div style="font-weight: normal;" class="d-flex align-items-center"> <span
+                                class="badge badge-info mr-2"
+                                style="
+                                    background: #2196f3;
+                                    padding: 5px 15px;
+                                    border-radius: 3px;
+                                    color: #fff;
+                                    font-size: 9px;
+                                    text-transform: uppercase;
+                                    font-weight: bold;
+                                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                                "
+                            >
+                                Fixed
+                            </span> 
+                            <span style="vertical-align: middle;font-size: 15px;"> Minor Bug Fixed.</span></div>
+               </div>
+            </div>
+         
+             
+             <div class="sh_content shadow rounded bg-white" style="padding: 20px;margin-bottom: 15px;">
+               <h4 style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: block;"><span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span> <span>Version 16.0.1</span> | <span style="color: #3363c1;">Released on : 28<sup>th</sup> October 2022</span></h4>
+               <div style="font-size: 16px;padding-left: 32px;color: #555;margin: 0;padding-top: 15px;">
+                  <div style="font-weight: normal;" class="d-flex align-items-center">
+                  <span
+                                class="badge mr-2"
+                                style="
+                                    background-color: #3363c1 !important;
+                                    padding: 5px 15px;
+                                    border-radius: 3px;
+                                    color: #fff;
+                                    font-size: 9px;
+                                    text-transform: uppercase;
+                                    font-weight: bold;
+                                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                                "
+                            >
+                                Initial
+                            </span>
+                         <span style="vertical-align: middle;font-size: 15px;">Initial Release.</div>
+               </div>
+            </div>
+
+         </div>
+         <!-- tab 3 -->
+         <!-- tab 4 -->
+         <div id="FAQ" class="tab-pane fade container">
+            <div class="demo">
+               <div class="panel-group" id="accordion" role="tablist">
+                  <div class="panel panel-default shadow rounded bg-white" style="padding: 20px;margin-bottom: 20px;">
+                     <div class="panel-heading" role="tab" id="headingOne" style="border: 0;padding: 0;">
+                        <h4 class="panel-title" style="margin: 0;">
+                           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: flex;">
+                              <span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                              Is this app compatible with Odoo Community as well as Enterprise?
+                              <!--  <span class="fa fa-plus" style="float: right;background-color: #3363c1;width: 35px;height: 35px;text-align: center;line-height: 35px;color: #fff;border-radius: 50%;margin-top: -8px;"></span> -->
+                           </a>
+                        </h4>
+                     </div>
+                     <div id="collapseOne1" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body" style="padding-top: 20px;">
+                           <ul style="list-style-type: disc;font-size: 16px;padding-left: 30px;color: #555;margin: 0;">
+                              <li style="margin-bottom: 0px;">Yes, this app works perfectly with Odoo Enterprise (Odoo.sh & Premise) as well as Community. </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="panel panel-default shadow rounded bg-white" style="padding: 20px;margin-bottom: 20px;">
+                     <div class="panel-heading" role="tab" id="headingThree" style="border: 0;padding: 0;">
+                       <h4 class="panel-title" style="margin: 0;">
+                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: flex;">
+                           <span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span> Is this application compatible with odoo.com(odoo saas)? </a>
+                       </h4>
+                     </div>
+                     <div id="collapseThree3" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingThree">
+                       <div class="panel-body" style="padding-top: 20px;">
+                         <ul style="list-style-type: disc;font-size: 16px;padding-left: 30px;color: #555;margin: 0;">
+                           <li style="margin-bottom: 0px;">No, this application is not compatible with odoo.com(odoo saas).</li>
+                         </ul>
+                       </div>
+                     </div>
+                   </div>
+
+                  <div class="panel panel-default shadow rounded bg-white" style="padding: 20px;margin-bottom: 20px;">
+                     <div class="panel-heading" role="tab" id="headingThree" style="border: 0;padding: 0;">
+                        <h4 class="panel-title" style="margin: 0;">
+                           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: flex;">
+                           <span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                           I want some customization in this app. How can I request it?
+                           </a>
+                        </h4>
+                     </div>
+                     <div id="collapseThree3" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body" style="padding-top: 20px;">
+                           <ul style="list-style-type: disc;font-size: 16px;padding-left: 30px;color: #555;margin: 0;">
+                              <li style="margin-bottom: 0px;">Please Contact Us at <a href='mailto:sales@softhealer.com' style="color: #007bff;font-weight: 600;text-decoration: none;">sales@softhealer.com</a>to request customization.</li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="panel panel-default shadow rounded bg-white" style="padding: 20px;margin-bottom: 20px;">
+                     <div class="panel-heading" role="tab" id="headingThree" style="border: 0;padding: 0;">
+                        <h4 class="panel-title" style="margin: 0;">
+                           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: flex;">
+                           <span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                           Do i get free support?
+                           </a>
+                        </h4>
+                     </div>
+                     <div id="collapseThree3" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body" style="padding-top: 20px;">
+                           <ul style="list-style-type: disc;font-size: 16px;padding-left: 30px;color: #555;margin: 0;">
+                              <li style="margin-bottom: 0px;">Yes, we provide free support for 100 days.</li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+
+
+                  <div class="panel panel-default shadow rounded bg-white" style="padding: 20px;margin-bottom: 20px;">
+                     <div class="panel-heading" role="tab" id="headingThree" style="border: 0;padding: 0;">
+                        <h4 class="panel-title" style="margin: 0;">
+                           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: flex;">
+                           <span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                           Do i get free updates?
+                           </a>
+                        </h4>
+                     </div>
+                     <div id="collapseThree3" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body" style="padding-top: 20px;">
+                           <ul style="list-style-type: disc;font-size: 16px;padding-left: 30px;color: #555;margin: 0;">
+                              <li style="margin-bottom: 0px;">Yes, you will get free update for lifetime.</li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="panel panel-default shadow rounded bg-white" style="padding: 20px;margin-bottom: 20px;">
+                     <div class="panel-heading" role="tab" id="headingThree" style="border: 0;padding: 0;">
+                        <h4 class="panel-title" style="margin: 0;">
+                           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: flex;">
+                           <span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                           Do we need to install any additional libraries/modules for using this module?
+                           </a>
+                        </h4>
+                     </div>
+                     <div id="collapseThree3" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body" style="padding-top: 20px;">
+                           <ul style="list-style-type: disc;font-size: 16px;padding-left: 30px;color: #555;margin: 0;">
+                              <li style="margin-bottom: 0px;">No, you don't need to install addition libraries.</li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="panel panel-default shadow rounded bg-white" style="padding: 20px;margin-bottom: 20px;">
+                     <div class="panel-heading" role="tab" id="headingThree" style="border: 0;padding: 0;">
+                        <h4 class="panel-title" style="margin: 0;">
+                           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: flex;">
+                           <span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                           Do I have to buy my module for each version?
+                           </a>
+                        </h4>
+                     </div>
+                     <div id="collapseThree3" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body" style="padding-top: 20px;">
+                           <ul style="list-style-type: disc;font-size: 16px;padding-left: 30px;color: #555;margin: 0;">
+                              <li style="margin-bottom: 0px;">Yes, You have to download module for each version (13,14,15) except in version 12 or lower.</li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="panel panel-default shadow rounded bg-white" style="padding: 20px;margin-bottom: 20px;">
+                     <div class="panel-heading" role="tab" id="headingThree" style="border: 0;padding: 0;">
+                        <h4 class="panel-title" style="margin: 0;">
+                           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 16px;margin: 0;color: #212121;text-decoration: none;font-weight: 600;letter-spacing: 1px;display: flex;">
+                           <span class="fa fa-hand-o-right" style="color: #3363c1;font-weight: 600;font-size: 18px;padding-right: 10px;"></span>
+                           What If I purchase Module In Wrong Version Can I exchange Module With Other Versions?
+                           </a>
+                        </h4>
+                     </div>
+                     <div id="collapseThree3" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body" style="padding-top: 20px;">
+                           <ul style="list-style-type: disc;font-size: 16px;padding-left: 30px;color: #555;margin: 0;">
+                              <li style="margin-bottom: 0px;">No, We do not provide any kind of exchange.</li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- tab 4 -->
+         <!-- tab 5 -->
+         <div id="Support" class="tab-pane fade container">
+            <div class="row">
+               <div class="col-md">
+                  <div class="sh_content shadow rounded bg-white" style="padding: 20px;margin-bottom: 0px;">
+                     <h4 class="mb-0"><a href="mailto:support@softhealer.com" style="text-decoration: none;color: #212121;font-size: 18px;font-weight: 600;letter-spacing: 1px;"><span class="fa fa-envelope" style="color: #3363c1;padding-right: 10px;font-size: 20px;"></span> Please mail us for support on <b style="color: #3363c1">support@softhealer.com</b></a></h4>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- tab 5 -->
+      </div>
+   </div>
+</section>
+<section id="sh_multi_language" style="margin: 50px 0;background-color: transparent;">
+   <div class="container">
+      <div class="sh_center text-center">
+        <div class="sh_center text-center mb-3">
+            <h4 style="font-size: 28px;font-weight: 600;color: #3363c1;margin-bottom: 10px;">Multi-Languages</h4>
+            <img src="heading.png" alt="heading">
+         </div>
+         <div class="content">
+
+            We have added predefined some languages(English, German / Deutsch, Arabic, Spanish / Espanol, French / Francais, Chinese) in module, If you want to add other language you can contact us on <a href="mailto:support@softhealer.com">support@softhealer.com</a>. We use google translator tools for multi-languages so possible translations can be not accurate. we accept suggest to make more accurate translations also on <a href="mailto:support@softhealer.com">support@softhealer.com</a>.
+            <br/><br/>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="img" style="text-align: center;">
+               <img class="shadow rounded" src="eng.png" title="English" alt="english" style="object-fit: cover;margin: 10px 10px;border-radius: 0.25rem !important;" />
+               <img class="shadow rounded" src="german.png" title="Germany" alt="germany" style="object-fit: cover;margin: 10px 10px;border-radius: 0.25rem !important;" />
+               <img class="shadow rounded" src="aarab.png" title="Arab" alt="arab" style="object-fit: cover;margin: 10px 10px;border-radius: 0.25rem !important;" />
+               <img class="shadow rounded" src="spanish.jpg" title="Spanish" alt="spanish" style="object-fit: cover;margin: 10px 10px;border-radius: 0.25rem !important;" />
+               <img class="shadow rounded" src="chinese.png" title="Chinese" alt="Chinese" style="object-fit: cover;margin: 10px 10px;border-radius: 0.25rem !important;" />
+               <img class="shadow rounded" src="french.png" title="French" alt="French" style="object-fit: cover;margin: 10px 10px;border-radius: 0.25rem !important;" />
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+ <section class="sh_bg_cover" style="padding:40px 0px; margin-top:2em;background-color: transparent;">
+        <div class="container">
+            
+            <div class="sh_center text-center row">
+               <div class="col-lg-3 col-md-3 col-sm-12 col-12"></div>
+               <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+                  <a class="shadow rounded py-3 px-4 mb-2 d-flex align-items-center justify-content-center" style="border-width: 1px;border-style: solid;border-color: #3363c1;color: #fff;position: relative; overflow: hidden;text-decoration: none;border-radius: 0px;display: inline-block;font-size: 20px;font-weight: bold;width: 100%;background-color: #3363c1;border-radius: 0.25rem !important;" href="https://apps.odoo.com/apps/modules/browse?author=Softhealer%20Technologies" target="_blank"><span class="fa fa-cube mr-3" style="font-size: 20px;color: #fff;"></span><span class="align-middle">Our Apps</span></a>
+               </div>
+               <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+                  <a class="shadow rounded py-3 px-4 mb-2 d-flex align-items-center justify-content-center" style="border-width: 1px;border-style: solid;border-color: #3363c1;color: #fff;position: relative; overflow: hidden;text-decoration: none;border-radius: 0px;display: inline-block;font-size: 20px;font-weight: bold;width: 100%;background-color: #3363c1;border-radius: 0.25rem !important;" href="https://apps.odoo.com/apps/themes/browse?author=Softhealer%20Technologies" target="_blank"><span class="fa fa-paint-brush mr-3" style="font-size: 20px;color: #fff;"></span><span class="align-middle">Our Themes</span></a>
+               </div>
+               <div class="col-lg-3 col-md-3 col-sm-12 col-12"></div> 
+            </div>
+         </div>
+      </section> 
+
+<section id="sh_like_module" style="margin: 50px 0;background-color: transparent;">
+   <div class="container">
+      <div class="sh_center text-center mb-5">
+         <h4 style="font-size: 28px;font-weight: 600;color: #3363c1;margin-bottom: 10px;">You May Also Like</h4>
+         <img src="heading.png" alt="heading" />
+      </div>
+      <div class="row" style="margin-top: 1rem;">
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img">
+                   <a href="https://apps.odoo.com/apps/modules/13.0/sh_account_disable_followers/">
+                              <img class="rounded" src="image1.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img">
+                  <a href="https://apps.odoo.com/apps/modules/13.0/sh_inventory_disable_followers/">
+                              <img class="rounded" src="image2.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img">
+                <a href="https://apps.odoo.com/apps/modules/13.0/sh_purchase_disable_followers/">
+                              <img class="rounded" src="image3.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img">
+                <a href="https://apps.odoo.com/apps/modules/13.0/sh_sale_disable_followers/">
+                              <img class="rounded" src="image4.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img">
+                   <a href="https://apps.odoo.com/apps/modules/13.0/sh_account_default_followers/">
+                              <img class="rounded" src="image5.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                   <a href="https://apps.odoo.com/apps/modules/13.0/sh_sale_default_followers/">
+                              <img class="rounded" src="image6.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                  <a href="https://apps.odoo.com/apps/modules/13.0/sh_crm_default_followers/">
+                              <img class="rounded" src="image7.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                  <a href="https://apps.odoo.com/apps/modules/13.0/sh_inventory_default_followers/">
+                              <img class="rounded" src="image8.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                   <a href="https://apps.odoo.com/apps/modules/13.0/sh_purchase_default_followers/">
+                              <img class="rounded" src="image9.png" style="width: 100%;"></img>
+                               </a>
+               </div>
+            </div>
+         </div>
+
+
+      </div>
+   </div>
+</section>
+<!-- Most Popular Apps -->
+<section id="sh_most_demanded_apps" style="margin: 50px 0 0px 0px;background-color: transparent;">
+   <div class="container">
+      <div class="sh_center text-center mb-5">
+         <h4 style="font-size: 28px;font-weight: 600;color: #3363c1;margin-bottom: 10px;">Most Demanded Apps</h4>
+         <img src="heading.png" alt="heading" />
+      </div>
+      <div class="row" style="margin-top: 1rem;">
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                  <a href="https://apps.odoo.com/apps/modules/14.0/sh_all_in_one_mbs/">
+                  <img class="rounded" src="d1.png" alt="sh_all_in_one_mbs" width="100%">
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                  <a href="https://apps.odoo.com/apps/modules/14.0/sh_activities_management/">
+                  <img class="rounded" src="d3.png" alt="sh_activities_management" width="100%">
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                  <a href="https://apps.odoo.com/apps/modules/14.0/sh_all_in_one_helpdesk/">
+                  <img class="rounded" src="d2.png" alt="sh_all_in_one_helpdesk" style="width: 100%">
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                  <a href="https://apps.odoo.com/apps/modules/14.0/sh_secondary_unit/">
+                  <img class="rounded" src="d4.png" alt="sh_secondary_unit" width="100%">
+                  </a>
+               </div>
+            </div>
+         </div>
+          <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                  <a href="https://apps.odoo.com/apps/modules/14.0/sh_barcode_scanner/">
+                  <img class="rounded" src="d5.png" alt="sh_barcode_scanner" width="100%">
+                  </a>
+               </div>
+            </div>
+         </div>
+         
+         <div class="col-md-4 mb-3">
+            <div class="sh_content shadow rounded" style="text-align: center;">
+               <div class="sh_img"> 
+                  <a href="https://apps.odoo.com/apps/modules/14.0/sh_all_in_one_basic_import/">
+                  <img class="rounded" src="d6.png" alt="sh_all_in_one_basic_import" style="width: 100%">
+                  </a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+<!-- Most Popular Apps -->
+<section class="sh_services" style="padding: 50px 0px;background-color: transparent;">
+	<div class="container">
+		<div class="sh_center text-center mb-5">
+         <h4 style="font-size: 28px;font-weight: 600;color: #3363c1;margin-bottom: 10px;">Our Services</h4>
+         <img src="heading.png" alt="heading" />
+      </div>
+		<div class="row">
+			<div class="col-md-3 text-center">
+				<div class="box p-4 shadow rounded mb-2" style="background-color: #dfd7ff;border: 2px solid #9284d2;border-radius: 0.25rem !important;">
+					<a href="mailto:sales@softhealer.com" target="_blank" style="text-decoration: none;">
+						<div class="icon_img mb-2">
+							<!-- <span class="fa fa-info-circle" style="font-size: 50px;color: #fff;"></span> -->
+							<img src="info.png" alt="info" style="height: 55px;"></img>
+						</div>
+						<div class="content">
+							<p class="mb-0" style="font-size: 18px;color: #604eaf;font-weight: bold;">Odoo Implementation</p>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-md-3 text-center">
+				<div class="box p-4 shadow rounded mb-2" style="background-color: #ffcee2;border: 2px solid #c5648c;border-radius: 0.25rem !important;">
+					<a href="mailto:sales@softhealer.com" target="_blank" style="text-decoration: none;">
+						<div class="icon_img mb-2">
+							<!-- <span class="fa fa-cogs" style="font-size: 50px;color: #fff;"></span> -->
+							<img src="setting.png" alt="setting" style="height: 55px;"></img>
+						</div>
+						<div class="content">
+							<p class="mb-0" style="font-size: 18px;color: #b54574;font-weight: bold;">Odoo Customization</p>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-md-3 text-center">
+				<div class="box p-4 shadow rounded mb-2" style="background-color: #dfe8b4;border: 2px solid #97a362;border-radius: 0.25rem !important;">
+					<a href="mailto:sales@softhealer.com" target="_blank" style="text-decoration: none;">
+						<div class="icon_img mb-2">
+							<!-- <span class="fa fa-users" style="font-size: 50px;color: #fff;"></span> -->
+							<img src="user.png" alt="user" style="height: 55px;"></img>
+						</div>
+						<div class="content">
+							<p class="mb-0" style="font-size: 18px;color: #7f9037;font-weight: bold;">Support & Maintenance</p>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-md-3 text-center">
+				<div class="box p-4 shadow rounded mb-2" style="background-color: #eaddca;border: 2px solid #a38762;border-radius: 0.25rem !important;">
+					<a href="mailto:sales@softhealer.com" target="_blank" style="text-decoration: none;">
+						<div class="icon_img mb-2">
+							<!-- <span class="fa fa-mobile" style="font-size: 50px;color: #fff;"></span> -->
+							<img src="mobileapp.png" alt="mobileapp" style="height: 55px;"></img>
+						</div>
+						<div class="content">
+							<p class="mb-0" style="font-size: 18px;color: #946d38;font-weight: bold;">Mobile Apps</p>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="sh_bg_cover" style="padding:40px 0px;background-color: transparent;">
+  <div class="container">
+      
+      <div class="sh_center text-center row">
+         <div class="col-lg-3 col-md-3 col-sm-12 col-12"></div>
+         <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+            <a class="shadow rounded py-3 px-4 d-flex justify-content-center align-items-center mb-2" style="border-width: 1px;border-style: solid;border-color: #4ca9e3;color: #fff;position: relative; overflow: hidden;text-decoration: none;border-radius: 0px;font-size: 20px;font-weight: bold;width: 100%;background-color: #4ca9e3;border-radius: 0.25rem !important;" href="skype:live:softhealertechnologies?chat" target="_blank"><span class="fa fa-skype mr-3" style="font-size: 30px;color: #fff;"></span><span class="align-middle">Skype</span></a>
+         </div>
+         <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+            <a class="shadow rounded py-3 px-4 d-flex justify-content-center align-items-center mb-2" style="border-width: 1px;border-style: solid;border-color: #ce493b;color: #fff;position: relative; overflow: hidden;text-decoration: none;border-radius: 0px;font-size: 20px;font-weight: bold;width: 100%;background-color: #ce493b;border-radius: 0.25rem !important;" href="mailto:sales@softhealer.com" target="_blank"><span class="fa fa-envelope mr-3" style="font-size: 30px;color: #fff;"></span><span class="align-middle">Email</span></a>
+         </div>
+         <div class="col-lg-3 col-md-3 col-sm-12 col-12"></div> 
+      </div>
+   </div>
+</section>
+   </body>
+</html>
