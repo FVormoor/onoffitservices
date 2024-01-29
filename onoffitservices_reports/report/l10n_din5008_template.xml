@@ -80,5 +80,15 @@
                 </table>
             </div>
         </xpath>
+
+        <xpath expr="//div[hasclass('shipping_address')]" position="replace">
+            <div class="shipping_address">
+                <strong><t t-esc="doc_address[0]"/></strong>
+                <div t-esc="doc_address[1]" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True}"/>
+                <t t-if="o._name=='sale.order' and o.partner_id and o.partner_id.vat and len(doc_address)>2">
+                    <p t-if="o.partner_id.vat"><t t-out="o.company_id.account_fiscal_country_id.vat_label or 'Tax ID'"/>: <span t-esc="doc_address[2]"/></p>
+                </t>
+            </div>
+        </xpath>
     </template>
 </odoo>
