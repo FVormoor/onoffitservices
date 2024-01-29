@@ -55,3 +55,24 @@ msgstr "Geschäftsführer:"
 #: model:ir.model.fields,field_description:onoffitservices_reports.field_res_company__managing_director
 msgid "Managing Director(s)"
 msgstr "Geschäftsführer"
+
+#. module: onoffitservices_reports
+#. odoo-python
+#: code:addons/onoffitservices_reports/models/sale_order.py:0
+#, python-format
+msgid "Invoicing Address:"
+msgstr "Rechnungsadresse:"
+
+#. module: onoffitservices_reports
+#. odoo-python
+#: code:addons/onoffitservices_reports/models/sale_order.py:0
+#, python-format
+msgid "Invoicing and Shipping Address:"
+msgstr "Rechnungs- und Lieferadresse:"
+
+#. module: onoffitservices_reports
+#. odoo-python
+#: code:addons/onoffitservices_reports/models/sale_order.py:0
+#, python-format
+msgid "Shipping Address:"
+msgstr "Lieferadresse:"
