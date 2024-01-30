@@ -1,6 +1,6 @@
 {
     'name': 'OnOffItservices Reports',
-    'version': '16.0.1.0.2',
+    'version': '16.0.1.0.3',
     'author': 'Hucke Media GmbH & Co. KG/IFE GmbH',
     'category': 'Customizations/Custom',
     'website': 'https://www.hucke-media.de/',
@@ -11,6 +11,7 @@
         'sale',
         'l10n_din5008_sale',
         'stock_account',
+        'sale_order_line_position',
     ],
     'data': [
         'report/l10n_din5008_template.xml',
