@@ -7,7 +7,7 @@
 
         <xpath expr="//td[@name='account_invoice_line_name']" position="before">
             <td class="text-start" style="vertical-align: top">
-                <span t-field="line.position" />
+                <span t-if="line.position" t-field="line.position" />
             </td>
         </xpath>
         <xpath expr="//td[3]" position="attributes">

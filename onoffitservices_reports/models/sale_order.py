@@ -1,6 +1,17 @@
 from odoo import models, fields, _
 from odoo.tools import format_date
+from odoo.addons.sale_order_line_position.models.sale_order import SaleOrder as SaleOrderOrigin
 
+def recompute_positions(self):
+    for sale in self:
+        #if sale.locked_positions or sale.company_id.disable_sale_position_recompute:
+            #continue
+        lines = sale.order_line.filtered(lambda l: not l.display_type)
+        lines.sorted(key=lambda x: (x.sequence, x.id))
+        for position, line in enumerate(lines, start=1):
+            line.position = position
+
+SaleOrderOrigin.recompute_positions = recompute_positions
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -15,11 +26,4 @@ class SaleOrder(models.Model):
                 data.append((_("Invoicing Address:"), record.partner_invoice_id, record.partner_id.vat))
     
 
-    def recompute_positions(self):
-        for sale in self:
-            #if sale.locked_positions or sale.company_id.disable_sale_position_recompute:
-                #continue
-            lines = sale.order_line.filtered(lambda l: not l.display_type)
-            lines.sorted(key=lambda x: (x.sequence, x.id))
-            for position, line in enumerate(lines, start=1):
-                line.position = position
+    

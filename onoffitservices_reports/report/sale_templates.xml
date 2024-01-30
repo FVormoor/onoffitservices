@@ -4,6 +4,7 @@
         <xpath expr="//p[@t-if='doc.partner_id.vat']" position="replace"/>
         <xpath expr="//td[1]" position="attributes">
             <attribute name="style">vertical-align: top</attribute>
+            <attribute name="class">text-end</attribute>
         </xpath>
         <xpath expr="//td[@name='td_quantity']" position="attributes">
             <attribute name="style">vertical-align: top</attribute>
