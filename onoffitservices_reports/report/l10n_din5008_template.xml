@@ -5,7 +5,7 @@
             <table class="company_header table-borderless">
                 <tr>
                     <td><div class="h3 mt0" t-field="company.report_header"/></td>
-                    <td><img t-if="company.logo" t-att-src="image_data_uri(company.logo)"  style="margin-top:15mm;width:50mm"/></td>
+                    <td><img t-if="company.logo" t-att-src="image_data_uri(company.logo)"  style="margin-top:10mm;width:50mm"/></td>
                 </tr>
             </table>
         </xpath>

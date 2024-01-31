@@ -1,6 +1,6 @@
 {
     'name': 'OnOffItservices Reports',
-    'version': '16.0.1.0.3',
+    'version': '16.0.1.0.4',
     'author': 'Hucke Media GmbH & Co. KG/IFE GmbH',
     'category': 'Customizations/Custom',
     'website': 'https://www.hucke-media.de/',

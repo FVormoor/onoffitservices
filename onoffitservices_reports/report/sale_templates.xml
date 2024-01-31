@@ -2,6 +2,9 @@
 <odoo>
     <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document" priority="100">
         <xpath expr="//p[@t-if='doc.partner_id.vat']" position="replace"/>
+        <xpath expr="//td[@name='td_name']" position="attributes">
+          <attribute name="style">vertical-align: top</attribute>
+        </xpath>
         <xpath expr="//td[1]" position="attributes">
             <attribute name="style">vertical-align: top</attribute>
             <attribute name="class">text-end</attribute>
