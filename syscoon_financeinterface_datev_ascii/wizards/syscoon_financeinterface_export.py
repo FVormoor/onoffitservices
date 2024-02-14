@@ -4,7 +4,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
-class syscoonFinanceinterfaceExport(models.TransientModel):
+class SyscoonFinanceinterfaceExport(models.TransientModel):
     _inherit = "syscoon.financeinterface.export"
 
     mode = fields.Selection(
@@ -21,7 +21,7 @@ class syscoonFinanceinterfaceExport(models.TransientModel):
     @api.onchange("mode")
     def _onchange_mode(self):
         """Inherits the basic onchange mode"""
-        res = super(syscoonFinanceinterfaceExport, self)._onchange_mode()
+        res = super()._onchange_mode()
         if self.mode and self.mode == "datev_ascii":
             self.type = "date_range"
         return res
@@ -32,27 +32,19 @@ class syscoonFinanceinterfaceExport(models.TransientModel):
 
     def action_start(self):
         """Inherit of the basic start function"""
-        start = super(syscoonFinanceinterfaceExport, self).action_start()
         if self.mode == "datev_ascii":
             if self.type != "date_range":
                 raise UserError(
                     _(
-                        'For the DATEV ASCII move export you must select the type "Date Range" to do an export!'
+                        "For the DATEV ASCII move export you must select the type "
+                        '"Date Range" to do an export!'
                     )
                 )
             args = [self.journal_ids.ids]
             export_id = self.env["syscoon.financeinterface"].export(
                 self.mode, self.date_from, self.date_to, args
             )
-            return {
-                "name": "Financial Export Invoices",
-                "view_type": "form",
-                "view_mode": "form",
-                "view_id": False,
-                "res_model": "syscoon.financeinterface",
-                "type": "ir.actions.act_window",
-                "target": "current",
-                "res_id": export_id,
-            }
-        else:
-            return start
+            return self._get_action(
+                name="Financial Export Invoices", record_id=export_id.id
+            )
+        return super().action_start()

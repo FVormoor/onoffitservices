@@ -4,6 +4,9 @@ from odoo import fields, models
 
 
 class AccountPaymentTerm(models.Model):
-    _inherit = "account.payment.term"
+    _inherit = 'account.payment.term'
 
-    datev_payment_conditons_id = fields.Integer("DATEV Payment Term ID")
+    datev_payment_conditons_id = fields.Integer('DATEV Payment Term ID')
+    export_finance_interface_active = fields.Boolean(
+        related="company_id.export_finance_interface_active"
+    )

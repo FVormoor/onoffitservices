@@ -1,12 +1,14 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
-from odoo import api, fields, models, _
+# © 2023 syscoon GmbH (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
+from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
+    auto_account_creation = fields.Boolean(
+        related="company_id.auto_account_creation", readonly=False
+    )
     receivable_sequence_id = fields.Many2one(
         'ir.sequence', 'Receivable Sequence',
         related="company_id.receivable_sequence_id",
@@ -22,7 +24,7 @@ class ResConfigSettings(models.TransientModel):
         'Receivable Account Template',
         related="company_id.receivable_template_id",
         readonly=False,
-        domain=[('user_type_id.type', '=', 'receivable')])
+        domain=[('account_type', '=', 'asset_receivable')])
     payable_sequence_id = fields.Many2one(
         'ir.sequence',
         'Payable Sequence',
@@ -40,7 +42,7 @@ class ResConfigSettings(models.TransientModel):
         'Payable Account Template',
         related="company_id.payable_template_id",
         readonly=False,
-        domain=[('user_type_id.type', '=', 'payable')])
+        domain=[('account_type', '=', 'liability_payable')])
     add_number_to_partner_number = fields.Boolean(
         'Add Account Number as Customer- / Supplier-Numbers',
         related="company_id.add_number_to_partner_number",
@@ -57,4 +59,3 @@ class ResConfigSettings(models.TransientModel):
         'Use Separate Accounts',
         related="company_id.use_separate_accounts",
         readonly=False)
-

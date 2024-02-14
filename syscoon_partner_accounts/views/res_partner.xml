@@ -6,19 +6,35 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='sale']" position="inside">
-                <button name="create_customer_number" type="object" string="Create Customer Number"/>
-                <field name="customer_number" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
-            </xpath>
-            <xpath expr="//group[@name='purchase']" position="inside">
-                <button name="create_supplier_number" type="object" string="Create Supplier Number"/>
-                <field name="supplier_number" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+            <xpath expr="//sheet" position="before">
+                <field name="auto_account_creation" invisible="1"/>
             </xpath>
             <xpath expr="//group[@name='accounting_entries']" position="inside">
-                <button name="create_receivable_account" type="object" string="Create Receivable Account"/>
                 <field name="debitor_number" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
-                <button name="create_payable_account" type="object" string="Create Payable Account"/>
                 <field name="creditor_number" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+            </xpath>
+            <xpath expr="//group[@name='purchase']" position="after">
+                <div class="row" attrs="{'invisible': [('auto_account_creation', '=', False)]}">
+                    <div class="col">
+                        <button name="create_customer_number" class="oe_highlight" type="object" string="Create Customer Number"/>
+                    </div>
+                </div>
+                <div class="row" attrs="{'invisible': [('auto_account_creation', '=', False)]}">
+                    <div class="col">
+                        <button name="create_supplier_number" class="oe_highlight" type="object" string="Create Supplier Number"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//group[@name='accounting_entries']" position="after">
+                <group></group>
+                <div class="row" attrs="{'invisible': [('auto_account_creation', '=', False)]}">
+                    <div class="col-6">
+                        <button name="create_payable_account" class="oe_highlight" type="object" string="Create Payable Account"/>
+                    </div>
+                    <div class="col-6">
+                        <button name="create_receivable_account" class="oe_highlight" type="object" string="Create Receivable Account"/>
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>

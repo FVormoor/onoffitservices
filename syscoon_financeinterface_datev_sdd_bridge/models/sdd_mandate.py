@@ -4,9 +4,9 @@ from odoo import models
 
 
 class SDDMandate(models.Model):
-    _inherit = "sdd.mandate"
+    _inherit = 'sdd.mandate'
 
     def write(self, values):
         if self.partner_id:
-            self.partner_id.datev_exported = "false"
-        return super(SDDMandate, self).write(values)
+            self.partner_id.datev_exported = 'false'
+        return super().write(values)

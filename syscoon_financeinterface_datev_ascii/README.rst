@@ -16,7 +16,7 @@ Go to apps and search for syscoon Finanzinterface - DATEV ASCII Export
 
 Usage
 =====
-* 
+*
 
 Credits
 -------
@@ -25,4 +25,3 @@ Credits
 .. |tm| unicode:: U+2122 .. TRADEMARK SIGN
 
 - |copy| `syscoon Gmb <http://www.syscoon.de>`_ |tm| 2022
-
