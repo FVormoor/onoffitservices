@@ -1,0 +1,78 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* onoffitservices_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-29 12:43+0000\n"
+"PO-Revision-Date: 2024-01-29 12:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: onoffitservices_reports
+#: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
+msgid "<span>|</span>"
+msgstr ""
+
+#. module: onoffitservices_reports
+#: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
+msgid "BIC:"
+msgstr ""
+
+#. module: onoffitservices_reports
+#: model:ir.model,name:onoffitservices_reports.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: onoffitservices_reports
+#: model:ir.model,name:onoffitservices_reports.model_base_document_layout
+msgid "Company Document Layout"
+msgstr ""
+
+#. module: onoffitservices_reports
+#: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
+msgid "HRB Nr:"
+msgstr ""
+
+#. module: onoffitservices_reports
+#: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
+msgid "IBAN:"
+msgstr ""
+
+#. module: onoffitservices_reports
+#: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
+msgid "Management:"
+msgstr "Geschäftsführer:"
+
+#. module: onoffitservices_reports
+#: model:ir.model.fields,field_description:onoffitservices_reports.field_base_document_layout__managing_director
+#: model:ir.model.fields,field_description:onoffitservices_reports.field_res_company__managing_director
+msgid "Managing Director(s)"
+msgstr "Geschäftsführer"
+
+#. module: onoffitservices_reports
+#. odoo-python
+#: code:addons/onoffitservices_reports/models/sale_order.py:0
+#, python-format
+msgid "Invoicing Address:"
+msgstr "Rechnungsadresse:"
+
+#. module: onoffitservices_reports
+#. odoo-python
+#: code:addons/onoffitservices_reports/models/sale_order.py:0
+#, python-format
+msgid "Invoicing and Shipping Address:"
+msgstr "Rechnungs- und Lieferadresse:"
+
+#. module: onoffitservices_reports
+#. odoo-python
+#: code:addons/onoffitservices_reports/models/sale_order.py:0
+#, python-format
+msgid "Shipping Address:"
+msgstr "Lieferadresse:"

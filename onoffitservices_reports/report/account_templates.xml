@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document" priority="100">
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th class="text-start">Pos</th>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td class="text-start" style="vertical-align: top">
+                <span t-if="line.position" t-field="line.position" />
+            </td>
+        </xpath>
+        <xpath expr="//td[3]" position="attributes">
+            <attribute name="style">vertical-align: top</attribute>
+        </xpath>
+        <xpath expr="//td[4]" position="attributes">
+            <attribute name="style">vertical-align: top</attribute>
+        </xpath>
+        <xpath expr="//td[5]" position="attributes">
+            <attribute name="style">vertical-align: top</attribute>
+        </xpath>
+        <xpath expr="//td[6]" position="attributes">
+            <attribute name="style">vertical-align: top</attribute>
+        </xpath>
+        <xpath expr="//td[7]" position="attributes">
+            <attribute name="style">vertical-align: top</attribute>
+        </xpath>
+    </template>
+
+    <template id="stock_account_report_invoice_document_inherit" inherit_id="stock_account.stock_account_report_invoice_document" priority="100">
+        <xpath expr="//table[@name='invoice_snln_table']" position="attributes">
+            <attribute name="style">width: 100%</attribute>
+        </xpath>
+    </template>
+</odoo>
