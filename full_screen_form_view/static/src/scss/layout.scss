@@ -1,0 +1,41 @@
+
+.hide-right-panel {
+    z-index: 999;
+    top: 40px;
+    display: block;
+    cursor: pointer;
+    outline: 0;
+    text-decoration: none;
+    opacity: 0.5;
+    transition:opacity 0.5s;
+    right: 6px;
+}
+.hide-right-panel:hover {
+	opacity:1;
+	transition:opacity 0.5s;
+}
+
+.show-right-panel {
+    z-index: 999;
+    top: 40px;
+    display: block;
+    cursor: pointer;
+    outline: 0;
+    text-decoration: none;
+    right: 6px;
+    opacity: 0.5;
+    transition:opacity 0.5s
+}
+.show-right-panel:hover {
+	opacity:1;
+	transition:opacity 0.5s;
+}
+
+.o_form_view .o_form_sheet_bg {
+    position: relative !important;
+    max-width: none !important;
+}
+
+.full-screen-form {
+    max-width: 100% !important;
+}
