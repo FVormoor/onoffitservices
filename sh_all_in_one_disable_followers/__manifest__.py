@@ -8,7 +8,7 @@
     "support": "support@softhealer.com",
     "category": "Extra Tools",
     "license": "OPL-1",
-    "summary": "Hide Followers In Sale Order, Remove Sales Followers, Disable account Auto Add Followers, Quotation Invisible Followers Module, Partner Not Add In Follower App, Customer Not Add In Follower, Vendor Not Add In Followers In Bill Odoo",
+    "summary": "Hide Followers In Sale Order, Remove Sales Followers, Disable account Auto Add Followers, Quotation Invisible Followers Module, Partner Not Add In Follower App, Customer Not Add In Follower, Vendor Not Add In Followers In Bill All in One Disable Followers Disable Followers For Sales Disable  Followers For Purchase Disable Followers For Invoice Disable Followers For Bill Disable Followers For Picking Disable Followers feature Follower Disabling module Disable Follower Accounts tool Followers Deactivation module Inventory Disable Followers All-In-One Follower Control Disable Follow Requests Deactivate Followers Turn Off Followers Odoo",
     "description": """
 Generally in the odoo automatically partners(customers, vendors, contacts) added as the followers. so our module restricts that.This module disables the partners automatically added as followers. This module includes,
 
@@ -21,13 +21,11 @@ Generally in the odoo automatically partners(customers, vendors, contacts) added
  All In One Disable Followers Odoo
  Invisible Followers In Sale Order Module, Partner Not Add In Follower, Customer Not Add In Follower, Hide Followers In Quotation, Remove Sales Followers, Disable Auto Add Followers In Invoice, Vendor Not Add In Followers Odoo
  Hide Followers In Sale Order, Remove Sales Followers, Disable Invoice Auto Add Followers, Quotation Invisible Followers Module, Partner Not Add In Follower App, Customer Not Add In Follower, Vendor Not Add In Followers In Bill Odoo""",
-    "version": "16.0.6",
+    "version": "0.0.2",
     "depends": [
                 "sale_management",
                 "stock",
                 "purchase",
-                "crm",
-                'mail'
     ],
     "application": True,
     "data": [
@@ -36,17 +34,10 @@ Generally in the odoo automatically partners(customers, vendors, contacts) added
     ],
 
     'assets': {
-        'mail.assets_discuss_public': [
-            "sh_all_in_one_disable_followers/static/src/models/thread/thread.js",
-        ],
         'web.assets_backend': [
-
-            "sh_all_in_one_disable_followers/static/src/models/thread/thread.js",
             "sh_all_in_one_disable_followers/static/src/js/followers.js",
-
         ]},
     "images": ["static/description/background.png", ],
-    "live_test_url": "https://youtu.be/wlDsTifXeEk",
     "auto_install": False,
     "installable": True,
     "price": 25,

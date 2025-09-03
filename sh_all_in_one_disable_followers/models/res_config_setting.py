@@ -23,7 +23,7 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     sh_disable_follower_confirm_sale = fields.Boolean(
-        string='Disable to add followers by Confirm Quotation'
+        string='Disable to add Followers by Confirm Quotation'
     )
 
     sh_disable_follower_validate_invoice = fields.Boolean(
@@ -52,18 +52,13 @@ class ResCompany(models.Model):
     sh_disable_follower_confirm_rfq = fields.Boolean(
         string='Disable to add Followers by Confirm RFQ',
     )
-    
-    sh_disable_follower_lead = fields.Boolean(
-        string='Disable to add Followers by Create/Update Lead/Opportunity',
-    )
-
 
 
 class ResConfigSetting(models.TransientModel):
     _inherit = 'res.config.settings'
 
     sh_disable_follower_confirm_sale = fields.Boolean(
-        string='Disable to add followers by Confirm Quotation',
+        string='Disable to add Followers by Confirm Quotation',
         related='company_id.sh_disable_follower_confirm_sale',
         readonly=False
     )
@@ -109,11 +104,5 @@ class ResConfigSetting(models.TransientModel):
     sh_disable_follower_confirm_rfq = fields.Boolean(
         string='Disable to add Followers by Confirm RFQ',
         related='company_id.sh_disable_follower_confirm_rfq',
-        readonly=False
-    )
-
-    sh_disable_follower_lead = fields.Boolean(
-        string='Disable to add Followers by Create/Update Lead/Opportunity',
-        related='company_id.sh_disable_follower_lead',
         readonly=False
     )
