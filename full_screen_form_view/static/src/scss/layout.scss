@@ -1,39 +1,47 @@
 
-.hide-right-panel {
+.o_form_view .o_form_sheet_bg {
+    position: relative !important;
+    max-width: none !important;
+}
+
+.o_form_view .o_field_statusbar {
+    display: contents !important;
+}
+
+.div-hide-show-right-panel {
+    margin-left: 5px;
+}
+
+.button-hide-right-panel {
     z-index: 999;
-    top: 40px;
+    top: 8px;
     display: block;
     cursor: pointer;
     outline: 0;
     text-decoration: none;
     opacity: 0.5;
     transition:opacity 0.5s;
-    right: 6px;
+    right: 10px;
 }
-.hide-right-panel:hover {
+.button-hide-right-panel:hover {
 	opacity:1;
 	transition:opacity 0.5s;
 }
 
-.show-right-panel {
+.button-show-right-panel {
     z-index: 999;
-    top: 40px;
+    top: 8px;
     display: block;
     cursor: pointer;
     outline: 0;
     text-decoration: none;
-    right: 6px;
+    right: 10px;
     opacity: 0.5;
     transition:opacity 0.5s
 }
-.show-right-panel:hover {
+.button-show-right-panel:hover {
 	opacity:1;
 	transition:opacity 0.5s;
-}
-
-.o_form_view .o_form_sheet_bg {
-    position: relative !important;
-    max-width: none !important;
 }
 
 .full-screen-form {
