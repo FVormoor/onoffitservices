@@ -1,14 +1,16 @@
-# © 2023 syscoon GmbH (<https://syscoon.com>)
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
 # License OPL-1, See LICENSE file for full copyright and licensing details.
 import base64
 import csv
 import logging
 import time
 from datetime import datetime
+from functools import lru_cache
 from io import StringIO
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
 
@@ -62,15 +64,11 @@ class ImportDatev(models.Model):
 
     name = fields.Char(
         readonly=True,
-        default=lambda self: self.env["ir.sequence"].get(
-            "syscoon.datev.import.sequence"
-        )
+        default=lambda self: self.env["ir.sequence"].get("syscoon.datev.import.sequence")
         or "-",
     )
     description = fields.Char(required=True)
-    template_id = fields.Many2one(
-        "syscoon.datev.import.config", string="Import Template"
-    )
+    template_id = fields.Many2one("syscoon.datev.import.config", string="Import Template")
     journal_id = fields.Many2one("account.journal", required=True)
     one_move = fields.Boolean("In one move?")
     start_date = fields.Date(required=True, default=fields.Date.today())
@@ -109,21 +107,22 @@ class ImportDatev(models.Model):
         if self.get_import_config()["remove_datev_header"]:
             file = self.remove_datev_header(file)
         import_list = self.convert_lines(file)
-        logs = self.check_can_created(import_list)
-        if logs:
-            for log in logs:
-                if log["state"] == "error":
-                    log_error = True
-                self.env["syscoon.datev.import.log"].create(
-                    {
-                        "parent_id": log["parent_id"],
-                        "line": log["line"],
-                        "name": log["name"],
-                        "state": log["state"],
-                    }
-                )
-            if log_error:
-                self.write({"state": "error"})
+        log_vals = []
+        for log in self.check_can_created(import_list):
+            if log["state"] == "error":
+                log_error = True
+            log_vals.append(
+                {
+                    "parent_id": log["parent_id"],
+                    "line": log["line"],
+                    "name": log["name"],
+                    "state": log["state"],
+                }
+            )
+        if log_vals:
+            self.env["syscoon.datev.import.log"].create(log_vals)
+        if log_error:
+            self.write({"state": "error"})
         if not log_error:
             move_values = self.create_values(import_list)
         self._process_move_creation(move_values)
@@ -186,35 +185,22 @@ class ImportDatev(models.Model):
                 }
             )
 
-    def _prepare_reconcile_lines(self, move):
-        reconcile_lines = self.env["account.move"]
-        for line in move.line_ids:
-            if line.account_id.account_type not in [
-                "liability_payable",
-                "asset_receivable",
-            ]:
-                continue
-            reconcile_lines |= line
-        opposite_move = self.env["account.move"].search([("datev_ref", "=", move.ref)])
-        for line in opposite_move.line_ids:
-            if line.id in reconcile_lines.ids or line.account_id.account_type not in [
-                "liability_payable",
-                "asset_receivable",
-            ]:
-                continue
-            reconcile_lines |= line
-        return reconcile_lines
-
-    def reconcile_moves(self):
+    def reconcile_moves(self):  # noqa: C901
         for move in self.account_move_ids:
-            if not move.ref:
-                continue
-            reconcile_lines = self._prepare_reconcile_lines(move)
-            if len(reconcile_lines) > 1 and not reconcile_lines.filtered(
-                lambda l: l.reconciled
-            ):
-                reconcile_lines.reconcile()
-            if reconcile_lines >= 1:
+            reconcile_lines = move._prepare_datev_reconcile_lines()
+            if len(reconcile_lines) > 1:
+                for line in reconcile_lines:
+                    reconciled = bool(line.reconciled)
+                if not reconciled:
+                    reconcile_lines.reconcile()
+                self.env["syscoon.datev.import.log"].create(
+                    {
+                        "parent_id": self.id,
+                        "name": _("Move %s reconciled", move.ref),
+                        "state": "info",
+                    }
+                )
+            if len(reconcile_lines) == 1:
                 self.env["syscoon.datev.import.log"].create(
                     {
                         "parent_id": self.id,
@@ -513,72 +499,77 @@ class ImportDatev(models.Model):
             move_date = move_date.replace(year=self.end_date.year)
         return move_date
 
-    def get_object(self, model_obj, field, value, padding):
+    def get_object(self, model_obj, field, value, padding, domain=None):
+        if not isinstance(domain, list):
+            try:
+                domain = safe_eval(domain) if isinstance(domain, str) else []
+            except Exception:
+                domain = []
         return_object = False
         if model_obj == "account.tax":
-            taxes = self.env[model_obj].search(
-                [(field, "=", value), ("company_id", "=", self.company_id.id)]
-            )
-            for tax in taxes:
-                if tax.price_include:
-                    return_object = tax
+            domain += [(field, "=", value), ("company_id", "=", self.company_id.id)]
+            taxes = self.env[model_obj].search(domain)
+            return_object = taxes[:1]
         elif model_obj == "account.account":
             if padding:
                 return_object = self.env[model_obj].search(
-                    [
+                    domain
+                    + [
                         (field, "=", value.zfill(padding)),
-                        ("company_id", "=", self.company_id.id),
+                        ("company_ids", "in", [self.company_id.id]),
                     ]
                 )
             else:
                 return_object = self.env[model_obj].search(
-                    [(field, "=", value), ("company_id", "=", self.company_id.id)]
+                    domain
+                    + [(field, "=", value), ("company_ids", "in", [self.company_id.id])]
                 )
         elif padding:
             return_object = self.env[model_obj].search(
-                [(field, "=", value.zfill(padding))]
+                domain + [(field, "=", value.zfill(padding))]
             )
         else:
-            return_object = self.env[model_obj].search([(field, "=", value)])
+            return_object = self.env[model_obj].search(domain + [(field, "=", value)])
         return return_object
 
     def _prepare_default_move_values(self):
         move = {
             "ref": False,
             "date": False,
+            "company_id": self.company_id.id,
             "journal_id": self.journal_id.id,
             "line_ids": [(0, 0, [])],
             "move_type": "entry",
             "syscoon_datev_import_id": self.id,
         }
-        debit_move_line = {
+        debit_line = {
             "account_id": False,
             "partner_id": False,
             "name": False,
             "analytic_distribution": {},
-            "tax_ids": [(6, 0, [])],
+            "tax_ids": [],
             "tax_line_id": False,
             "debit": 0.0,
             "credit": 0.0,
             "tax_tag_ids": False,
         }
-        credit_move_line = {
+        credit_line = {
             "account_id": False,
             "partner_id": False,
             "name": False,
             "analytic_distribution": {},
-            "tax_ids": [(6, 0, [])],
+            "tax_ids": [],
             "tax_line_id": False,
             "debit": 0.0,
             "credit": 0.0,
             "tax_tag_ids": False,
         }
-        discount_move_line = {
+        discount_line = {
             "account_id": False,
             "partner_id": False,
             "name": False,
             "analytic_distribution": False,
-            "tax_ids": [(6, 0, [])],
+            "tax_ids": [],
             "tax_line_id": False,
             "debit": 0.0,
             "credit": 0.0,
@@ -586,138 +577,121 @@ class ImportDatev(models.Model):
         }
         return {
             "move": move,
-            "debit_move_line": debit_move_line,
-            "credit_move_line": credit_move_line,
-            "discount_move_line": discount_move_line,
+            "debit_line": debit_line,
+            "credit_line": credit_line,
+            "discount_line": discount_line,
         }
 
+    def _get_analytic_account(self, account_id, cost_center, values):
+        if account_id.account_type not in COST_ACCOUNT_TYPES:
+            return self.env["account.analytic.account"]
+        return self.get_object(
+            values["type"].object,
+            values["type"].field,
+            values["import_value"],
+            values["padding"],
+        ).filtered(lambda x: x.plan_id.datev_cost_center == cost_center)
+
+    def _get_tax(self, account_id):
+        tax_id = False
+        if account_id.datev_automatic_tax:
+            tax_ids = account_id.datev_automatic_tax
+            for tax in tax_ids:
+                if tax.price_include:
+                    tax_id = tax
+            if account_id.datev_vatid_required and len(tax_ids) == 1:
+                tax_id = tax_ids[0]
+        return tax_id
+
+    def _is_cost_account(self, account_id):
+        return account_id and account_id.account_type in COST_ACCOUNT_TYPES
+
     def create_values(self, vals_list):  # noqa: C901
+        @lru_cache
+        def _partner(field_key, number):
+            return partner.search([(f"{field_key}_number", "=", number)], limit=1)
+
         moves = []
         partner = self.env["res.partner"]
+        move_obj = self.env["account.move"]
+        company_currency = self.company_id.currency_id.name
 
         for values in vals_list:
-            for _k, v in values.items():
-                if v["type"].type == "move_sign":
-                    sign = self.check_move_sign(v["import_value"])
             default_values = self._prepare_default_move_values()
             move = default_values["move"]
-            debit_move_line = default_values["debit_move_line"]
-            credit_move_line = default_values["credit_move_line"]
-            discount_move_line = default_values["discount_move_line"]
+            debit_line = default_values["debit_line"]
+            credit_line = default_values["credit_line"]
+            discount_line = default_values["discount_line"]
 
+            sign = "s"
             has_currency = False
             taxes = False
             tax_id = False
             tax_direction = False
-            opposite_move = False
-
             for _k, v in values.items():
-                if v["type"].type == "currency" and v["import_value"]:
-                    has_currency = True
-                if v["type"].type == "move_date":
+                if v["type"].type == "move_sign":
+                    sign = self.check_move_sign(v["import_value"])
+                elif v["type"].type == "currency" and v["import_value"]:
+                    has_currency = v["import_value"] != company_currency
+                elif v["type"].type == "move_date":
                     move["date"] = self.get_date(v["date_format"], v["import_value"])
-                if v["type"].type == "move_name":
+                elif v["type"].type == "move_name":
                     move["ref"] = v["import_value"]
-                if v["type"].type == "move_ref":
-                    debit_move_line["name"] = v["import_value"]
-                    credit_move_line["name"] = v["import_value"]
-                if v["type"].type == "guid":
+                elif v["type"].type == "move_ref":
+                    debit_line["name"] = v["import_value"]
+                    credit_line["name"] = v["import_value"]
+                elif v["type"].type == "guid":
                     move["syscoon_datev_import_guid"] = v["import_value"]
 
+            amount_key = "base_amount" if has_currency else "amount"
             for _k, v in values.items():
-                if has_currency:
-                    if v["type"].type == "base_amount":
-                        amount_value = self.convert_to_float(v["import_value"])
-                        if sign == "s":
-                            debit_move_line["debit"] = amount_value
-                            credit_move_line["credit"] = amount_value
-                        if sign == "h":
-                            debit_move_line["credit"] = amount_value
-                            credit_move_line["debit"] = amount_value
-                else:
-                    if v["type"].type == "amount":
-                        amount_value = self.convert_to_float(v["import_value"])
-                        if sign == "s":
-                            debit_move_line["debit"] = amount_value
-                            credit_move_line["credit"] = amount_value
-                        if sign == "h":
-                            debit_move_line["credit"] = amount_value
-                            credit_move_line["debit"] = amount_value
+                if v["type"].type == amount_key:
+                    amount_value = self.convert_to_float(v["import_value"])
+                    debit_key, credit_key = (
+                        ("debit", "credit") if sign == "s" else ("credit", "debit")
+                    )
+                    debit_line[debit_key] = amount_value
+                    credit_line[credit_key] = amount_value
 
             for _k, v in values.items():
                 if v["type"].type == "account":
-                    debit_move_line["account_id"] = self.get_object(
+                    debit_line["account_id"] = self.get_object(
                         v["type"].object,
                         v["type"].field,
                         v["import_value"],
                         v["padding"],
                     )
-                    if (
-                        debit_move_line["account_id"]
-                        and debit_move_line["account_id"].account_type
-                        in COST_ACCOUNT_TYPES
-                    ):
-                        tax_direction = "debit_move_line"
-                    if debit_move_line["account_id"].datev_automatic_tax:
-                        tax_ids = debit_move_line["account_id"].datev_automatic_tax
-                        for tax in tax_ids:
-                            if tax.price_include:
-                                tax_id = tax
-                        if (
-                            debit_move_line["account_id"].datev_vatid_required
-                            and len(tax_ids) == 1
-                        ):
-                            tax_id = tax_ids[0]
-                    if not debit_move_line["account_id"]:
-                        partner_debit_id = partner.search(
-                            [("debitor_number", "=", v["import_value"])]
-                        )
-                        partner_credit_id = partner.search(
-                            [("creditor_number", "=", v["import_value"])]
-                        )
+                    if self._is_cost_account(debit_line["account_id"]):
+                        tax_direction = "debit_line"
+                    tax_id = self._get_tax(debit_line["account_id"])
+                    if not debit_line["account_id"]:
+                        partner_debit_id = _partner("debitor", v["import_value"])
+                        partner_credit_id = _partner("creditor", v["import_value"])
                         if partner_debit_id:
-                            debit_move_line[
-                                "account_id"
-                            ] = partner_debit_id.property_account_receivable_id
-                            debit_move_line["partner_id"] = partner_debit_id.id
-                            credit_move_line["partner_id"] = partner_debit_id.id
+                            debit_line["account_id"] = (
+                                partner_debit_id.property_account_receivable_id
+                            )
+                            debit_line["partner_id"] = partner_debit_id.id
+                            credit_line["partner_id"] = partner_debit_id.id
                         if partner_credit_id:
-                            debit_move_line[
-                                "account_id"
-                            ] = partner_credit_id.property_account_payable_id
-                            debit_move_line["partner_id"] = partner_credit_id.id
-                            credit_move_line["partner_id"] = partner_credit_id.id
+                            debit_line["account_id"] = (
+                                partner_credit_id.property_account_payable_id
+                            )
+                            debit_line["partner_id"] = partner_credit_id.id
+                            credit_line["partner_id"] = partner_credit_id.id
                 if v["type"].type == "counteraccount":
-                    credit_move_line["account_id"] = self.get_object(
+                    credit_line["account_id"] = self.get_object(
                         v["type"].object,
                         v["type"].field,
                         v["import_value"],
                         v["padding"],
                     )
-                    if (
-                        credit_move_line["account_id"]
-                        and credit_move_line["account_id"].account_type
-                        in COST_ACCOUNT_TYPES
-                    ):
-                        tax_direction = "credit_move_line"
-                    if credit_move_line["account_id"].datev_automatic_tax:
-                        tax_direction = "credit_move_line"
-                        tax_ids = credit_move_line["account_id"].datev_automatic_tax
-                        for tax in tax_ids:
-                            if tax.price_include:
-                                tax_id = tax
-                        if (
-                            credit_move_line["account_id"].datev_vatid_required
-                            and len(tax_ids) == 1
-                        ):
-                            tax_id = tax_ids[0]
-                    if not credit_move_line["account_id"]:
-                        partner_debit_id = partner.search(
-                            [("debitor_number", "=", v["import_value"])]
-                        )
-                        partner_credit_id = partner.search(
-                            [("creditor_number", "=", v["import_value"])]
-                        )
+                    if self._is_cost_account(credit_line["account_id"]):
+                        tax_direction = "credit_line"
+                    tax_id = self._get_tax(credit_line["account_id"])
+                    if not credit_line["account_id"]:
+                        partner_debit_id = _partner("debitor", v["import_value"])
+                        partner_credit_id = _partner("creditor", v["import_value"])
                         if len(partner_credit_id) > 1:
                             raise UserError(
                                 _(
@@ -727,11 +701,11 @@ class ImportDatev(models.Model):
                                 )
                             )
                         if partner_credit_id:
-                            credit_move_line[
-                                "account_id"
-                            ] = partner_credit_id.property_account_payable_id
-                            credit_move_line["partner_id"] = partner_credit_id.id
-                            debit_move_line["partner_id"] = partner_credit_id.id
+                            credit_line["account_id"] = (
+                                partner_credit_id.property_account_payable_id
+                            )
+                            credit_line["partner_id"] = partner_credit_id.id
+                            debit_line["partner_id"] = partner_credit_id.id
                         if len(partner_debit_id) > 1:
                             raise UserError(
                                 _(
@@ -741,13 +715,13 @@ class ImportDatev(models.Model):
                                 )
                             )
                         if partner_debit_id:
-                            credit_move_line[
-                                "account_id"
-                            ] = partner_debit_id.property_account_receivable_id
-                            credit_move_line["partner_id"] = partner_debit_id.id
-                            debit_move_line["partner_id"] = partner_debit_id.id
+                            credit_line["account_id"] = (
+                                partner_debit_id.property_account_receivable_id
+                            )
+                            credit_line["partner_id"] = partner_debit_id.id
+                            debit_line["partner_id"] = partner_debit_id.id
                     if tax_id and not tax_direction:
-                        tax_direction = "credit_move_line"
+                        tax_direction = "credit_line"
 
             for _k, v in values.items():
                 if v["type"].type == "tax_key" and v["import_value"]:
@@ -757,157 +731,102 @@ class ImportDatev(models.Model):
                             v["type"].field,
                             v["import_value"],
                             v["padding"],
+                            domain=v["type"].domain,
                         )
                     else:
                         if (
-                            debit_move_line["account_id"]
-                            and tax_direction in ("debit_move_line", "credit_move_line")
-                            and debit_move_line["account_id"].datev_automatic_tax
-                            and debit_move_line["account_id"].datev_no_tax
+                            debit_line["account_id"]
+                            and tax_direction in ("debit_line", "credit_line")
+                            and debit_line["account_id"].datev_automatic_tax
+                            and debit_line["account_id"].datev_no_tax
                         ):
-                            tax_id = False
+                            tax_id = self.env["account.tax"]
 
                 elif v["type"].type == "tax_key" and not v["import_value"]:
-                    if (
-                        debit_move_line["account_id"]
-                        and tax_direction == "debit_move_line"
-                    ) and (
-                        debit_move_line["account_id"].datev_automatic_tax
-                        and debit_move_line["account_id"].datev_automatic_tax
-                        and not debit_move_line["account_id"].datev_no_tax
+                    if (debit_line["account_id"] and tax_direction == "debit_line") and (
+                        debit_line["account_id"].datev_automatic_tax
+                        and debit_line["account_id"].datev_automatic_tax
+                        and not debit_line["account_id"].datev_no_tax
                     ):
-                        tax_id = debit_move_line[
-                            "account_id"
-                        ].datev_automatic_tax.filtered(
+                        tax_id = debit_line["account_id"].datev_automatic_tax.filtered(
                             lambda x: x.price_include is True
                         )
                     if (
-                        credit_move_line["account_id"]
-                        and tax_direction == "credit_move_line"
+                        credit_line["account_id"] and tax_direction == "credit_line"
                     ) and (
-                        credit_move_line["account_id"].datev_automatic_tax
-                        and credit_move_line["account_id"].datev_automatic_tax
-                        and not credit_move_line["account_id"].datev_no_tax
+                        credit_line["account_id"].datev_automatic_tax
+                        and credit_line["account_id"].datev_automatic_tax
+                        and not credit_line["account_id"].datev_no_tax
                     ):
-                        tax_id = credit_move_line[
-                            "account_id"
-                        ].datev_automatic_tax.filtered(
+                        tax_id = credit_line["account_id"].datev_automatic_tax.filtered(
                             lambda x: x.price_include is True
                         )
-                if v["type"].type == "cost1" and v["import_value"]:
-                    if debit_move_line["account_id"].account_type in COST_ACCOUNT_TYPES:
-                        analytic_account_id = self.get_object(
-                            v["type"].object,
-                            v["type"].field,
-                            v["import_value"],
-                            v["padding"],
-                        ).filtered(lambda x: x.plan_id.datev_cost_center == 'add_to_kost1').id
-                        if analytic_account_id:
-                            debit_move_line["analytic_distribution"][str(analytic_account_id)] = 100
-                    if (
-                        credit_move_line["account_id"].account_type
-                        in COST_ACCOUNT_TYPES
+                if v["type"].type in ("cost1", "cost2") and v["import_value"]:
+                    cost_key = {"cost1": "add_to_kost1", "cost2": "add_to_kost2"}.get(
+                        v["type"].type
+                    )
+                    if debit_analytic := self._get_analytic_account(
+                        debit_line["account_id"], cost_key, v
                     ):
-                        analytic_account_id = self.get_object(
-                            v["type"].object,
-                            v["type"].field,
-                            v["import_value"],
-                            v["padding"],
-                        ).filtered(lambda x: x.plan_id.datev_cost_center == 'add_to_kost1').id
-                        if analytic_account_id:
-                            credit_move_line["analytic_distribution"][
-                                str(analytic_account_id)
-                            ] = 100
-                if v["type"].type == "cost2" and v["import_value"]:
-                    if debit_move_line["account_id"].account_type in COST_ACCOUNT_TYPES:
-                        analytic_account_id = self.get_object(
-                            v["type"].object,
-                            v["type"].field,
-                            v["import_value"],
-                            v["padding"],
-                        ).filtered(lambda x: x.plan_id.datev_cost_center == 'add_to_kost2').id
-                        if analytic_account_id:
-                            debit_move_line["analytic_distribution"][str(analytic_account_id)] = 100
-                    if (
-                        credit_move_line["account_id"].account_type
-                        in COST_ACCOUNT_TYPES
+                        debit_line["analytic_distribution"][str(debit_analytic.id)] = 100
+                    if credit_analytic := self._get_analytic_account(
+                        credit_line["account_id"], cost_key, v
                     ):
-                        analytic_account_id = self.get_object(
-                            v["type"].object,
-                            v["type"].field,
-                            v["import_value"],
-                            v["padding"],
-                        ).filtered(lambda x: x.plan_id.datev_cost_center == 'add_to_kost2').id
-                        if analytic_account_id:
-                            credit_move_line["analytic_distribution"][
-                                str(analytic_account_id)
-                            ] = 100
+                        credit_line["analytic_distribution"][
+                            str(credit_analytic.id)
+                        ] = 100
             account_with_tax = any(
                 (
-                    credit_move_line["account_id"].account_type
-                    not in NO_TAX_ACCOUNT_TYPES,
-                    debit_move_line["account_id"].account_type
-                    not in NO_TAX_ACCOUNT_TYPES,
+                    credit_line["account_id"].account_type not in NO_TAX_ACCOUNT_TYPES,
+                    debit_line["account_id"].account_type not in NO_TAX_ACCOUNT_TYPES,
                 )
             )
             if tax_id and account_with_tax:
-                if (
-                    debit_move_line["account_id"].account_type
-                    not in NO_TAX_ACCOUNT_TYPES
-                ):
-                    tax_direction = "debit_move_line"
-                if (
-                    credit_move_line["account_id"].account_type
-                    not in NO_TAX_ACCOUNT_TYPES
-                ):
-                    tax_direction = "credit_move_line"
+                if debit_line["account_id"].account_type not in NO_TAX_ACCOUNT_TYPES:
+                    tax_direction = "debit_line"
+                if credit_line["account_id"].account_type not in NO_TAX_ACCOUNT_TYPES:
+                    tax_direction = "credit_line"
 
                 if not tax_direction:
-                    if (
-                        debit_move_line["account_id"].account_type
-                        not in NO_TAX_ACCOUNT_TYPES
-                    ):
-                        tax_direction = "debit_move_line"
-                    if (
-                        credit_move_line["account_id"].account_type
-                        not in NO_TAX_ACCOUNT_TYPES
-                    ):
-                        tax_direction = "credit_move_line"
+                    if debit_line["account_id"].account_type not in NO_TAX_ACCOUNT_TYPES:
+                        tax_direction = "debit_line"
+                    if credit_line["account_id"].account_type not in NO_TAX_ACCOUNT_TYPES:
+                        tax_direction = "credit_line"
                 if (
-                    debit_move_line["account_id"].account_type
-                    not in NO_TAX_ACCOUNT_TYPES
-                    and tax_direction == "debit_move_line"
+                    debit_line["account_id"].account_type not in NO_TAX_ACCOUNT_TYPES
+                    and tax_direction == "debit_line"
                 ):
-                    if debit_move_line["debit"]:
-                        taxes = tax_id.compute_all(debit_move_line["debit"])
-                        debit_move_line["debit"] = taxes["total_excluded"]
-                    if debit_move_line["credit"]:
-                        taxes = tax_id.compute_all(debit_move_line["credit"])
-                        debit_move_line["credit"] = taxes["total_excluded"]
-                    debit_move_line["tax_ids"] = [(6, 0, tax_id.ids)]
-                    debit_move_line["tax_tag_ids"] = [(6, 0, taxes["base_tags"])]
+                    if debit_line["debit"]:
+                        taxes = tax_id.compute_all(debit_line["debit"])
+                        debit_line["debit"] = taxes["total_excluded"]
+                    if debit_line["credit"]:
+                        taxes = tax_id.compute_all(debit_line["credit"])
+                        debit_line["credit"] = taxes["total_excluded"]
+                    debit_line["tax_ids"] = [(6, 0, tax_id.ids)]
+                    if taxes and taxes.get("base_tags", False):
+                        debit_line["tax_tag_ids"] = [(6, 0, taxes["base_tags"])]
                 if (
-                    credit_move_line["account_id"].account_type in COST_ACCOUNT_TYPES
-                    and tax_direction == "credit_move_line"
+                    credit_line["account_id"].account_type in COST_ACCOUNT_TYPES
+                    and tax_direction == "credit_line"
                 ):
-                    if credit_move_line["debit"]:
-                        taxes = tax_id.compute_all(credit_move_line["debit"])
-                        credit_move_line["debit"] = taxes["total_excluded"]
-                    if credit_move_line["credit"]:
-                        taxes = tax_id.compute_all(credit_move_line["credit"])
-                        credit_move_line["credit"] = taxes["total_excluded"]
-                    credit_move_line["tax_ids"] = [(6, 0, tax_id.ids)]
-                    credit_move_line["tax_tag_ids"] = [(6, 0, taxes["base_tags"])]
+                    if credit_line["debit"]:
+                        taxes = tax_id.compute_all(credit_line["debit"])
+                        credit_line["debit"] = taxes["total_excluded"]
+                    if credit_line["credit"]:
+                        taxes = tax_id.compute_all(credit_line["credit"])
+                        credit_line["credit"] = taxes["total_excluded"]
+                    credit_line["tax_ids"] = [(6, 0, tax_id.ids)]
+                    if taxes and taxes.get("base_tags", False):
+                        credit_line["tax_tag_ids"] = [(6, 0, taxes["base_tags"])]
 
             for _k, v in values.items():
                 if v["type"].type == "discount_amount" and v["import_value"]:
-                    discount_move_line["name"] = _("Discount")
+                    discount_line["name"] = _("Discount")
                     amount = self.convert_to_float(v["import_value"])
-                    if move["ref"] != "0" or move["ref"] is not False:
-                        opposite_move = self.env["account.move"].search(
-                            [("datev_ref", "=", move["ref"])]
+                    if move["ref"] not in ("0", False):
+                        opposite_move = move_obj._get_opposite_datev_moves(
+                            ref=move["ref"]
                         )
-                    if opposite_move:
                         for line in opposite_move.line_ids:
                             if (
                                 line.account_id.account_type in COST_ACCOUNT_TYPES
@@ -916,43 +835,44 @@ class ImportDatev(models.Model):
                                 tax_id = line.tax_ids[0].with_context(
                                     force_price_include=True
                                 )
-                    if tax_id and tax_id.datev_discount_account:
-                        for tax in tax_id.datev_discount_account.datev_automatic_tax:
-                            if tax.price_include:
-                                tax_id = tax
-                    taxes = tax_id.compute_all(amount)
-                    discount_move_line["account_id"] = tax_id.datev_discount_account.id
-                    if debit_move_line["account_id"].account_type in [
-                        "receivable",
-                        "payable",
-                    ]:
-                        if debit_move_line["credit"]:
-                            discount_move_line["debit"] = taxes["total_excluded"]
-                            debit_move_line["credit"] += amount
-                        if debit_move_line["debit"]:
-                            discount_move_line["credit"] = taxes["total_excluded"]
-                            debit_move_line["debit"] += amount
-                    if credit_move_line["account_id"].account_type in [
-                        "receivable",
-                        "payable",
-                    ]:
-                        if credit_move_line["credit"]:
-                            discount_move_line["debit"] = taxes["total_excluded"]
-                            credit_move_line["credit"] += amount
-                        if credit_move_line["debit"]:
-                            discount_move_line["credit"] = taxes["total_excluded"]
-                            credit_move_line["debit"] += amount
-                    discount_move_line["tax_ids"] = [(6, 0, tax_id.ids)]
-                    discount_move_line["tax_tag_ids"] = [(6, 0, taxes["base_tags"])]
+                    if tax_id:
+                        if tax_id.datev_discount_account:
+                            for tax in tax_id.datev_discount_account.datev_automatic_tax:
+                                if tax.price_include:
+                                    tax_id = tax
+                        taxes = tax_id.compute_all(amount)
+                        discount_line["account_id"] = tax_id.datev_discount_account.id
+                        if debit_line["account_id"].account_type in [
+                            "asset_receivable",
+                            "liability_payable",
+                        ]:
+                            if debit_line["credit"]:
+                                discount_line["debit"] = taxes["total_excluded"]
+                                debit_line["credit"] += amount
+                            if debit_line["debit"]:
+                                discount_line["credit"] = taxes["total_excluded"]
+                                debit_line["debit"] += amount
+                        if credit_line["account_id"].account_type in [
+                            "asset_receivable",
+                            "liability_payable",
+                        ]:
+                            if credit_line["credit"]:
+                                discount_line["debit"] = taxes["total_excluded"]
+                                credit_line["credit"] += amount
+                            if credit_line["debit"]:
+                                discount_line["credit"] = taxes["total_excluded"]
+                                credit_line["debit"] += amount
+                        discount_line["tax_ids"] = [(6, 0, tax_id.ids)]
+                        discount_line["tax_tag_ids"] = [(6, 0, taxes["base_tags"])]
 
-            if not isinstance(debit_move_line["account_id"], int):
-                debit_move_line["account_id"] = debit_move_line["account_id"].id
-            if not isinstance(credit_move_line["account_id"], int):
-                credit_move_line["account_id"] = credit_move_line["account_id"].id
-            move["line_ids"] = [(0, 0, debit_move_line), (0, 0, credit_move_line)]
+            if not isinstance(debit_line["account_id"], int):
+                debit_line["account_id"] = debit_line["account_id"].id
+            if not isinstance(credit_line["account_id"], int):
+                credit_line["account_id"] = credit_line["account_id"].id
+            move["line_ids"] = [(0, 0, debit_line), (0, 0, credit_line)]
 
-            if discount_move_line["name"]:
-                move["line_ids"].append((0, 0, discount_move_line))
+            if discount_line["name"]:
+                move["line_ids"].append((0, 0, discount_line))
 
             if taxes:
                 for tax in taxes["taxes"]:
@@ -977,49 +897,48 @@ class ImportDatev(models.Model):
                     )
                     partner_credit_id = partner.search(
                         [
-                            ("debitor_number", "!=", False),
+                            ("creditor_number", "!=", False),
                             ("creditor_number", "=", v["import_value"]),
                         ],
                         limit=1,
                     )
 
-                    if partner_credit_id:
-                        tax_move_line["partner_id"] = partner_credit_id.id
-                    if partner_debit_id:
-                        tax_move_line["partner_id"] = partner_debit_id.id
-                    if debit_move_line["tax_tag_ids"]:
-                        if debit_move_line["debit"]:
+                    if debit_line["tax_ids"]:
+                        if debit_line["debit"]:
                             if tax["amount"] < 0.0:
                                 tax_move_line["credit"] = -tax["amount"]
                             else:
                                 tax_move_line["debit"] = tax["amount"]
-                        if debit_move_line["credit"]:
+                        if debit_line["credit"]:
                             if tax["amount"] < 0.0:
                                 tax_move_line["debit"] = -tax["amount"]
                             else:
                                 tax_move_line["credit"] = tax["amount"]
-                    if credit_move_line["tax_tag_ids"]:
-                        if credit_move_line["debit"]:
+                        tax_move_line["partner_id"] = debit_line["partner_id"]
+                    if credit_line["tax_ids"]:
+                        if credit_line["debit"]:
                             if tax["amount"] < 0.0:
                                 tax_move_line["credit"] = -tax["amount"]
                             else:
                                 tax_move_line["debit"] = tax["amount"]
-                        if credit_move_line["credit"]:
+                        if credit_line["credit"]:
                             if tax["amount"] < 0.0:
                                 tax_move_line["debit"] = -tax["amount"]
                             else:
                                 tax_move_line["credit"] = tax["amount"]
-                    if discount_move_line["tax_tag_ids"]:
-                        if discount_move_line["debit"]:
+                        tax_move_line["partner_id"] = credit_line["partner_id"]
+                    if discount_line["tax_ids"]:
+                        if discount_line["debit"]:
                             if tax["amount"] < 0.0:
                                 tax_move_line["credit"] = -tax["amount"]
                             else:
                                 tax_move_line["debit"] = tax["amount"]
-                        if discount_move_line["credit"]:
+                        if discount_line["credit"]:
                             if tax["amount"] < 0.0:
                                 tax_move_line["debit"] = -tax["amount"]
                             else:
                                 tax_move_line["credit"] = tax["amount"]
+                        tax_move_line["partner_id"] = discount_line["partner_id"]
                     move["line_ids"].append((0, 0, tax_move_line))
             for ml in move["line_ids"]:
                 line_vals = ml[2] if len(ml) == 3 else {}
@@ -1074,7 +993,7 @@ class ImportDatevLog(models.Model):
 
     _name = "syscoon.datev.import.log"
     _order = "id desc"
-    _description = "Object for loggin the import"
+    _description = "Datev Import Logs"
 
     name = fields.Text()
     line = fields.Char()

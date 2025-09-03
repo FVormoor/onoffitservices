@@ -4,15 +4,13 @@
         <field name="name">res.config.settings.view.form.inherit.account</field>
         <field name="model">res.config.settings</field>
         <field name="priority" eval="60"/>
-        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="syscoon_partner_accounts.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <div id="use_separate_accounts" position="after">
-                <div class="col-12 col-lg-6 o_setting_box">
-                    <group>
-                        <field name="create_auto_account_on" widget="many2many_checkboxes" class="o_light_label"/>
-                    </group>
-                </div>
-            </div>
+            <xpath expr="//block[@id='syscoon_partner_accounts_general_settings']" position="inside">
+                <setting string="Create Automatic Accounts" help="If you enable this option, Odoo will create the accounts automatically for you.">
+                    <field name="create_auto_account_on" widget="many2many_checkboxes"/>
+                </setting>
+            </xpath>
         </field>
     </record>
 </odoo>

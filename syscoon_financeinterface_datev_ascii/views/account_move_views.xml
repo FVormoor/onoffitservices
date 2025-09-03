@@ -10,10 +10,10 @@
         <field name="arch" type="xml">
             <xpath expr="//group" position="inside">
                 <field name="export_finance_interface_active" invisible="1"/>
-                <group id="syscoon_financeinterface_datev" attrs="{'invisible': [('export_finance_interface_active', '=', False)]}">
+                <group id="syscoon_financeinterface_datev" invisible="not export_finance_interface_active">
                     <group>
                         <field name="datev_checks_enabled"/>
-                        <field name="datev_ref" readonly="0"/>
+                        <field name="datev_ref" force_save="1"/>
                     </group>
                 </group>
             </xpath>

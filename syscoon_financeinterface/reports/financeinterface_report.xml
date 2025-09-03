@@ -4,26 +4,35 @@
     <template id="export_report_document">
         <t t-call="web.internal_layout">
             <div class="row mt32 mb32">
-                <h1>Protocol for exported acoount moves</h1>
+                <h1>Protocol for exported account moves</h1>
             </div>
-            <div class="row mt32 mb32">
-                <div class="col-auto">
-                    <strong>Date:</strong>
-                    <p t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
-                </div>
-                <div class="col-auto">
-                    <strong>Name:</strong>
-                    <p class="m-0" t-field="doc.name"/>
-                </div>
-                <div class="col-auto">
-                    <strong>Export Modus:</strong>
-                    <p class="m-0" t-field="doc.mode"/>
-                </div>
-                <div class="col-auto">
-                    <strong>Period:</strong>
-                    <p class="m-0" t-field="doc.period"/>
+            <div class="container mt32 mb32">
+                <div class="row align-items-start flex-wrap">
+                    <div class="col-auto me-5 mb-2">
+                        <strong>Date:</strong><br/>
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                    </div>
+                    <div class="col-auto me-5 mb-2">
+                        <strong>Name:</strong><br/>
+                        <span t-field="doc.name"/>
+                    </div>
+                    <div class="col-auto me-5 mb-2">
+                        <strong>Export Modus:</strong><br/>
+                        <span t-field="doc.mode"/>
+                    </div>
+                    <div class="col-auto" t-if="doc.type == 'date'">
+                        <strong>Date:</strong>
+                        <p class="m-0" t-field="doc.start_date"/>
+                    </div>
+                    <div class="col-auto" t-if="doc.type == 'date_range'">
+                        <strong>Period:</strong>
+                        <p class="m-0">
+                            <span t-field="doc.start_date"/> - <span t-field="doc.end_date"/>
+                        </p>
+                    </div>
                 </div>
             </div>
+
             <div class="row mt32 mb32" t-if="doc.log">
                 <div class="col-12">
                     <strong>Log:</strong>

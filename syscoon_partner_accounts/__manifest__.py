@@ -1,13 +1,13 @@
-# © 2023 syscoon GmbH (<https://syscoon.com>)
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
 # License OPL-1, See LICENSE file for full copyright and licensing details.
 {
     "name": "syscoon Partner Debit and Credit Accounts",
-    "version": "16.0.0.0.8",
+    "version": "18.0.0.0.5",
     "author": "syscoon Estonia OÜ",
     "license": "OPL-1",
     "category": "Accounting",
     "website": "https://syscoon.com",
-    "depends": ["syscoon_partner_customer_supplier_number"],
+    "depends": ["account"],
     "description": """
         If a partner is created a new debit and/or credit account
         will be created following a
@@ -19,4 +19,5 @@
         "views/res_partner.xml",
     ],
     "installable": True,
+    "module_type": "official",
 }

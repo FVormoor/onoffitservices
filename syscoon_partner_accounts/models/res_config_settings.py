@@ -1,61 +1,66 @@
-# © 2023 syscoon GmbH (<https://syscoon.com>)
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
 # License OPL-1, See LICENSE file for full copyright and licensing details.
 from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = "res.config.settings"
 
     auto_account_creation = fields.Boolean(
         related="company_id.auto_account_creation", readonly=False
     )
     receivable_sequence_id = fields.Many2one(
-        'ir.sequence', 'Receivable Sequence',
+        "ir.sequence",
+        "Receivable Sequence",
         related="company_id.receivable_sequence_id",
         readonly=False,
-        domain=[('code', '=', 'partner.auto.receivable')])
-    customer_number_sequence_id = fields.Many2one(
-        'ir.sequence', 'Customer Number Sequence',
-        related="company_id.customer_number_sequence_id",
-        readonly=False,
-        domain=[('code', '=', 'partner.auto.customer.number')])
+        domain=[("code", "=", "partner.auto.receivable")],
+    )
     receivable_template_id = fields.Many2one(
-        'account.account',
-        'Receivable Account Template',
+        "account.account",
+        "Receivable Account Template",
         related="company_id.receivable_template_id",
         readonly=False,
-        domain=[('account_type', '=', 'asset_receivable')])
+        domain=[("account_type", "=", "asset_receivable")],
+    )
     payable_sequence_id = fields.Many2one(
-        'ir.sequence',
-        'Payable Sequence',
+        "ir.sequence",
+        "Payable Sequence",
         related="company_id.payable_sequence_id",
         readonly=False,
-        domain=[('code', '=', 'partner.auto.payable')])
-    supplier_number_sequence_id = fields.Many2one(
-        'ir.sequence',
-        'Supplier Number Sequence',
-        related="company_id.supplier_number_sequence_id",
-        readonly=False,
-        domain=[('code', '=', 'partner.auto.supplier.number')])
+        domain=[("code", "=", "partner.auto.payable")],
+    )
     payable_template_id = fields.Many2one(
-        'account.account',
-        'Payable Account Template',
+        "account.account",
+        "Payable Account Template",
         related="company_id.payable_template_id",
         readonly=False,
-        domain=[('account_type', '=', 'liability_payable')])
-    add_number_to_partner_number = fields.Boolean(
-        'Add Account Number as Customer- / Supplier-Numbers',
-        related="company_id.add_number_to_partner_number",
-        readonly=False)
-    add_number_to_partner_ref = fields.Boolean(
-        'Add Customer or Supplier Number to Partner Reference',
-        related="company_id.add_number_to_partner_ref",
-        readonly=False)
-    use_separate_partner_numbers = fields.Boolean(
-        'Use separate Customer- / Supplier-Numbers',
-        related="company_id.use_separate_partner_numbers",
-        readonly=False)
+        domain=[("account_type", "=", "liability_payable")],
+    )
     use_separate_accounts = fields.Boolean(
-        'Use Separate Accounts',
+        "Use Separate Accounts",
         related="company_id.use_separate_accounts",
-        readonly=False)
+        readonly=False,
+    )
+
+    def action_create_receivable_sequence(self):
+        self.ensure_one()
+        sequence = self._create_sequence("partner.auto.receivable", 10000)
+        self.update({"receivable_sequence_id": sequence.id})
+
+    def action_create_payable_sequence(self):
+        self.ensure_one()
+        sequence = self._create_sequence("partner.auto.payable", 70000)
+        self.update({"payable_sequence_id": sequence.id})
+
+    def _create_sequence(self, code, number_next):
+        self.ensure_one()
+        sequence = self.env["ir.sequence"].create(
+            {
+                "name": f"{self.env.company.name} {code}",
+                "code": code,
+                "number_next": number_next,
+                "company_id": self.env.company.id,
+            }
+        )
+        return sequence

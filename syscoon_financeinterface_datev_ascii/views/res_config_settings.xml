@@ -8,203 +8,44 @@
         <field name="priority" eval="80"/>
         <field name="inherit_id" ref="syscoon_financeinterface.view_syscoon_financeinterface_configuration"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@id='syscoon_financeinterface']" position="inside">
-                <div id="syscoon_financeinterface_datev_basic_settings" attrs="{'invisible': [('company_export_finance_interface_active', '=', False)]}">
-                    <h2>Basic DATEV Settings</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div class="col-12 col-lg-6 o_setting_box" title="Basic settings for the DATEV exports.">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <div class="content-group">
-                                    <div class="row mt16">
-                                        <label string="Accountant Number" for="company_datev_accountant_number" class="col-lg-3 o_light_label"/>
-                                        <field name="company_datev_accountant_number"/>
-                                    </div>
-                                    <div class="row mt16">
-                                        <label string="Client Number" for="company_datev_client_number" class="col-lg-3 o_light_label"/>
-                                        <field name="company_datev_client_number"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" title="Enables fixing of moves when they are imported to DATEV.">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">Automatic Settings for Account and Taxes</span>
-                                <div class="text-muted">
-                                        Sets automatic accounts and tax kexs for use in DATEV automatically.
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group">
-                                        <field name="company_datev_auto_set_accounts" class="o_light_label mt16" widget="radio"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" title="Enables checks for DATEV compliance of account moves.">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">Enable DATEV Checks</span>
-                                <div class="text-muted">
-                                        Enables checks for DATEV compliance of account moves.
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <field name="company_datev_checks_enabled" class="col-lg-1 ml16"/>
-                                            <label for="company_datev_checks_enabled"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" title="Add BEDI Beleglink in ASCII Export.">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">BEDI Beleglink</span>
-                                <div class="text-muted">
-                                        If activated the BEDI Beleglink ist filled for outgoing and incoming invoices / credit notes.
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <field name="company_datev_use_bedi" class="col-lg-1 ml16"/>
-                                            <label for="company_datev_use_bedi"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" title="Enables fixing of moves when they are imported to DATEV.">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">Enable fix moves</span>
-                                <div class="text-muted">
-                                        Enables fixing of moves when they are imported to DATEV.
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <field name="company_datev_enable_fixing" class="col-lg-1 ml16"/>
-                                            <label for="company_datev_enable_fixing"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" title="Removes the leadings Zeros from the Accounts in Odoo during the Export.">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">Remove leading zeros</span>
-                                <div class="text-muted">
-                                        Removes the leadings Zeros from the Accounts in Odoo during the Export.
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <field name="company_datev_remove_leading_zeros" class="col-lg-1 ml16"/>
-                                            <label for="company_datev_remove_leading_zeros"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" title="Digits for Account Codes">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">Digits for accouont codes</span>
-                                <div class="text-muted">
-                                        Set here the lenght of the account code digits for your Company
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <field name="company_datev_account_code_digits" class="col-lg-2 ml16"/>
-                                            <label for="company_datev_account_code_digits"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="syscoon_financeinterface_datev_basic_settings">
-                    <h2>DATEV ASCII Move Export Settings</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div class="col-12 col-lg-6 o_setting_box" title="DATEV Export Method">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">DATEV Export Method</span>
-                                <div class="text-muted">
-                                        Set the export method for the DATEV ASCII export. You can choose between net and gross.
-                                        Net = export of the moves with extra tax lines, no bookingkeys
-                                        Gross = export with tax keys and auto accounts
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <label for="company_datev_export_method" class="col-lg-3 o_light_label"/>
-                                            <field name="company_datev_export_method"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" title="Date Format">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">Date Format</span>
-                                <div class="text-muted">
-                                        Format of the date for the export. You can set the date freely as your interface needs it.
-                                        For DATEV-ASCII the default format is "ddmm".
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <label for="company_datev_voucher_date_format" class="col-lg-3 o_light_label"/>
-                                            <field name="company_datev_voucher_date_format"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" title="Group Equal Move Lines">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">Group Equal Move Lines</span>
-                                <div class="text-muted">
-                                        This function has moved to account journals. Please set it from there for each journal separately.
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <!--label for="company_datev_group_lines" class="col-lg-3 o_light_label"/>
-                                                <field name="company_datev_group_lines"/-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 o_setting_box" title="Default Journals">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">Default Jornals</span>
-                                <div class="text-muted">
-                                        Default journals you want to have always in the Finance Export Wizard.
-                                        You can add or remove further journals at any time here or directly in the wizard.
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <label for="company_datev_default_journal_ids" class="col-lg-3 o_light_label"/>
-                                            <field name="company_datev_default_journal_ids" widget="many2many_tags"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <xpath expr="//block[@id='syscoon_financeinterface_basic_settings']" position="after">
+                <block title="syscoon Finance Interface (DATEV Settings)" id="syscoon_financeinterface_datev_basic_settings" invisible="not company_export_finance_interface_active">
+                    <setting company_dependent="1" help="Please put in the consultant number of your tax consultant.">
+                        <field name="company_datev_accountant_number" string="Consultant Number"/>
+                    </setting>
+                    <setting company_dependent="1" help="Please put in the client number of your company.">
+                        <field name="company_datev_client_number" string="Client Number"/>
+                    </setting>
+                    <setting company_dependent="1" help="Enables fixing of moves to not allow changes when they are imported to DATEV.">
+                        <field name="company_datev_enable_fixing" string="Fixing Moves"/>
+                    </setting>
+                    <setting company_dependent="1" help="Set the digits of your account codes lenght. Default is 4.">
+                        <field name="company_datev_account_code_digits" string="Code Digits Lenght"/>
+                    </setting>
+                    <setting company_dependent="1" help="In Odoo, the asset accounts containting a leanding zero like 0670 which is not necessary in DATEV. This option will remove it during the export.">
+                        <field name="company_datev_remove_leading_zeros" string="Remove Leading Zero"/>
+                    </setting>
+                    <setting company_dependent="1" help="Use BEDI (UUID) in invoices for exporting the moves linked to PDFs to DATEV. For a complete range of functions the syscoon_financeinterface_datev_xml module is necessary.">
+                        <field name="company_datev_use_bedi" string="Use BEDI"/>
+                    </setting>
+                    <setting company_dependent="1" help="Enable checks for a healthy and complient export to DATEV without problems of automatic accounts and taxes.">
+                        <field name="company_datev_checks_enabled" string="Enable DATEV Checks"/>
+                    </setting>
+                    <setting company_dependent="1" help="Let Odoo set the tax keys and 'autmatic account' settings automatically.">
+                        <field name="company_datev_auto_set_accounts" string="Automated Setting For Accounts and Taxes" widget="radio"/>
+                    </setting>
+                    <setting company_dependent="1" help="Enables use of Vendor Reference in Belegfeld 1, if not active move name is used.">
+                        <field name="company_datev_ref_from_ref" string="Enable Vendor Reference"/>
+                    </setting>
+                </block>
+                <block id="syscoon_financeinterface_datev_ascii_settings" title="syscoon Financeinterface (DATEV ASCII Export Settings)" invisible="not company_export_finance_interface_active">
+                    <setting company_dependent="1" help="Set the export method for the DATEV ASCII export. You can choose between net and gross. Net = export of the moves with extra tax lines, no tax keys. Gross = export with tax keys and auto accounts">
+                        <field name="company_datev_export_method" string="Preferred Export Method"/>
+                    </setting>
+                    <setting company_dependent="1" help="Format of the date for the export. You can set the date freely as your interface needs it. For DATEV-ASCII the default format is 'ddmm'.">
+                        <field name="company_datev_voucher_date_format" string="Date Format"/>
+                    </setting>
+                </block>
             </xpath>
         </field>
     </record>

@@ -1,11 +1,12 @@
-# See LICENSE file for full copyright and licensing details.
-
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    """ Inherits the res.company class and adds several fields for the finance interface"""
-    _inherit = 'res.company'
+    """Inherits the res.company class and adds several fields for the finance interface"""
+
+    _inherit = "res.company"
 
     export_finance_interface = fields.Selection(
         selection_add=[("datev_ascii_accounts", "DATEV ASCII Account Export")]
