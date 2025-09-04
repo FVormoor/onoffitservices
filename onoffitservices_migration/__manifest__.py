@@ -7,7 +7,6 @@
     "version": "18.0.1.0.1",
     "depends": [
         "base",
-        "syscoon_partner_accounts",
     ],
     "data": [],
     "license": "LGPL-3",
