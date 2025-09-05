@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-29 12:43+0000\n"
-"PO-Revision-Date: 2024-01-29 12:43+0000\n"
+"POT-Creation-Date: 2025-09-05 06:24+0000\n"
+"PO-Revision-Date: 2025-09-05 06:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,23 +17,18 @@ msgstr ""
 
 #. module: onoffitservices_reports
 #: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
-msgid "<span>|</span>"
-msgstr ""
-
-#. module: onoffitservices_reports
-#: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
 msgid "BIC:"
 msgstr ""
 
 #. module: onoffitservices_reports
 #: model:ir.model,name:onoffitservices_reports.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: onoffitservices_reports
 #: model:ir.model,name:onoffitservices_reports.model_base_document_layout
 msgid "Company Document Layout"
-msgstr ""
+msgstr "Dokumentenlayout des Unternehmens"
 
 #. module: onoffitservices_reports
 #: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
@@ -44,6 +39,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
 msgid "IBAN:"
 msgstr ""
+
+#. module: onoffitservices_reports
+#: model:ir.model,name:onoffitservices_reports.model_account_move_line
+msgid "Journal Item"
+msgstr "Buchungszeile"
 
 #. module: onoffitservices_reports
 #: model_terms:ir.ui.view,arch_db:onoffitservices_reports.external_layout_din5008_inherit
@@ -57,22 +57,12 @@ msgid "Managing Director(s)"
 msgstr "Geschäftsführer"
 
 #. module: onoffitservices_reports
-#. odoo-python
-#: code:addons/onoffitservices_reports/models/sale_order.py:0
-#, python-format
-msgid "Invoicing Address:"
-msgstr "Rechnungsadresse:"
+#: model:ir.model.fields,field_description:onoffitservices_reports.field_account_move_line__position
+#: model_terms:ir.ui.view,arch_db:onoffitservices_reports.report_invoice_document_inherit
+msgid "Pos"
+msgstr ""
 
 #. module: onoffitservices_reports
-#. odoo-python
-#: code:addons/onoffitservices_reports/models/sale_order.py:0
-#, python-format
-msgid "Invoicing and Shipping Address:"
-msgstr "Rechnungs- und Lieferadresse:"
-
-#. module: onoffitservices_reports
-#. odoo-python
-#: code:addons/onoffitservices_reports/models/sale_order.py:0
-#, python-format
-msgid "Shipping Address:"
-msgstr "Lieferadresse:"
+#: model:ir.model,name:onoffitservices_reports.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Verkaufsauftragszeile"
