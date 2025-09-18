@@ -1,6 +1,6 @@
 {
     "name": "OnOffItservices Reports",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "author": "IFE Gesellschaft für Forschung und Entwicklung",
     "category": "Customizations/Custom",
     "website": "https://www.ife.de",
