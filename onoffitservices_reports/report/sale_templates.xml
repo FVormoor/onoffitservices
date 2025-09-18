@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template
-        id="report_saleorder_document_inherit"
-        inherit_id="sale.report_saleorder_document"
-        priority="100"
+            id="report_saleorder_document_inherit"
+            inherit_id="sale.report_saleorder_document"
+            priority="100"
     >
-
+        <!-- Add changes from manually created view with name: onoff:report_saleorder_document to module  -->
+        <xpath expr="//tbody[@class='sale_tbody']//td" position="attributes">
+            <attribute name="style">vertical-align:top;</attribute>
+        </xpath>
         <!-- Hide the VAT paragraph instead of replacing it -->
         <xpath expr="//p[@t-if='doc.partner_id.vat']" position="attributes">
             <attribute name="style">display:none</attribute>
         </xpath>
 
         <xpath expr="//td[@name='td_name']" position="attributes">
-          <attribute name="style">vertical-align: top</attribute>
-        </xpath>
-        <xpath expr="//td[1]" position="attributes">
             <attribute name="style">vertical-align: top</attribute>
-            <attribute name="class">text-end</attribute>
         </xpath>
         <xpath expr="//td[@name='td_quantity']" position="attributes">
             <attribute name="style">vertical-align: top</attribute>
@@ -38,13 +37,17 @@
 
     <!-- Inherit from sale_order_line_position module to modify position display -->
     <template
-        id="report_saleorder_document_position_inherit"
-        inherit_id="sale_order_line_position.report_saleorder_document"
-        priority="101"
+            id="report_saleorder_document_position_inherit"
+            inherit_id="sale_order_line_position.report_saleorder_document"
+            priority="101"
     >
         <!-- Change position_formatted to position using attributes -->
         <xpath expr="//span[@t-field='line.position_formatted']" position="attributes">
             <attribute name="t-field">line.position</attribute>
+        </xpath>
+        <xpath expr="//td[span[@t-field='line.position']]" position="attributes">
+            <attribute name="style">vertical-align: top;</attribute>
+            <attribute name="class">text-end</attribute>
         </xpath>
     </template>
 </odoo>
