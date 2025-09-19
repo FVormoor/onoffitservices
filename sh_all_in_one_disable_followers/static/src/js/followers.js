@@ -1,50 +1,46 @@
-odoo.define("sh_all_in_one_disable_followers.Followers", function (require) {
-    "use strict";
+/** @odoo-module */
 
-    var AbstractField = require("web.AbstractField");
-    var concurrency = require("web.concurrency");
-    var core = require("web.core");
-    var Dialog = require("web.Dialog");
-    var field_registry = require("web.field_registry");
-    var Followers = require("mail.Followers");
+import { patch } from "@web/core/utils/patch";
+import { _t } from "@web/core/l10n/translation";
+import { FollowerList } from "@mail/core/web/follower_list";
+import { Chatter } from "@mail/chatter/web_portal/chatter";
 
-    var _t = core._t;
-    var QWeb = core.qweb;
+// FOR ADD FOLLOWERS WIZARD CONTEXT BUTTON ADD FOLLOWER ISSUE
 
-    Followers.include({
-        _inviteFollower: function (channel_only) {
-            var action = {
-                type: "ir.actions.act_window",
-                res_model: "mail.wizard.invite",
-                view_mode: "form",
-                views: [[false, "form"]],
-                name: _t("Invite Follower"),
-                target: "new",
-                context: {
-                    default_res_model: this.model,
-                    default_res_id: this.res_id,
-                    mail_invite_follower_channel_only: channel_only,
-                    manually_added_follower: true,
-                    allow_manual_create: true,
-                },
-            };
-            this.do_action(action, {
-                on_close: this._reload.bind(this),
-            });
-        },
+patch(FollowerList.prototype, {
+    onClickAddFollowers() {
+        document.body.click(); // hack to close dropdown
+        const action = {
+            type: "ir.actions.act_window",
+            res_model: "mail.wizard.invite",
+            view_mode: "form",
+            views: [[false, "form"]],
+            name: _t("Invite Follower"),
+            target: "new",
+            context: {
+                default_res_model: this.props.thread.model,
+                default_res_id: this.props.thread.id,
+                manually_added_follower: true,
+            },
+        };
+        this.action.doAction(action, {
+            onClose: () => {
+                this.props.onAddFollowers?.();
+            },
+        });
+    }
+});
 
-        _follow: function () {
-            var kwargs = {
-                partner_ids: [this.partnerID],
-                context: { manually_added_follower: true }, // FIXME
-            };
-            this._rpc({
-                model: this.model,
-                method: "message_subscribe",
-                args: [[this.res_id]],
-                kwargs: kwargs,
-            }).then(this._reload.bind(this));
-        },
-    });
+// FOR FOLLOW BUTTON ADD FOLLOWER ISSUE
 
+patch(Chatter.prototype, {
+    async _follow(threadModel, threadId) {
+        await this.orm.call(threadModel, "message_subscribe", [[threadId]], {
+            partner_ids: [this.store.self.id],
+            // CUSTOM CHANGES FOR MANNUALLY CONTEXT
+            context: { manually_added_follower: true },
+
+        });
+        this.onFollowerChanged();
+    }
 });

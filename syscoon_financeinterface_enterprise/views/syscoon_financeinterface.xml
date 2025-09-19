@@ -2,6 +2,6 @@
 <odoo>
     <!-- Switch menu "Invoicing" to "Accounting" -->
     <record id="syscoon_financeinterface.menu_finance_interface" model="ir.ui.menu">
-        <field name="parent_id" ref="account_accountant.menu_accounting"/>
+        <field name="parent_id" ref="accountant.menu_accounting"/>
     </record>
 </odoo>

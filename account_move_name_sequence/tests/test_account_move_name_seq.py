@@ -5,43 +5,94 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from datetime import datetime
+from unittest.mock import patch
 
 from freezegun import freeze_time
 
-from odoo import fields
+from odoo import Command, fields
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
+from odoo.tests import Form, TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
 class TestAccountMoveNameSequence(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.company = self.env.ref("base.main_company")
-        self.misc_journal = self.env["account.journal"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.company = cls.env.ref("base.main_company")
+        cls.partner = cls.env.ref("base.res_partner_3")
+        cls.misc_journal = cls.env["account.journal"].create(
             {
                 "name": "Test Journal Move name seq",
                 "code": "ADLM",
                 "type": "general",
-                "company_id": self.company.id,
+                "company_id": cls.company.id,
             }
         )
-        self.purchase_journal = self.env["account.journal"].create(
+        cls.sales_seq = cls.env["ir.sequence"].create(
+            {
+                "name": "TB2C",
+                "implementation": "no_gap",
+                "prefix": "TB2CSEQ/%(range_year)s/",
+                "use_date_range": True,
+                "number_increment": 1,
+                "padding": 4,
+                "company_id": cls.company.id,
+            }
+        )
+        cls.sales_journal = cls.env["account.journal"].create(
+            {
+                "name": "TB2C",
+                "code": "TB2C",
+                "type": "sale",
+                "company_id": cls.company.id,
+                "refund_sequence": True,
+                "sequence_id": cls.sales_seq.id,
+            }
+        )
+        cls.purchase_journal = cls.env["account.journal"].create(
             {
                 "name": "Test Purchase Journal Move name seq",
                 "code": "ADLP",
                 "type": "purchase",
-                "company_id": self.company.id,
+                "company_id": cls.company.id,
                 "refund_sequence": True,
             }
         )
-        self.accounts = self.env["account.account"].search(
-            [("company_id", "=", self.company.id)], limit=2
+        cls.accounts = cls.env["account.account"].search(
+            [("company_ids", "=", cls.company.id)], limit=2
         )
-        self.account1 = self.accounts[0]
-        self.account2 = self.accounts[1]
-        self.date = datetime.now()
+        cls.account1 = cls.accounts[0]
+        cls.account2 = cls.accounts[1]
+        cls.date = datetime.now()
+        cls.purchase_journal2 = cls.purchase_journal.copy()
+
+        cls.journals = (
+            cls.misc_journal
+            | cls.purchase_journal
+            | cls.sales_journal
+            | cls.purchase_journal2
+        )
+        # This patch was added to avoid test failures in the CI pipeline caused by the
+        # `account_journal_restrict_mode` module. It prevents a validation error when
+        # disabling restrict mode on journals used in the test, allowing moves to be
+        # set to draft and deleted.
+        with patch("odoo.models.BaseModel._validate_fields"):
+            cls.journals.restrict_mode_hash_table = False
+
+        cls.lines = [
+            Command.create({"account_id": cls.account1.id, "debit": 10}),
+            Command.create({"account_id": cls.account2.id, "credit": 10}),
+        ]
+        cls.invoice_line = [
+            Command.create(
+                {
+                    "account_id": cls.account1.id,
+                    "price_unit": 42.0,
+                    "quantity": 12,
+                },
+            )
+        ]
 
     def test_seq_creation(self):
         self.assertTrue(self.misc_journal.sequence_id)
@@ -63,16 +114,13 @@ class TestAccountMoveNameSequence(TransactionCase):
             {
                 "date": self.date,
                 "journal_id": self.misc_journal.id,
-                "line_ids": [
-                    (0, 0, {"account_id": self.account1.id, "debit": 10}),
-                    (0, 0, {"account_id": self.account2.id, "credit": 10}),
-                ],
+                "line_ids": self.lines,
             }
         )
         self.assertEqual(move.name, "/")
         move.action_post()
         seq = self.misc_journal.sequence_id
-        move_name = "%s%s" % (seq.prefix, "1".zfill(seq.padding))
+        move_name = "{}{}".format(seq.prefix, "1".zfill(seq.padding))
         move_name = move_name.replace("%(range_year)s", str(self.date.year))
         self.assertEqual(move.name, move_name)
         self.assertTrue(seq.date_range_ids)
@@ -102,10 +150,7 @@ class TestAccountMoveNameSequence(TransactionCase):
                 {
                     "date": "2021-12-31",
                     "journal_id": self.misc_journal.id,
-                    "line_ids": [
-                        (0, 0, {"account_id": self.account1.id, "debit": 10}),
-                        (0, 0, {"account_id": self.account2.id, "credit": 10}),
-                    ],
+                    "line_ids": self.lines,
                 }
             )
             move.action_post()
@@ -115,10 +160,7 @@ class TestAccountMoveNameSequence(TransactionCase):
                 {
                     "date": "2022-06-30",
                     "journal_id": self.misc_journal.id,
-                    "line_ids": [
-                        (0, 0, {"account_id": self.account1.id, "debit": 10}),
-                        (0, 0, {"account_id": self.account2.id, "credit": 10}),
-                    ],
+                    "line_ids": self.lines,
                 }
             )
             move.action_post()
@@ -129,14 +171,39 @@ class TestAccountMoveNameSequence(TransactionCase):
                 {
                     "date": "2022-07-01",
                     "journal_id": self.misc_journal.id,
-                    "line_ids": [
-                        (0, 0, {"account_id": self.account1.id, "debit": 10}),
-                        (0, 0, {"account_id": self.account2.id, "credit": 10}),
-                    ],
+                    "line_ids": self.lines,
                 }
             )
             move.action_post()
         self.assertEqual(move.name, "TEST-2022-07-0001")
+
+    def test_prefix_move_name_use_move_date_2(self):
+        seq = self.misc_journal.sequence_id
+        seq.prefix = "TEST-%(range_month)s-"
+        with freeze_time("2022-01-01"):
+            move = self.env["account.move"].create(
+                {
+                    "date": "2022-06-30",
+                    "journal_id": self.misc_journal.id,
+                    "line_ids": self.lines,
+                }
+            )
+            move.action_post()
+        self.assertEqual(move.name, "TEST-06-0001")
+
+    def test_prefix_move_name_use_move_date_3(self):
+        seq = self.misc_journal.sequence_id
+        seq.prefix = "TEST-%(range_day)s-"
+        with freeze_time("2022-01-01"):
+            move = self.env["account.move"].create(
+                {
+                    "date": "2022-01-01",
+                    "journal_id": self.misc_journal.id,
+                    "line_ids": self.lines,
+                }
+            )
+            move.action_post()
+        self.assertEqual(move.name, "TEST-01-0001")
 
     def test_in_invoice_and_refund(self):
         in_invoice = self.env["account.move"].create(
@@ -145,46 +212,20 @@ class TestAccountMoveNameSequence(TransactionCase):
                 "invoice_date": self.date,
                 "partner_id": self.env.ref("base.res_partner_3").id,
                 "move_type": "in_invoice",
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": self.account1.id,
-                            "price_unit": 42.0,
-                            "quantity": 12,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
+                "invoice_line_ids": self.invoice_line
+                + [
+                    Command.create(
                         {
                             "account_id": self.account1.id,
                             "price_unit": 48.0,
                             "quantity": 10,
-                        },
-                    ),
+                        }
+                    )
                 ],
             }
         )
         self.assertEqual(in_invoice.name, "/")
         in_invoice.action_post()
-
-        move_reversal = (
-            self.env["account.move.reversal"]
-            .with_context(active_model="account.move", active_ids=in_invoice.ids)
-            .create(
-                {
-                    "journal_id": in_invoice.journal_id.id,
-                    "reason": "no reason",
-                    "refund_method": "cancel",
-                }
-            )
-        )
-        reversal = move_reversal.reverse_moves()
-        reversed_move = self.env["account.move"].browse(reversal["res_id"])
-        self.assertTrue(reversed_move)
-        self.assertEqual(reversed_move.state, "posted")
 
         in_invoice = in_invoice.copy(
             {
@@ -193,18 +234,14 @@ class TestAccountMoveNameSequence(TransactionCase):
         )
         in_invoice.action_post()
 
-        move_reversal = (
-            self.env["account.move.reversal"]
-            .with_context(active_model="account.move", active_ids=in_invoice.ids)
-            .create(
-                {
-                    "journal_id": in_invoice.journal_id.id,
-                    "reason": "no reason",
-                    "refund_method": "modify",
-                }
-            )
+        move_reversal = self.env["account.move.reversal"].create(
+            {
+                "move_ids": in_invoice.ids,
+                "journal_id": in_invoice.journal_id.id,
+                "reason": "no reason",
+            }
         )
-        reversal = move_reversal.reverse_moves()
+        reversal = move_reversal.modify_moves()
         draft_invoice = self.env["account.move"].browse(reversal["res_id"])
         self.assertTrue(draft_invoice)
         self.assertEqual(draft_invoice.state, "draft")
@@ -217,18 +254,14 @@ class TestAccountMoveNameSequence(TransactionCase):
         )
         in_invoice.action_post()
 
-        move_reversal = (
-            self.env["account.move.reversal"]
-            .with_context(active_model="account.move", active_ids=in_invoice.ids)
-            .create(
-                {
-                    "journal_id": in_invoice.journal_id.id,
-                    "reason": "no reason",
-                    "refund_method": "refund",
-                }
-            )
+        move_reversal = self.env["account.move.reversal"].create(
+            {
+                "move_ids": in_invoice.ids,
+                "journal_id": in_invoice.journal_id.id,
+                "reason": "no reason",
+            }
         )
-        reversal = move_reversal.reverse_moves()
+        reversal = move_reversal.refund_moves()
         draft_reversed_move = self.env["account.move"].browse(reversal["res_id"])
         self.assertTrue(draft_reversed_move)
         self.assertEqual(draft_reversed_move.state, "draft")
@@ -241,23 +274,13 @@ class TestAccountMoveNameSequence(TransactionCase):
                 "invoice_date": self.date,
                 "partner_id": self.env.ref("base.res_partner_3").id,
                 "move_type": "in_refund",
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": self.account1.id,
-                            "price_unit": 42.0,
-                            "quantity": 12,
-                        },
-                    )
-                ],
+                "invoice_line_ids": self.invoice_line,
             }
         )
         self.assertEqual(in_refund_invoice.name, "/")
         in_refund_invoice.action_post()
         seq = self.purchase_journal.refund_sequence_id
-        move_name = "%s%s" % (seq.prefix, "1".zfill(seq.padding))
+        move_name = "{}{}".format(seq.prefix, "1".zfill(seq.padding))
         move_name = move_name.replace("%(range_year)s", str(self.date.year))
         self.assertEqual(in_refund_invoice.name, move_name)
         in_refund_invoice.button_draft()
@@ -269,15 +292,16 @@ class TestAccountMoveNameSequence(TransactionCase):
             {
                 "date": self.date,
                 "journal_id": self.misc_journal.id,
-                "line_ids": [
-                    (0, 0, {"account_id": self.account1.id, "debit": 10}),
-                    (0, 0, {"account_id": self.account2.id, "credit": 10}),
-                ],
+                "line_ids": self.lines,
             }
         )
         self.assertEqual(invoice.name, "/")
         invoice.action_post()
-        error_msg = "You cannot delete an item linked to a posted entry."
+        error_msg = (
+            "You can't delete a posted journal item. "
+            "Don’t play games with your accounting records; "
+            "reset the journal entry to draft before deleting it."
+        )
         with self.assertRaisesRegex(UserError, error_msg):
             invoice.unlink()
         invoice.button_draft()
@@ -294,22 +318,16 @@ class TestAccountMoveNameSequence(TransactionCase):
                 "invoice_date": self.date,
                 "partner_id": self.env.ref("base.res_partner_3").id,
                 "move_type": "in_refund",
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": self.account1.id,
-                            "price_unit": 42.0,
-                            "quantity": 12,
-                        },
-                    )
-                ],
+                "invoice_line_ids": self.invoice_line,
             }
         )
         self.assertEqual(in_refund_invoice.name, "/")
         in_refund_invoice.action_post()
-        error_msg = "You cannot delete an item linked to a posted entry."
+        error_msg = (
+            "You can't delete a posted journal item. "
+            "Don’t play games with your accounting records; "
+            "reset the journal entry to draft before deleting it."
+        )
         with self.assertRaisesRegex(UserError, error_msg):
             in_refund_invoice.unlink()
         in_refund_invoice.button_draft()
@@ -317,7 +335,7 @@ class TestAccountMoveNameSequence(TransactionCase):
         self.assertTrue(in_refund_invoice.unlink())
 
     def test_journal_check_journal_sequence(self):
-        new_journal = self.purchase_journal.copy()
+        new_journal = self.purchase_journal2
         # same sequence_id and refund_sequence_id
         with self.assertRaises(ValidationError):
             new_journal.write({"refund_sequence_id": new_journal.sequence_id})
@@ -334,3 +352,37 @@ class TestAccountMoveNameSequence(TransactionCase):
 
     def test_constrains_date_sequence_true(self):
         self.assertTrue(self.env["account.move"]._constrains_date_sequence())
+
+    def test_prefix_move_name_journal_onchange(self):
+        product = self.env["product.product"].create({"name": "Product"})
+        with Form(
+            self.env["account.move"].with_context(default_move_type="out_invoice")
+        ) as invoice_form:
+            invoice_form.invoice_date = fields.Date.today()
+            invoice_form.partner_id = self.partner
+            with invoice_form.invoice_line_ids.new() as line_form:
+                line_form.product_id = product
+            invoice = invoice_form.save()
+            self.assertEqual(invoice.name, "/")
+        invoice.journal_id = self.sales_journal
+        self.assertEqual(invoice.name, "/", "name based on journal instead of sequence")
+        invoice.action_post()
+        self.assertIn("TB2CSEQ/", invoice.name, "name was not based on sequence")
+
+    def test_is_end_of_seq_chain(self):
+        self.env.user.groups_id -= self.env.ref("account.group_account_manager")
+        invoice = self.env["account.move"].create(
+            {
+                "date": self.date,
+                "journal_id": self.misc_journal.id,
+                "line_ids": self.lines,
+            }
+        )
+        invoice.action_post()
+        error_msg = (
+            "You cannot delete this entry, as it has already consumed "
+            "a sequence number and is not the last one in the chain. "
+            "You should probably revert it instead."
+        )
+        with self.assertRaisesRegex(UserError, error_msg):
+            invoice._unlink_forbid_parts_of_chain()

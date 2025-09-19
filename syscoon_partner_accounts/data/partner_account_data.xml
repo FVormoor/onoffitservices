@@ -14,16 +14,4 @@
         <field name="number_next" eval="70000"/>
     </record>
 
-    <record id="partner_account_customer_number_sequence" model="ir.sequence">
-        <field eval="'partner.auto.customer.number'" name="code"/>
-        <field eval="'Customer Number'" name="name"/>
-        <field name="number_next" eval="100000"/>
-    </record>
-
-    <record id="partner_account_supplier_number_sequence" model="ir.sequence">
-        <field eval="'partner.auto.supplier.number'" name="code"/>
-        <field eval="'Supplier Number'" name="name"/>
-        <field name="number_next" eval="700000"/>
-    </record>
-
 </odoo>

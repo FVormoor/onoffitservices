@@ -32,21 +32,21 @@ class SaleOrder(models.Model):
         partner_ids=None,
         subtype_ids=None
     ):
-        if self.env.company.sh_disable_follower_email and self.env.context.get('mark_so_as_sent') and not self.env.context.get('allow_manual_create') and not self.env.context.get('manually_added_follower') and not self.env.context.get('mail_invite_follower_channel_only'):
-            if partner_ids and len(partner_ids) == 1 and self.env.user.partner_id.id == partner_ids[0]:
-                return super(SaleOrder, self).message_subscribe(
-                    partner_ids, subtype_ids
-                )
-            else:
-                return False
-        elif self.env.company.sh_disable_follower_confirm_sale and not self.env.context.get('mark_so_as_sent') and not self.env.context.get('allow_manual_create') and not self.env.context.get('manually_added_follower') and not self.env.context.get('mail_invite_follower_channel_only'):
-            if partner_ids and len(partner_ids) == 1 and self.env.user.partner_id.id == partner_ids[0]:
-                return super(SaleOrder, self).message_subscribe(
-                    partner_ids, subtype_ids
-                )
-            else:
-                return False
-        elif self.env.context.get('allow_manual_create') and self.env.context.get('manually_added_follower'):
+        if self.env.company.sh_disable_follower_confirm_sale:
+            if self.partner_id.id in partner_ids:
+                partner_ids.remove(self.partner_id.id)
+            return super(SaleOrder, self).message_subscribe(partner_ids)
+
+        if self.env.company.sh_disable_follower_email:
+            if self.partner_id.id in partner_ids:
+                partner_ids.remove(self.partner_id.id)
+            return super(SaleOrder , self).message_subscribe(partner_ids)
+        
+        if self.env.company.sh_disable_follower_email and self.env.context.get('mark_so_as_sent') and not self.env.context.get('allow_manual_create') and not self.env.context.get('mail_invite_follower_channel_only') and not self.env.context.get('manually_added_follower'):
+            return False
+        elif self.env.company.sh_disable_follower_confirm_sale and not self.env.context.get('mark_so_as_sent') and not self.env.context.get('allow_manual_create') and not self.env.context.get('mail_invite_follower_channel_only') and not self.env.context.get('manually_added_follower'):
+            return False
+        elif self.env.context.get('allow_manual_create'):
             return super(SaleOrder, self).message_subscribe(
                 partner_ids, subtype_ids
             )

@@ -4,16 +4,63 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e-20230317\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-26 08:33+0000\n"
-"PO-Revision-Date: 2023-03-26 08:33+0000\n"
+"POT-Creation-Date: 2024-07-30 17:49+0000\n"
+"PO-Revision-Date: 2024-08-06 14:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#. module: syscoon_financeinterface_datev_ascii
+#. odoo-python
+#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
+#, python-format
+msgid ""
+"%(line_name)s has an automatic account, but the tax %(tax_name)s is not in "
+"the list of the allowed taxes!"
+msgstr ""
+"%(line_name)s hat ein Automatikkonto, aber die Steuer %(tax_name)s ist nicht"
+" in der Liste der erlaubten Steuern!"
+
+#. module: syscoon_financeinterface_datev_ascii
+#. odoo-python
+#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
+#, python-format
+msgid "%(line_name)s has more than one tax account, but allowed is only one."
+msgstr ""
+"%(line_name)s hat mehr als ein Steuerkonto, aber nur eines ist erlaubt."
+
+#. module: syscoon_financeinterface_datev_ascii
+#. odoo-python
+#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
+#, python-format
+msgid "%(name)s has an automatic account, but there is no tax set."
+msgstr "%(name)s hat ein Automatikkonto, aber es ist keine Steuer gesetzt."
+
+#. module: syscoon_financeinterface_datev_ascii
+#. odoo-python
+#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
+#, python-format
+msgid "%(name)s has taxes applied, but the tax has no DATEV Tax Key"
+msgstr ""
+"%(name)s hat Steuern angewendet, aber die Steuer hat keinen DATEV "
+"Buchungsschlüssel"
+
+#. module: syscoon_financeinterface_datev_ascii
+#. odoo-python
+#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
+#, python-format
+msgid ""
+"%(name)s needs the VAT-ID, but in the Partner %(partner_name)s it is not set"
+msgstr ""
+"%(name)s benötigt die USt-ID, aber im Partner %(partner_name)s ist sie nicht"
+" gesetzt"
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
@@ -46,12 +93,17 @@ msgstr "<span class=\"o_form_label\">Standard-Jornals</span>"
 #. module: syscoon_financeinterface_datev_ascii
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
 msgid "<span class=\"o_form_label\">Digits for accouont codes</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">Stellen für Kontonummern</span>"
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
 msgid "<span class=\"o_form_label\">Enable DATEV Checks</span>"
 msgstr "<span class=\"o_form_label\">Aktiviere DATEV Checks</span>"
+
+#. module: syscoon_financeinterface_datev_ascii
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
+msgid "<span class=\"o_form_label\">Enable Vendor Reference</span>"
+msgstr "<span class=\"o_form_label\">Lieferantenreferenz aktivieren</span>"
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
@@ -163,12 +215,12 @@ msgstr ""
 #. module: syscoon_financeinterface_datev_ascii
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
 msgid "DATEV Export Method"
-msgstr "DATEV Eportmethode"
+msgstr "DATEV Exportmethode"
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_account_account__datev_no_tax
 msgid "DATEV No Tax"
-msgstr "DATEV BS 40"
+msgstr "DATEV Steuer No."
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_account_payment_term__datev_payment_conditons_id
@@ -213,6 +265,12 @@ msgid "Datev Country"
 msgstr "DATEV Land"
 
 #. module: syscoon_financeinterface_datev_ascii
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_res_company__datev_ref_from_ref
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_res_config_settings__company_datev_ref_from_ref
+msgid "Datev Ref From Ref"
+msgstr "DATEV Referenz von Referenz"
+
+#. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_res_company__datev_default_journal_ids
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_res_config_settings__company_datev_default_journal_ids
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
@@ -222,11 +280,11 @@ msgstr "Standardjournale"
 #. module: syscoon_financeinterface_datev_ascii
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
 msgid ""
-"Default journals you want to have always in the Finance Export Wizard. \n"
+"Default journals you want to have always in the Finance Export Wizard.\n"
 "                                        You can add or remove further journals at any time here or directly in the wizard."
 msgstr ""
-"Standardjournale die immer im Finanzexport-Assistenten enthalten sein sollen. \n"
-"                                        Sie können später im Assistenten jederzeit Journale hinzufügen oder entfernen."
+"Standardjournale, die Sie immer im Finance Export Wizard haben möchten.\n"
+"                                        Sie können hier oder direkt im Assistenten jederzeit weitere Journale hinzufügen oder entfernen."
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
@@ -244,6 +302,15 @@ msgid "Enables fixing of moves when they are imported to DATEV."
 msgstr ""
 "Aktiviert die Festschreibung von Buchungen wenn diese nach DATEV importiert "
 "werden."
+
+#. module: syscoon_financeinterface_datev_ascii
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
+msgid ""
+"Enables use of Vendor Reference in Belegfeld 1, if not active move name is "
+"used."
+msgstr ""
+"Ermöglicht die Verwendung der Lieferantenreferenz im Belegfeld 1, wenn nicht"
+" aktiv wird der Buchungssatzname verwendet."
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_res_company__export_finance_interface
@@ -367,51 +434,17 @@ msgstr ""
 #. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model,name:syscoon_financeinterface_datev_ascii.model_account_move
 msgid "Journal Entry"
-msgstr "Journaleintrag"
+msgstr "Journalbuchungen"
 
 #. module: syscoon_financeinterface_datev_ascii
-#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_syscoon_financeinterface__journals
+#: model:ir.model,name:syscoon_financeinterface_datev_ascii.model_account_move_line
+msgid "Journal Item"
+msgstr "Buchungszeilen"
+
+#. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_syscoon_financeinterface_export__journal_ids
 msgid "Journals"
 msgstr "Journale"
-
-#. module: syscoon_financeinterface_datev_ascii
-#. odoo-python
-#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
-#, python-format
-msgid "Move Line %s has more than one tax account, but allowed is only one."
-msgstr ""
-"Die Buchungszeile %s hat mehr als ein Steuerkonto, aber erlaubt ist nur "
-"eines."
-
-#. module: syscoon_financeinterface_datev_ascii
-#. odoo-python
-#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
-#, python-format
-msgid ""
-"Move line %s has an automatic account, but the tax %s is not in the list of "
-"the allowed taxes!"
-msgstr ""
-"Buchungszeile %s hat ein Automatikkonto, aber die Steuer %s ist nicht in der"
-" Liste der erlaubten Steuerstätze!"
-
-#. module: syscoon_financeinterface_datev_ascii
-#. odoo-python
-#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
-#, python-format
-msgid "Move line %s has an automatic account, but there is no tax set."
-msgstr ""
-"Buchungszeile %s hat ein Automatikkonto, aber es ist kein Steuersatz "
-"gesetzt."
-
-#. module: syscoon_financeinterface_datev_ascii
-#. odoo-python
-#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
-#, python-format
-msgid "Move line %s has taxes applied, but the tax has no DATEV Tax Key"
-msgstr ""
-"Buchungszeile %s hat einen Steuersatz, aber dieser hat keinen "
-"Steuerschlüssel hinterlegt."
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_ascii.selection__res_company__datev_export_method__net
@@ -475,13 +508,13 @@ msgstr "Neue DATEV BEDI erstellen"
 #. module: syscoon_financeinterface_datev_ascii
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
 msgid ""
-"Set the export method for the DATEV ASCII export. You can choose between net and gross.<br/>\n"
-"                                        Net = export of the moves with extra tax lines, no bookingkeys<br/>\n"
+"Set the export method for the DATEV ASCII export. You can choose between net and gross.\n"
+"                                        Net = export of the moves with extra tax lines, no bookingkeys\n"
 "                                        Gross = export with tax keys and auto accounts"
 msgstr ""
-"Einstellung für die Exportmethode des DATEV ASCII Exportes. Es kann zwischen Netto und Brutto gewählt werden.<br/>\n"
-"                                        Netto = Export der Buchungen mit Steuerbuchungen, keine Buchungsschlüssel<br/>\n"
-"                                        Brutto = Export mit Steuerschüssel und Automatikkonten"
+"Legen Sie die Exportmethode für den DATEV-ASCII-Export fest. Sie können zwischen Netto und Brutto wählen.\n"
+"                                        Netto = Export der Bewegungen mit zusätzlichen Steuerzeilen, ohne Buchungsschlüssel\n"
+"                                        Brutto = Export mit Steuerschlüsseln und Autokonten"
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields,help:syscoon_financeinterface_datev_ascii.field_res_company__datev_account_code_digits
@@ -493,8 +526,7 @@ msgstr "Einstellung für die Länge der Kontonummern im Export."
 #: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
 msgid "Sets automatic accounts and tax kexs for use in DATEV automatically."
 msgstr ""
-"Setzt Automatikkonten und Steuerschlüssel für die Verwendung in DATEV "
-"automatisch."
+"Setzt automatisch Konten und Steuerkennzeichen für die Verwendung in DATEV"
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields,help:syscoon_financeinterface_datev_ascii.field_res_company__datev_enable_fixing
@@ -521,18 +553,7 @@ msgstr "Steuer"
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_res_company__datev_accountant_number
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_res_config_settings__company_datev_accountant_number
 msgid "Tax Accountant Number"
-msgstr "Beraternummer"
-
-#. module: syscoon_financeinterface_datev_ascii
-#. odoo-python
-#: code:addons/syscoon_financeinterface_datev_ascii/models/account_move.py:0
-#, python-format
-msgid ""
-"The account on move line %s needs the VAT-ID, but in the Partner %s it is "
-"not set"
-msgstr ""
-"Das Konto in Buchungszeile %s verlangt eine USt-ID, aber im Partner %s ist "
-"diese nicht gesetzt"
+msgstr "Stuer Beraternummer"
 
 #. module: syscoon_financeinterface_datev_ascii
 #. odoo-python
@@ -557,6 +578,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:syscoon_financeinterface_datev_ascii.field_res_config_settings__company_datev_use_bedi
 msgid "Use BEDI Beleglink"
 msgstr "BEDI Beleglink aktivieren"
+
+#. module: syscoon_financeinterface_datev_ascii
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii
+msgid "Use Vendor Reference in Belegfeld 1."
+msgstr ""
 
 #. module: syscoon_financeinterface_datev_ascii
 #: model:ir.model.fields,help:syscoon_financeinterface_datev_ascii.field_account_account__datev_no_tax

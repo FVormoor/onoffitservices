@@ -1,13 +1,15 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = "res.partner"
 
     @api.model_create_multi
     def create(self, vals_list):
+        """Inherit to create accounts for partners"""
         records = super().create(vals_list)
         company = self.env.company
         for res in records:
@@ -18,6 +20,7 @@ class ResPartner(models.Model):
         return records
 
     def _prepare_account_types(self):
+        """Prepare the account types for the partner"""
         company = self.env.company
         create_accounts = [auto.code for auto in company.create_auto_account_on]
         types = {}
@@ -27,23 +30,14 @@ class ResPartner(models.Model):
             types.update(
                 {
                     "asset_receivable": True,
-                    "customer_number": bool(
-                        company.use_separate_partner_numbers
-                        and "partner_customer_numbers" in create_accounts
-                    ),
                 }
             )
         if "partner_supplier" in create_accounts:
             types.update(
                 {
                     "liability_payable": True,
-                    "supplier_number": bool(
-                        company.use_separate_partner_numbers
-                        and "partner_supplier_numbers" in create_accounts
-                    ),
                 }
             )
         if "asset_receivable" in types or "liability_payable" in types:
             types["use_separate"] = bool(company.use_separate_accounts)
-            types["add_number"] = bool(company.add_number_to_partner_number)
         return types

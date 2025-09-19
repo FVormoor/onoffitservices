@@ -1,12 +1,12 @@
 # Odoo Proprietary License v1.0
 
-Copyright © 2023 syscoon GmbH (<https://syscoon.com>)
+Copyright © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
 
 This software and associated files (the “Software”) may only be used (executed,
 modified, executed after modifications) if you have purchased a valid license
-from syscoon GmbH, specifically for the Enterprise edition
+from syscoon Estonia OÜ, specifically for the Enterprise edition
 of the Software. Alternatively, you must have received a written agreement from
-syscoon GmbH (see the COPYRIGHT file).
+syscoon Estonia OÜ (see the COPYRIGHT file).
 
 You may develop Odoo modules that use the Software as a library (typically by
 depending on it, importing it, and using its resources), but without copying any
@@ -17,7 +17,7 @@ proprietary licenses similar to this one).
 
 It is forbidden to publish, distribute, sublicense, or sell copies of the
 Software or modified copies of the Software without prior written permission
-from syscoon GmbH.
+from syscoon Estonia OÜ.
 
 The above copyright notice, permission notice, and information about the
 specific company and edition must be included in all copies or substantial

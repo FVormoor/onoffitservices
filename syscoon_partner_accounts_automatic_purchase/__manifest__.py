@@ -1,9 +1,9 @@
-# This file is part of Odoo. The COPYRIGHT file at the top level of
-# this module contains the full copyright notices and license terms.
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "syscoon Partner Credit Accounts Automation on Purchase Orders",
-    "version": "16.0.0.0.7",
+    "name": "Syscoon Partner Credit Accounts Automation on Purchase Orders",
+    "version": "18.0.0.0.1",
     "author": "syscoon Estonia OÜ",
     "license": "OPL-1",
     "category": "Accounting",
@@ -12,8 +12,9 @@
     "description": """
 If a purchase order is confirmed, a new credit account will be created automatically.
 """,
-    'data': [
-        'data/automatic_mode.xml',
+    "data": [
+        "data/automatic_mode.xml",
     ],
-    'installable': True
+    "installable": True,
+    "module_type": "official",
 }

@@ -1,1 +1,2 @@
 pdfminer
+odoo_upgrade @ git+https://github.com/odoo/upgrade-util@master

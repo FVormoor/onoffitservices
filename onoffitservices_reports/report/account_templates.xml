@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document" priority="100">
+    <template
+        id="report_invoice_document_inherit"
+        inherit_id="account.report_invoice_document"
+        priority="100"
+    >
         <xpath expr="//th[@name='th_description']" position="before">
             <th class="text-start">Pos</th>
         </xpath>
@@ -27,7 +31,11 @@
         </xpath>
     </template>
 
-    <template id="stock_account_report_invoice_document_inherit" inherit_id="stock_account.stock_account_report_invoice_document" priority="100">
+    <template
+        id="stock_account_report_invoice_document_inherit"
+        inherit_id="stock_account.stock_account_report_invoice_document"
+        priority="100"
+    >
         <xpath expr="//table[@name='invoice_snln_table']" position="attributes">
             <attribute name="style">width: 100%</attribute>
         </xpath>

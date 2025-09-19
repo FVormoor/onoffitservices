@@ -6,29 +6,12 @@
         <field name="priority" eval="80"/>
         <field name="inherit_id" ref="syscoon_financeinterface.view_syscoon_financeinterface_configuration"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@id='syscoon_financeinterface']" position="inside">
-                <div id="syscoon_financeinterface_datev_ascii_account_settings" attrs="{'invisible': [('company_export_finance_interface_active', '=', False)]}">
-                    <h2>DATEV ASCII Account Export Settings</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div class="col-12 col-lg-6 o_setting_box" title="DATEV Account Export Kind">
-                            <div class="o_setting_left_pane"/>
-                            <div class="o_setting_right_pane">
-                                <span class="o_form_label">DATEV Account Export Kind</span>
-                                <div class="text-muted">
-                                        Set the export method for the DATEV Account Export. You can choose between DATEV Kanzlei Rewe and DATEV Unternehmen Online.
-                                </div>
-                                <div class="mt16">
-                                    <div class="content-group" id="send_default">
-                                        <div class="row">
-                                            <label for="company_datev_ascii_accounts_kind" class="col-lg-3 o_light_label"/>
-                                            <field name="company_datev_ascii_accounts_kind"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <xpath expr="//block[@id='syscoon_financeinterface_basic_settings']" position="after">
+                <block title="DATEV ASCII Account Export Settings" id="syscoon_financeinterface_datev_ascii_account_settings" invisible="not company_export_finance_interface_active">
+                    <setting company_dependent="1" help="Set the export method for the DATEV Account Export. You can choose between DATEV Kanzlei Rewe and DATEV Unternehmen Online.">
+                        <field name="company_datev_ascii_accounts_kind" string="DATEV Account Export Kind"/>
+                    </setting>
+                </block>
             </xpath>
         </field>
     </record>

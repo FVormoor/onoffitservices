@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * syscoon_partner_accounts_automatic
+# 	* syscoon_partner_accounts_automatic
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e-20231215\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-08 10:12+0000\n"
-"PO-Revision-Date: 2021-10-08 10:12+0000\n"
+"POT-Creation-Date: 2024-01-04 10:10+0000\n"
+"PO-Revision-Date: 2024-01-04 10:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,11 @@ msgid "Create Auto Account On"
 msgstr "Automatisch erstellen bei"
 
 #. module: syscoon_partner_accounts_automatic
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts_automatic.res_config_settings_view_form
+msgid "Create Automatic Accounts"
+msgstr "Automatische Konten erstellen"
+
+#. module: syscoon_partner_accounts_automatic
 #: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__create_uid
 msgid "Created by"
 msgstr "Erstellt von"
@@ -62,9 +67,13 @@ msgid "ID"
 msgstr ""
 
 #. module: syscoon_partner_accounts_automatic
-#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode____last_update
-msgid "Last Modified on"
-msgstr "Zuletzt geändert am"
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts_automatic.res_config_settings_view_form
+msgid ""
+"If you enable this option, Odoo will create the accounts automatically for "
+"you."
+msgstr ""
+"Wenn Sie diese Option aktivieren, erstellt Odoo die Konten automatisch für "
+"Sie."
 
 #. module: syscoon_partner_accounts_automatic
 #: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__write_uid
@@ -87,19 +96,9 @@ msgid "Parnter (Credit Accounts)"
 msgstr "Parnter (Keditorenkonten)"
 
 #. module: syscoon_partner_accounts_automatic
-#: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic.syscoon_automatic_mode_customer_numbers
-msgid "Partner (Customer Numbers)"
-msgstr "Partner (Kundennummern)"
-
-#. module: syscoon_partner_accounts_automatic
 #: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic.syscoon_automatic_mode_customers
 msgid "Partner (Debit Accounts)"
 msgstr "Partner (Debitorenkonten)"
-
-#. module: syscoon_partner_accounts_automatic
-#: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic.syscoon_automatic_mode_vendor_numbers
-msgid "Partner (Supplier Numbers)"
-msgstr "Partner (Lieferantennummern)"
 
 #. module: syscoon_partner_accounts_automatic
 #: model:ir.model.fields,help:syscoon_partner_accounts_automatic.field_res_company__create_auto_account_on
@@ -114,7 +113,7 @@ msgstr ""
 #: model:ir.model.fields,help:syscoon_partner_accounts_automatic.field_res_config_settings__create_auto_account_on
 msgid ""
 "Select where the Accounts should be created. Please notice, without a "
-"slection no accounts will be created automatically."
+"selection no accounts will be created automatically."
 msgstr ""
 "Wählen Sie wann die Konten erstellt werden sollen. Bitte beachten Sie dass "
 "ohne Auswahl keine Konten erstellt werden."

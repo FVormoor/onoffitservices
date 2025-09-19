@@ -6,9 +6,9 @@
         <field name="model">account.payment.term</field>
         <field name="inherit_id" ref="account.view_payment_term_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='company_id']" position="after">
+            <xpath expr="//group[1]" position="inside">
                 <field name="export_finance_interface_active" invisible="1"/>
-                <field name="datev_payment_conditons_id" attrs="{'invisible': [('export_finance_interface_active', '=', False)]}"/>
+                <field name="datev_payment_conditons_id" invisible="not export_finance_interface_active"/>
             </xpath>
         </field>
     </record>

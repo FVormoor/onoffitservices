@@ -1,14 +1,16 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
+
 from odoo import api, models
 
 ALLOWED_MOVE_TYPES = ["in_invoice", "out_invoice", "in_refund", "out_refund"]
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = "account.move"
 
     # todo: vals in onchange ?? needs to be checked
-    @api.onchange('partner_id', 'journal_id')
+    @api.onchange("partner_id", "journal_id")
     def _check_account_created(self, vals=False):
         if not vals:
             vals = {}
@@ -24,7 +26,7 @@ class AccountMove(models.Model):
         default_account_id = self._get_partner_default_account_id(
             partner, journal_type=journal_type
         )
-        types = self._prepare_account_types(partner, journal_type=journal_type)
+        types = self._prepare_account_types(journal_type=journal_type)
         company = self.company_id or self.env.company
         accounts = partner.create_accounts(company, types)
         if not accounts:
@@ -33,12 +35,12 @@ class AccountMove(models.Model):
             if line.account_id.id != int(default_account_id):
                 continue
             if journal_type == "sale" and accounts.get("property_account_receivable_id"):
-                line.account_id = accounts["property_account_receivable_id"]
+                line.account_id = accounts["property_account_receivable_id"].id
             if journal_type == "purchase" and accounts.get("property_account_payable_id"):
-                line.account_id = accounts["property_account_payable_id"]
+                line.account_id = accounts["property_account_payable_id"].id
 
     def write(self, vals):
-        if vals.get('partner_id'):
+        if vals.get("partner_id"):
             self._check_account_created(vals)
         return super().write(vals)
 
@@ -54,7 +56,7 @@ class AccountMove(models.Model):
             default_account_id = self._get_partner_default_account_id(
                 partner, move_type=val["move_type"]
             )
-            types = self._prepare_account_types(partner, move_type=val["move_type"])
+            types = self._prepare_account_types(move_type=val["move_type"])
             if val.get("company_id"):
                 company = self.env["res.company"].browse(val["company_id"])
             else:
@@ -65,29 +67,25 @@ class AccountMove(models.Model):
             for _0, _1, line_vals in val.get("line_ids", []):
                 if line_vals.get("account_id") != default_account_id.id:
                     continue
-                if (
-                    val["move_type"] in ["out_invoice", "out_refund"]
-                    and accounts.get("property_account_receivable_id")
+                if val["move_type"] in ["out_invoice", "out_refund"] and accounts.get(
+                    "property_account_receivable_id"
                 ):
                     account_receivable_id = accounts["property_account_receivable_id"]
-                    line_vals["account_id"] = account_receivable_id
-                if (
-                    val["move_type"] in ["in_invoice", "in_refund"]
-                    and accounts.get("property_account_payable_id")
+                    line_vals["account_id"] = account_receivable_id.id
+                if val["move_type"] in ["in_invoice", "in_refund"] and accounts.get(
+                    "property_account_payable_id"
                 ):
-                    line_vals["account_id"] = accounts["property_account_payable_id"]
+                    line_vals["account_id"] = accounts["property_account_payable_id"].id
         return super().create(vals_list)
 
-    def _get_partner_default_account_id(
-        self, partner, move_type=None, journal_type=None
-    ):
+    def _get_partner_default_account_id(self, partner, move_type=None, journal_type=None):
         if move_type in ["out_invoice", "out_refund"] or journal_type in ("sale",):
             default_account_id = partner.property_account_receivable_id
         else:
             default_account_id = partner.property_account_payable_id
         return default_account_id
 
-    def _prepare_account_types(self, partner, move_type=None, journal_type=None):
+    def _prepare_account_types(self, move_type=None, journal_type=None):
         company = self.env.company
         create_accounts = [auto.code for auto in company.create_auto_account_on]
         types = {}
@@ -97,10 +95,6 @@ class AccountMove(models.Model):
             types.update(
                 {
                     "asset_receivable": True,
-                    "customer_number": bool(
-                        company.use_separate_partner_numbers
-                        and "invoice_customer_numbers" in create_accounts
-                    ),
                 }
             )
         elif (
@@ -109,13 +103,8 @@ class AccountMove(models.Model):
             types.update(
                 {
                     "liability_payable": True,
-                    "supplier_number": bool(
-                        company.use_separate_partner_numbers
-                        and "invoice_supplier_numbers" in create_accounts
-                    ),
                 }
             )
         if "asset_receivable" in types or "liability_payable" in types:
             types["use_separate"] = bool(company.use_separate_accounts)
-            types["add_number"] = bool(company.add_number_to_partner_number)
         return types

@@ -32,14 +32,9 @@ class StockPicking(models.Model):
             partner_ids=None,
             subtype_ids=None
     ):
-        if self.env.company.sh_disable_follower_create_picking and not self.env.context.get('allow_manual_create') and not self.env.context.get('manually_added_follower') and not self.env.context.get('mail_invite_follower_channel_only'):
-            if partner_ids and len(partner_ids) == 1 and self.env.user.partner_id.id == partner_ids[0]:
-                return super(StockPicking, self).message_subscribe(
-                    partner_ids, subtype_ids
-                )
-            else:
-                return False
-        elif self.env.context.get('allow_manual_create') and self.env.context.get('manually_added_follower'):
+        if self.env.company.sh_disable_follower_create_picking and not self.env.context.get('allow_manual_create') and not self.env.context.get('mail_invite_follower_channel_only') and not self.env.context.get('manually_added_follower'):
+            return False
+        elif self.env.context.get('allow_manual_create'):
             return super(StockPicking, self).message_subscribe(
                 partner_ids, subtype_ids
             )
@@ -48,3 +43,12 @@ class StockPicking(models.Model):
                 partner_ids,
                 subtype_ids
             )
+
+    # for restrict to add user partner when validate transfer
+    def button_validate(self):
+        res=super(StockPicking,self).button_validate()
+
+        if self.env.company.sh_disable_follower_responsible_picking :
+            self.message_unsubscribe([self.env.user.partner_id.id])
+
+        return res

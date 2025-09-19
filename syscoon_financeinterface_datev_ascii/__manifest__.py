@@ -1,8 +1,8 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 {
     "name": "syscoon Finanzinterface - DATEV ASCII Export",
-    "version": "16.0.0.0.15",
+    "version": "18.0.1.1.5",
     "author": "syscoon Estonia OÜ",
     "license": "OPL-1",
     "website": "https://syscoon.com",
@@ -13,15 +13,15 @@
         "syscoon_financeinterface",
         "syscoon_partner_accounts",
     ],
-    'data': [
-        'data/ir_actions_server.xml',
-        'views/account_journal.xml',
-        'views/account_move_views.xml',
-        'views/account_payment_term.xml',
-        'views/account_views.xml',
-        'views/res_config_settings.xml',
-        'views/syscoon_financeinterface.xml',
-        'wizards/syscoon_financeinterface_export.xml',
+    "data": [
+        "data/ir_actions_server.xml",
+        "views/account_journal.xml",
+        "views/account_move_views.xml",
+        "views/account_payment_term.xml",
+        "views/account_views.xml",
+        "views/res_config_settings.xml",
+        "views/syscoon_financeinterface.xml",
     ],
-    'installable': True,
+    "installable": True,
+    "module_type": "official",
 }

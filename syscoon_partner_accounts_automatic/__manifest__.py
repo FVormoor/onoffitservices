@@ -1,9 +1,9 @@
-# This file is part of Odoo. The COPYRIGHT file at the top level of
-# this module contains the full copyright notices and license terms.
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "syscoon Partner Debit and Credit Accounts Automation",
-    "version": "16.0.0.0.8",
+    "name": "Syscoon Partner Debit and Credit Accounts Automation",
+    "version": "18.0.0.0.1",
     "author": "syscoon Estonia OÜ",
     "license": "OPL-1",
     "category": "Accounting",
@@ -12,10 +12,11 @@
     "description": """
 If a partner is created, a new debit and credit account will be created automatically.
 """,
-    'data': [
-        'data/automatic_mode.xml',
-        'security/ir.model.access.csv',
-        'views/res_config_settings_views.xml',
+    "data": [
+        "data/automatic_mode.xml",
+        "security/ir.model.access.csv",
+        "views/res_config_settings_views.xml",
     ],
-    'installable': True
+    "installable": True,
+    "module_type": "official",
 }

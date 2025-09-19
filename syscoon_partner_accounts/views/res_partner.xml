@@ -6,36 +6,45 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//sheet" position="before">
+            <xpath expr="//page[@name='accounting']" position="inside">
                 <field name="auto_account_creation" invisible="1"/>
+                <group name="syscoon_partner_accounts" invisible="not auto_account_creation">
+                    <group string="Finance Interface Debitor- and Creditor Numbers">
+                        <label for="debitor_number"/>
+                        <div class="o_row">
+                            <field name="debitor_number" readonly="debitor_number"/>
+                            <button name="action_create_receivable_account" type="object"
+                                string="Create Debitor Account"
+                                help="Creates a new Debitor Account if it does not exist yet."
+                                class="btn-link mb-1 px-0" icon="fa-refresh"
+                                confirm="This will create a new Debitor Account."
+                                invisible="debitor_number"/>
+                        </div>
+                        <label for="creditor_number"/>
+                        <div class="o_row">
+                            <field name="creditor_number" readonly="creditor_number"/>
+                            <button name="action_create_payable_account" type="object"
+                                string="Create Creditor Account"
+                                help="Creates a new Creditor Account if it does not exist yet."
+                                class="btn-link mb-1 px-0" icon="fa-refresh"
+                                confirm="This will create a new Creditor Account."
+                                invisible="creditor_number"/>
+                        </div>
+                    </group>
+                </group>
             </xpath>
-            <xpath expr="//group[@name='accounting_entries']" position="inside">
-                <field name="debitor_number" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
-                <field name="creditor_number" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
-            </xpath>
-            <xpath expr="//group[@name='purchase']" position="after">
-                <div class="row" attrs="{'invisible': [('auto_account_creation', '=', False)]}">
-                    <div class="col">
-                        <button name="create_customer_number" class="oe_highlight" type="object" string="Create Customer Number"/>
-                    </div>
-                </div>
-                <div class="row" attrs="{'invisible': [('auto_account_creation', '=', False)]}">
-                    <div class="col">
-                        <button name="create_supplier_number" class="oe_highlight" type="object" string="Create Supplier Number"/>
-                    </div>
-                </div>
-            </xpath>
-            <xpath expr="//group[@name='accounting_entries']" position="after">
-                <group></group>
-                <div class="row" attrs="{'invisible': [('auto_account_creation', '=', False)]}">
-                    <div class="col-6">
-                        <button name="create_payable_account" class="oe_highlight" type="object" string="Create Payable Account"/>
-                    </div>
-                    <div class="col-6">
-                        <button name="create_receivable_account" class="oe_highlight" type="object" string="Create Receivable Account"/>
-                    </div>
-                </div>
-            </xpath>
+        </field>
+    </record>
+
+    <record id="syscoon_partner_accounts_search_view" model="ir.ui.view">
+        <field name="name">syscoon.partner.accounts.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="debitor_number"/>
+                <field name="creditor_number"/>
+            </field>
         </field>
     </record>
 

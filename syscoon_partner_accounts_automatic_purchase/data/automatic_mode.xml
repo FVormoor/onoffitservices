@@ -7,9 +7,4 @@
         <field name="code">purchase_order_supplier</field>
     </record>
 
-    <record id="syscoon_automatic_mode_purchase_order_numbers" model="syscoon.accounts.automatic.mode">
-        <field name="name">Purchase Order (Supplier Numbers)</field>
-        <field name="code">purchase_order_supplier_numbers</field>
-    </record>
-
 </odoo>

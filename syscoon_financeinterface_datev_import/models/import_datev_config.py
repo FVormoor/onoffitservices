@@ -1,11 +1,11 @@
-# See LICENSE file for full copyright and licensing details.
-
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 from odoo import fields, models
 
 
 class SyscoonImportDatevConfig(models.Model):
-    _name = 'syscoon.datev.import.config'
-    _description = 'Configuration for the DATEV-Import'
+    _name = "syscoon.datev.import.config"
+    _description = "Configuration for the DATEV-Import"
 
     name = fields.Char()
     import_config_row_ids = fields.Many2many(
@@ -15,7 +15,6 @@ class SyscoonImportDatevConfig(models.Model):
     )
     delimiter = fields.Char("CSV Delimiter", default=";")
     encoding = fields.Char(default="iso-8859-1")
-    locale = fields.Char(default="de_DE.utf8")
     quotechar = fields.Char(default='"')
     headerrow = fields.Integer()
     remove_datev_header = fields.Boolean(
@@ -33,8 +32,8 @@ class SyscoonImportDatevConfig(models.Model):
 
 
 class SyscoonImportDatevConfigRows(models.Model):
-    _name = 'syscoon.datev.import.config.rows'
-    _description = 'DATEV Import Config Row'
+    _name = "syscoon.datev.import.config.rows"
+    _description = "DATEV Import Config Row"
 
     name = fields.Char(help="Name of the field in CSV-file")
     import_datev_id = fields.Many2one(
@@ -46,34 +45,36 @@ class SyscoonImportDatevConfigRows(models.Model):
 
 
 class SyscoonImportDatevAssignmentTypes(models.Model):
-    _name = 'syscoon.datev.import.assignment'
-    _description = 'Assignment Type'
+    _name = "syscoon.datev.import.assignment"
+    _description = "Assignment Type"
 
     name = fields.Char(translate=True)
-    type = fields.Selection([
-        ('amount', 'Amount'),
-        ('move_sign', 'Move Sign'),
-        ('account', 'Account'),
-        ('counteraccount', 'Counterccount'),
-        ('move_date', 'Accounting Date'),
-        ('due_date', 'Due Date'),
-        ('move_name', 'Move Name'),
-        ('move_ref', 'Reference'),
-        ('tax_key', 'Tax Key'),
-        ('cost1', 'Cost-1'),
-        ('cost2', 'Cost-2'),
-        ('custom', 'Custom'),
-        ('discount_amount', 'Discount Amount'),
-        ('guid', 'GUID'),
-        ('currency', 'Currency'),
-        ('base_amount', 'Base Amount'),
-        ('general_reversal', 'General Reversal'),
-    ], default='custom', required=True)
-    field_type = fields.Selection([
-        ('string', 'String'),
-        ('date', 'Date'),
-        ('decimal', 'Decimal')
-    ], required=True)
+    type = fields.Selection(
+        [
+            ("amount", "Amount"),
+            ("move_sign", "Move Sign"),
+            ("account", "Account"),
+            ("counteraccount", "Counterccount"),
+            ("move_date", "Accounting Date"),
+            ("due_date", "Due Date"),
+            ("move_name", "Move Name"),
+            ("move_ref", "Reference"),
+            ("tax_key", "Tax Key"),
+            ("cost1", "Cost-1"),
+            ("cost2", "Cost-2"),
+            ("custom", "Custom"),
+            ("discount_amount", "Discount Amount"),
+            ("guid", "GUID"),
+            ("currency", "Currency"),
+            ("base_amount", "Base Amount"),
+            ("general_reversal", "General Reversal"),
+        ],
+        default="custom",
+        required=True,
+    )
+    field_type = fields.Selection(
+        [("string", "String"), ("date", "Date"), ("decimal", "Decimal")], required=True
+    )
     object = fields.Char()
     field = fields.Char()
     domain = fields.Char()
@@ -97,8 +98,6 @@ class SyscoonImportDatevAssignmentTypes(models.Model):
             ("credit", "Credit"),
             ("tax_ids", "Tax IDs"),
             ("analytic_distribution", "Analytic Distribution"),
-            # ('analytic_account_id', 'Analytic Account'),
-            # ('analytic_tag_ids', 'Analytic Tags'),
         ]
     )
     padding = fields.Integer(

@@ -6,15 +6,33 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='sale']" position="inside">
-                <field name="customer_number"/>
+                <label for="customer_number"/>
+                <div class="o_row">
+                    <field name="customer_number" readonly="customer_number"/>
+                    <button name="action_create_custmer_number" type="object"
+                        string="Create Customer Number"
+                        help="Creates a new Customer Number if it does not exist yet."
+                        class="btn-link mb-1 px-0" icon="fa-refresh"
+                        confirm="This will create a new Customer Number."
+                        invisible="customer_number"/>
+                </div>
             </xpath>
             <xpath expr="//group[@name='purchase']" position="inside">
-                <field name="supplier_number"/>
+                <label for="supplier_number"/>
+                <div class="o_row">
+                    <field name="supplier_number" readonly="supplier_number"/>
+                    <button name="action_create_supplier_number" type="object"
+                        string="Create Supplier Number"
+                        help="Creates a new Supplier Number if it does not exist yet."
+                        class="btn-link mb-1 px-0" icon="fa-refresh"
+                        confirm="This will create a new Supplier Number."
+                        invisible="supplier_number"/>
+                </div>
             </xpath>
         </field>
     </record>
-    <record model="ir.ui.view" id="view_partner_tree_syscoon">
-        <field name="name">res.partner.tree.form.inherit.syscoon</field>
+    <record model="ir.ui.view" id="view_partner_list">
+        <field name="name">res.partner.list.form.inherit.syscoon</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_tree"/>
         <field name="arch" type="xml">

@@ -1,5 +1,5 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models
 
 
@@ -19,24 +19,41 @@ class AccountMove(models.Model):
     export_finance_interface_active = fields.Boolean(
         related="company_id.export_finance_interface_active"
     )
-    show_export_to_draft_button = fields.Boolean(
-        compute="_compute_export_reset_to_draft_button"
-    )
 
-    @api.depends('export_id')
-    def _compute_export_reset_to_draft_button(self):
-        for move in self:
-            move.show_export_to_draft_button = move.export_id and move.state in (
-                "posted",
-                "cancel",
-            )
+    @api.depends("export_id")
+    def _compute_show_reset_to_draft_button(self):
+        exported_moves = self.filtered(
+            lambda move: move.export_id
+            and move.state in ("posted", "cancel")
+            and not move.company_id.export_invoice_reset_active
+        )
+        exported_moves.show_reset_to_draft_button = False
+        super(AccountMove, self - exported_moves)._compute_show_reset_to_draft_button()
 
     def check_module_installed(self, module_name):
         # Search for the module in the ir.module.module model
-        module = self.env['ir.module.module'].search([('name', '=', module_name)])
+        module = self.env["ir.module.module"].search([("name", "=", module_name)])
 
         # Check if the module exists and is installed
         return bool(module and module.state == "installed")
+
+    def _get_default_accounts(self):
+        """Get default accounts for the move"""
+        if self.payment_ids[:1].payment_type == "inbound":
+            # Use journal's default debit account or suspense account
+            return [
+                self.journal_id.default_account_id.id
+                or self.env.company.account_journal_suspense_account_id.id,
+            ]
+        if self.payment_ids[:1].payment_type == "outbound":
+            # Use journal's default credit account or suspense account
+            return [
+                self.journal_id.default_account_id.id
+                or self.env.company.account_journal_suspense_account_id.id,
+            ]
+        return [
+            self.env.company.account_journal_suspense_account_id.id,
+        ]
 
     @api.depends("journal_id", "line_ids", "journal_id.default_account_id")
     def _compute_export_datev_account(self):  # noqa: C901
@@ -45,13 +62,29 @@ class AccountMove(models.Model):
         """
         for move in self:
             move.export_account_counterpart = False
+            existing_accounts = move.line_ids.mapped("account_id")
+            payment_account = move.line_ids.filtered(
+                lambda line: line.account_id.id in move._get_default_accounts()
+            )
+            # If move has an invoice, return invoice's account_id
+            default_account = move.journal_id.default_account_id
             if move.export_manual and move.export_account_counterpart_manual:
                 move.export_account_counterpart = (
                     move.export_account_counterpart_manual.id
                 )
                 continue
+            # If move belongs to a bank journal, return the journal's account
+            # (debit/credit should normally be the same)
+            # but take care of the case where the journals account is not in move.line_ids
+            if move.journal_id.type == "bank":
+                if default_account and default_account.id in existing_accounts.ids:
+                    move.export_account_counterpart = default_account.id
+                    continue
+                if payment_account:
+                    move.export_account_counterpart = payment_account.account_id.id
+                    continue
             # If move has an invoice, return invoice's account_id
-            default_account = move.journal_id.default_account_id
+            # get filtered move line containing account id from _get_default_accounts
             if move.is_invoice(include_receipts=True):
                 payment_term_lines = move.line_ids.filtered(
                     lambda line: line.account_id.account_type
@@ -64,11 +97,6 @@ class AccountMove(models.Model):
                 if check_hr_expense_installed and move.expense_sheet_id:
                     move.export_account_counterpart = default_account.id
                     continue
-            # If move belongs to a bank journal, return the journal's account
-            # (debit/credit should normally be the same)
-            if move.journal_id.type == "bank" and default_account:
-                move.export_account_counterpart = default_account.id
-                continue
             # If the move is an automatic exchange rate entry, take the gain/loss account
             # set on the exchange journal
             if (
@@ -83,7 +111,7 @@ class AccountMove(models.Model):
                 if len(move_lines) == 1:
                     move.export_account_counterpart = move_lines.account_id
                     continue
-            if move.journal_id.type == 'general':
+            if move.journal_id.type == "general":
                 rp_accounts = move.line_ids.filtered(
                     lambda line: line.account_id.account_type
                     in ("asset_receivable", "liability_payable")
@@ -91,12 +119,11 @@ class AccountMove(models.Model):
                 if rp_accounts and rp_accounts[0].account_id:
                     move.export_account_counterpart = rp_accounts[0].account_id
                     continue
-
             account_id = False
             # Look for an account used a single time in the move,
             # that has no originator tax
-            aml_debit = self.env['account.move.line']
-            aml_credit = self.env['account.move.line']
+            aml_debit = self.env["account.move.line"]
+            aml_credit = self.env["account.move.line"]
             for aml in move.line_ids:
                 if aml.debit > 0:
                     aml_debit |= aml
@@ -133,3 +160,9 @@ class AccountMove(models.Model):
                 if move.export_account_counterpart_manual:
                     account_id = move.export_account_counterpart_manual.id
             move.export_account_counterpart = account_id
+
+    def button_draft(self):
+        super().button_draft()
+        self.filtered(
+            lambda m: m.company_id.export_invoice_reset_active
+        ).export_id.reset_export()

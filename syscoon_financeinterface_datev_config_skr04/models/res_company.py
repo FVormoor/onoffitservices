@@ -1,18 +1,18 @@
-# This file is part of Odoo. The COPYRIGHT file at the top level of
-# this module contains the full copyright notices and license terms.
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 
 class Company(models.Model):
-    _inherit = 'res.company'
+    _inherit = "res.company"
 
-    datev_auto_set_accounts = fields.Selection(selection_add=[('skr04', 'SKR04')])
+    datev_auto_set_accounts = fields.Selection(selection_add=[("skr04", "SKR04")])
 
     def set_datev_skr04(self):
-        self.env['account.tax']._set_taxkeys_skr04(self.id)
-        self.env['account.account']._set_account_autoaccount_skr04(self.id)
+        self.env["account.tax"]._set_taxkeys_skr04(self.id)
+        self.env["account.account"]._set_account_autoaccount_skr04(self.id)
 
     def write(self, vals):
         for company in self:

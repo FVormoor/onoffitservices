@@ -1,5 +1,5 @@
-# This file is part of Odoo. The COPYRIGHT file at the top level of
-# this module contains the full copyright notices and license terms.
+# © 2025 syscoon Estonia OÜ (<https://syscoon.com>)
+# License OPL-1, See LICENSE file for full copyright and licensing details.
 
 from . import set_taxkeys
 from . import res_company

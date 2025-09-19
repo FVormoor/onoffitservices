@@ -12,7 +12,6 @@ class AccountMove(models.Model):
         res_super = super(AccountMove, self).create(vals_list)
         for res in res_super:
             if res.user_id and self.env.company.sh_disable_follower_salesperson_account:
-
                 res.message_unsubscribe([res.user_id.partner_id.id])
         return res_super
 
@@ -24,7 +23,6 @@ class AccountMove(models.Model):
                 res = super(AccountMove, self).write(vals)
                 if self:
                     for rec in self:
-
                         rec.message_unsubscribe([user_id.partner_id.id])
                 return res
         return super(AccountMove, self).write(vals)
@@ -35,23 +33,10 @@ class AccountMove(models.Model):
                           ):
 
         if self.env.company.sh_disable_follower_email and self.env.context.get('mark_invoice_as_sent') and not self.env.context.get('allow_manual_create') and not self.env.context.get('manually_added_follower'):
-
-            if partner_ids and len(partner_ids) == 1 and self.env.user.partner_id.id == partner_ids[0]:
-                return super(AccountMove, self).message_subscribe(
-                    partner_ids, subtype_ids
-                )
-            else:
-                return False
-
+            return False
         elif self.env.company.sh_disable_follower_validate_invoice and not self.env.context.get('mark_invoice_as_sent') and not self.env.context.get('allow_manual_create') and not self.env.context.get('manually_added_follower'):
-            if partner_ids and len(partner_ids) == 1 and self.env.user.partner_id.id == partner_ids[0]:
-                return super(AccountMove, self).message_subscribe(
-                    partner_ids, subtype_ids
-                )
-            else:
-                return False
-
-        elif self.env.context.get('allow_manual_create') and self.env.context.get('manually_added_follower'):
+            return False
+        elif self.env.context.get('allow_manual_create'):
             return super(AccountMove, self).message_subscribe(
                 partner_ids, subtype_ids
             )

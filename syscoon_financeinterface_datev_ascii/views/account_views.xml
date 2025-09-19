@@ -10,11 +10,11 @@
         <field name="arch" type="xml">
             <xpath expr="//group" position="inside">
                 <field name="export_finance_interface_active" invisible="1"/>
-                <group name="syscoon_financeinterface_datev" string="DATEV Settings" attrs="{'invisible': [('export_finance_interface_active', '=', False)]}">
+                <group name="syscoon_financeinterface_datev" string="DATEV Settings" invisible="not export_finance_interface_active">
                     <field name="datev_automatic_account"/>
-                    <field name="datev_automatic_tax" widget="many2many_tags" attrs="{'invisible': [('datev_automatic_account', '=', False)]}"/>
-                    <field name="datev_no_tax" attrs="{'invisible': [('datev_automatic_account', '=', False)]}"/>
-                    <field name="datev_vatid_required" attrs="{'invisible': [('datev_automatic_account', '=', False)]}"/>
+                    <field name="datev_automatic_tax" widget="many2many_tags" invisible="not datev_automatic_account"/>
+                    <field name="datev_no_tax" invisible="not datev_automatic_account"/>
+                    <field name="datev_vatid_required" invisible="not datev_automatic_account"/>
                 </group>
             </xpath>
         </field>
@@ -29,7 +29,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group" position="inside">
                 <field name="export_finance_interface_active" invisible="1"/>
-                <group name="syscoon_financeinterface_datev" attrs="{'invisible': [('export_finance_interface_active', '=', False)]}">
+                <group name="syscoon_financeinterface_datev" invisible="not export_finance_interface_active">
                     <field name="datev_tax_key"/>
                     <field name="datev_tax_case"/>
                     <field name="datev_country_id"/>

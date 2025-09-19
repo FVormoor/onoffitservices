@@ -69,17 +69,31 @@ class AccountMove(models.Model):
             return False
         return super(AccountMove, invoices_other_sequences)._is_end_of_seq_chain()
 
-    def _fetch_duplicate_supplier_reference(self, only_posted=False):
-        moves = self.filtered(lambda m: m.is_purchase_document() and m.ref)
+    def _fetch_duplicate_reference(self, matching_states=("draft", "posted")):
+        moves = self.filtered(
+            lambda m: m.is_sale_document() or m.is_purchase_document() and m.ref
+        )
         if moves:
             self.flush_model(["name", "journal_id", "move_type", "state"])
-        return super()._fetch_duplicate_supplier_reference(only_posted=only_posted)
+        return super()._fetch_duplicate_reference(matching_states=matching_states)
 
-    def _get_last_sequence(self, relaxed=False, with_prefix=None, lock=True):
-        return super()._get_last_sequence(relaxed, None, lock)
+    def _get_last_sequence(self, relaxed=False, with_prefix=None):
+        return super()._get_last_sequence(relaxed, None)
 
     @api.onchange("journal_id")
     def _onchange_journal_id(self):
         if not self.quick_edit_mode:
             self.name = "/"
             self._compute_name_by_sequence()
+
+    def _post(self, soft=True):
+        self.flush_recordset()
+        return super()._post(soft=soft)
+
+    @api.depends()
+    def _compute_name(self):
+        """Overwrite account module method in order to
+        avoid side effect if legacy code call it directly
+        like when creating entry from email.
+        """
+        return self._compute_name_by_sequence()
